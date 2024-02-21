@@ -11,7 +11,7 @@
   <meta name="author" content="">
   <meta name="keywords" content="">
   <meta name="description" content="">
-</head>
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,53 +22,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap"
   rel="stylesheet">
-  
-  <script src="node_modules/@firebase/database"></script>
+
+<script src="node_modules/@firebase/database"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script
-    src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+<!-- <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" /> -->
+<script type="module" src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+</head>
+<script>
+  //  var firebaseConfig = { // enter the details below
+  //       apiKey: "AIzaSyBtBLjODkH8iFlpPPJ31qeIIM5lDWSNgSc",
+  // authDomain: "pawsome-e2cd3.firebaseapp.com",
+  // databaseURL: "https://pawsome-e2cd3-default-rtdb.firebaseio.com",
+  // projectId: "pawsome-e2cd3",
+  // storageBucket: "pawsome-e2cd3.appspot.com",
+  // messagingSenderId: "584456719961",
+  // appId: "1:584456719961:web:db1bca363db76e90482b48",
+  // measurementId: "G-K6NCFMXZ40"
+  //   };
+  //   firebase.initializeApp(firebaseConfig);
+</script>
 
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
-    <script type="module" src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
-  <style>
-    .instagram-item{
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-  </style>
-  <script>
-       var firebaseConfig = { // enter the details below
-            apiKey: "AIzaSyBtBLjODkH8iFlpPPJ31qeIIM5lDWSNgSc",
-      authDomain: "pawsome-e2cd3.firebaseapp.com",
-      databaseURL: "https://pawsome-e2cd3-default-rtdb.firebaseio.com",
-      projectId: "pawsome-e2cd3",
-      storageBucket: "pawsome-e2cd3.appspot.com",
-      messagingSenderId: "584456719961",
-      appId: "1:584456719961:web:db1bca363db76e90482b48",
-      measurementId: "G-K6NCFMXZ40"
-        };
-        firebase.initializeApp(firebaseConfig);
-      //  window.addEventListener('load', function() {
-      //       initApp();
-      //   });
-      //   function initApp() {
-      //       firebase.auth().onAuthStateChanged(function(user) {
-      //           if (user) {
-      //               document.getElementById("signOut").style.display = "inline-block";
-      //               user.getIdToken().then(function(accessToken) {
-      //                 document.getElementById("usernametext").innerHTML = user.username
-
-      //               });
-      //           } else {
-      //               document.getElementById('usernametext').innerHTML = '';
-      //           }
-      //       });
-      //   };
-  </script>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <defs>
       <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
         <path fill="currentColor"
@@ -131,120 +109,16 @@
       </symbol>
 
     </defs>
-  </svg>
+  </svg> -->
 
   <div class="preloader-wrapper">
     <div class="preloader">
     </div>
   </div>
 
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-circle pt-2">3</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Grey Hoodie</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Dog Food</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Soft Toy</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <span class="fw-bold">Total (USD)</span>
-            <strong>$20</strong>
-          </li>
-        </ul>
+ 
+  <header>
 
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch"
-    aria-labelledby="Search">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-
-      <div class="order-md-last">
-        <h4 class="text-primary text-uppercase mb-3">
-          Search
-        </h4>
-        <div class="search-bar border rounded-2 border-dark-subtle">
-          <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
-            <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here" />
-            <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-<header>
-    <!-- <div class="container py-2">
-      <div class="row py-4 pb-0 pb-sm-4 align-items-center ">
-
-        <div class="col-sm-4 col-lg-3 text-center text-sm-start">
-          <div class="main-logo">
-            <a href="index.html">
-              <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid">
-            </a>
-          </div>
-        </div>
-
-        <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
-          <div class="search-bar border rounded-2 px-3 border-dark-subtle">
-            <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
-              <input type="text" class="form-control border-0 bg-transparent"
-                placeholder="Search for more than 10,000 products" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-              </svg>
-            </form>
-          </div>
-        </div>
-
-        <div
-          class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
-          <div class="support-box text-end d-none d-xl-block">
-            <span class="fs-6 secondary-font text-muted">Phone</span>
-            <h5 class="mb-0">+980-34984089</h5>
-          </div>
-          <div class="support-box text-end d-none d-xl-block">
-            <span class="fs-6 secondary-font text-muted">Email</span>
-            <h5 class="mb-0">waggy@gmail.com</h5>
-          </div>
-
-
-
-        </div>
-      </div>
-    </div> -->
 
     <div class="container-fluid">
       <hr class="m-0">
@@ -255,6 +129,12 @@
 
         <div class="d-flex d-lg-none align-items-end mt-3">
           <ul class="d-flex justify-content-end list-unstyled m-0">
+            
+            <li>
+              <a href="#" class="mx-3 bookicon">
+                <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
+              </a>
+            </li>
             <li>
               <a href="login.html" class="mx-3">
                 <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
@@ -262,29 +142,7 @@
               <span id="usernametext2"></span>
               <!-- <span id="usernametext"></span> -->
             </li>
-            <li>
-              <a href="user-manage.html" class="mx-3">
-                  <iconify-icon icon="eva:calendar-fill"class="fs-4"></iconify-icon>
-              </a>
-          </li>
 
-            <!-- <li>
-              <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                aria-controls="offcanvasCart">
-                <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
-                <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
-                  03
-                </span>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
-                aria-controls="offcanvasSearch">
-                <iconify-icon icon="tabler:search" class="fs-4"></iconify-icon>
-                </span>
-              </a>
-            </li> -->
           </ul>
 
         </div>
@@ -302,18 +160,18 @@
 
           <div class="offcanvas-body justify-content-between">
             <div class="main-logo">
-                <a href="index.html">
-                  <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid" width="85">
-                </a>
-              </div>
+              <a href="index.html">
+                <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid" width="85">
+              </a>
+            </div>
 
             <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
               <li class="nav-item">
                 <a href="index.html" class="nav-link active">Home</a>
               </li>
-             
+
               <li class="nav-item">
-                <a href="#" class="nav-link">Booking online</a>
+                <a href="#" class="nav-link booking">Booking online</a>
               </li>
               <li class="nav-item">
                 <a href="blog.html" class="nav-link">Blog</a>
@@ -321,24 +179,24 @@
               <li class="nav-item">
                 <a href="about.html" class="nav-link">About</a>
               </li>
-              
+
             </ul>
 
             <div class="d-none d-lg-flex align-items-end">
               <ul class="d-flex justify-content-end list-unstyled m-0">
+              
+
+                <li>
+                  <a href="#" class="mx-3 bookicon">
+                    <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
+                  </a>
+                </li>
                 <li style="margin-bottom: 10px;">
                   <a href="login.html" class="mx-3">
                     <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                   </a>
                   <span id="usernametext"></span>
                 </li>
-              
-                <li>
-                  <a href="user-manage.html" class="mx-3">
-                      <iconify-icon icon="eva:calendar-fill"class="fs-4"></iconify-icon>
-                  </a>
-              </li>
-             
               </ul>
 
             </div>
@@ -369,7 +227,7 @@
                 <h2 class="banner-title display-1 fw-normal">Best destination for <span class="text-primary">your
                     pets</span>
                 </h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 booking">
                   BOOKING NOW
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
@@ -388,8 +246,8 @@
                 <h2 class="banner-title display-1 fw-normal">Best destination for <span class="text-primary">your
                     pets</span>
                 </h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                    BOOKING NOW
+                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 booking">
+                  BOOKING NOW
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg></a>
@@ -407,8 +265,8 @@
                 <h2 class="banner-title display-1 fw-normal">Best destination for <span class="text-primary">your
                     pets</span>
                 </h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                    BOOKING NOW
+                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 booking">
+                  BOOKING NOW
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg></a>
@@ -426,20 +284,22 @@
 
   <section id="categories">
     <div class="container my-3 py-5 ps-5 pe-5">
-        <h5 class="display-6 fw-500 text-center mt-3">Our Services</h5>
-      <div class="row my-5" >
+      <h5 class="display-6 fw-500 text-center mt-3">Our Services</h5>
+      <div class="row my-5">
         <div class="col text-center">
           <a href="#" class="categories-item">
             <iconify-icon class="category-icon" icon="ph:bowl-food"></iconify-icon>
             <h5>Full Grooming</h5>
-            <p style="color: #908F8D;font-size: 16px;" class="text-center">Do everything including collecting various details.</p>
+            <p style="color: #908F8D;font-size: 16px;" class="text-center">Do everything including collecting various
+              details.</p>
           </a>
         </div>
         <div class="col text-center">
           <a href="#" class="categories-item">
             <iconify-icon class="category-icon" icon="ph:bird"></iconify-icon>
             <h5>Wash & Blow Dry</h5>
-            <p style="color: #908F8D;font-size: 16px;" class="text-center">Wash & Blow Dry by quality products Safe for your pets</p>
+            <p style="color: #908F8D;font-size: 16px;" class="text-center">Wash & Blow Dry by quality products Safe for
+              your pets</p>
           </a>
           </a>
         </div>
@@ -447,22 +307,24 @@
           <a href="#" class="categories-item">
             <iconify-icon class="category-icon" icon="ph:dog"></iconify-icon>
             <h5>dental care</h5>
-            <p style="color: #908F8D;font-size: 16px;" class="text-center">Completely clean your pet's mouth by a professional technician.</p>
+            <p style="color: #908F8D;font-size: 16px;" class="text-center">Completely clean your pet's mouth by a
+              professional technician.</p>
           </a>
           </a>
         </div>
-       
+
         <div class="col text-center">
           <a href="#" class="categories-item">
             <iconify-icon class="category-icon" icon="ph:cat"></iconify-icon>
             <h5>Nail Clipping</h5>
-            <p style="color: #908F8D;font-size: 16px;" class="text-center">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+            <p style="color: #908F8D;font-size: 16px;" class="text-center">Lorem ipsum dolor sit amet, consectetur adipi
+              elit.</p>
           </a>
           </a>
         </div>
       </div>
       <div class="text-end pe-5">
-        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 booking">
           BOOKING NOW
           <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
             <use xlink:href="#arrow-right"></use>
@@ -480,23 +342,23 @@
           <img src="images/banner-img2.png" class="img-fluid">
         </div>
         <div class="content-wrapper col-12 offset-md-1 col-md-5 p-5">
-            <div class="secondary-font text-primary text-uppercase mb-3 fs-4">About Pawsome</div>
-            <h5 class="banner-title fw-normal mb-3">Hi, i’m Anndear Thiruttikorn Sriwad.<br>
-              Nice to meet you all. <br>
-              I designed and created Pawsome, hoping it will please everyone.
-            </h5>
-            <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-              READ MORE
-              <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
-                <use xlink:href="#arrow-right"></use>
-              </svg></a>
+          <div class="secondary-font text-primary text-uppercase mb-3 fs-4">About Pawsome</div>
+          <h5 class="banner-title fw-normal mb-3">Hi, i’m Anndear Thiruttikorn Sriwad.<br>
+            Nice to meet you all. <br>
+            I designed and created Pawsome, hoping it will please everyone.
+          </h5>
+          <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+            READ MORE
+            <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
+              <use xlink:href="#arrow-right"></use>
+            </svg></a>
         </div>
 
       </div>
     </div>
   </section>
 
- 
+
 
   <section id="latest-blog" class="my-5">
     <div class="container py-5 my-5 ps-5 pe-5">
@@ -504,7 +366,7 @@
         <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
           <h2 class="display-3 fw-normal">Latest Blog Post</h2>
           <div>
-            <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+            <a href="blog.html" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
               Read all
               <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                 <use xlink:href="#arrow-right"></use>
@@ -530,7 +392,7 @@
                 <p class="blog-paragraph fs-6">At the core of our practice is the idea that cities are the incubators of
                   our greatest
                   achievements, and the best hope for a sustainable future.</p>
-                <a href="#" class="blog-read">read more</a>
+                <a href="single-post.html" class="blog-read">read more</a>
               </div>
 
             </div>
@@ -553,7 +415,7 @@
                 <p class="blog-paragraph fs-6">At the core of our practice is the idea that cities are the incubators of
                   our greatest
                   achievements, and the best hope for a sustainable future.</p>
-                <a href="#" class="blog-read">read more</a>
+                <a href="single-post.html" class="blog-read">read more</a>
               </div>
 
             </div>
@@ -576,7 +438,7 @@
                 <p class="blog-paragraph fs-6">At the core of our practice is the idea that cities are the incubators of
                   our greatest
                   achievements, and the best hope for a sustainable future.</p>
-                <a href="#" class="blog-read">read more</a>
+                <a href="single-post.html" class="blog-read">read more</a>
               </div>
 
             </div>
@@ -697,17 +559,17 @@
 
         <div class="col-md-3">
           <div class="footer-menu">
-            <img src="images/Logo Pawsome.png" alt="logo"width="120">
+            <img src="images/Logo Pawsome.png" alt="logo" width="120">
             <p class="blog-paragraph fs-6 mt-3">Hours of Operation</p>
             <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                Mon - Fri : 9am - 6pm  </p>
-                <p class="blog-paragraph mt-0"style="font-size: 12px;">
-                 
-                    Sat : 10am - 2pm</p>
-                    <p class="blog-paragraph  mt-0"style="font-size: 12px;">
-                    
-                        sun : closed  </p>
-           
+              Mon - Fri : 9am - 6pm </p>
+            <p class="blog-paragraph mt-0" style="font-size: 12px;">
+
+              Sat : 10am - 2pm</p>
+            <p class="blog-paragraph  mt-0" style="font-size: 12px;">
+
+              sun : closed </p>
+
           </div>
         </div>
         <div class="col-md-3">
@@ -718,7 +580,7 @@
                 <a href="index.html" class="nav-link">Home</a>
               </li>
               <li class="menu-item">
-                <a href="#" class="nav-link">Booking Online</a>
+                <a href="#" class="nav-link booking">Booking Online</a>
               </li>
               <li class="menu-item">
                 <a href="blog.html" class="nav-link">Blog </a>
@@ -732,41 +594,29 @@
         <div class="col-md-3">
           <div class="footer-menu">
             <h4>Help Center</h4>
-              <ul class="menu-list list-unstyled">
-                <li class="menu-item">
-                  <a href="#" class="nav-link">FAQs</a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="#" class="nav-link">Payment</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Returns & Refunds</a>
-                </li> -->
-                <li class="menu-item">
-                    <a class="nav-link"id="signOut"style="display: none;cursor: pointer;">Logout</a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="#" class="nav-link">Delivery Information</a>
-                </li> -->
-              </ul>
+            <ul class="menu-list list-unstyled">
+              <li class="menu-item">
+                <a class="nav-link" id="signOut" style="display: none;cursor: pointer;">Logout</a>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="col-md-3">
           <div>
             <h4>Contact</h4>
             <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                Phone </p>
-                <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                    123-456-7890 </p>
-                    <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                        Email </p>
-                        <p class="blog-paragraph  mt-0" style="font-size: 12px;">
-                            Thiruttikorn.a@mail.kmutt.ac.th </p>
-                            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                                Area Of Service </p>
-                                <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                                    Kmutt Univercity</p>
-            
+              Phone </p>
+            <p class="blog-paragraph mt-0" style="font-size: 12px;">
+              123-456-7890 </p>
+            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+              Email </p>
+            <p class="blog-paragraph  mt-0" style="font-size: 12px;">
+              Thiruttikorn.a@mail.kmutt.ac.th </p>
+            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+              Area Of Service </p>
+            <p class="blog-paragraph mt-0" style="font-size: 12px;">
+              Kmutt Univercity</p>
+
           </div>
         </div>
 
@@ -795,7 +645,8 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
   <script src="js/plugins.js"></script>
-  <script src="js/script.js"></script>  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/auth.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
 </body>

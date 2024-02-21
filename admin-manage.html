@@ -1,434 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>PAW-SOME</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="author" content="">
-        <meta name="keywords" content="">
-        <meta name="description" content="">
-    </head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-    <link href="https://fonts.cdnfonts.com/css/itim" rel="stylesheet">
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-        crossorigin="anonymous"
-    >
-    <link rel="stylesheet" type="text/css" href="css/vendor.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<head>
+    <title>PAW-SOME</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+<link href="https://fonts.cdnfonts.com/css/itim" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="css/vendor.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet">
+    
+<script src="node_modules/@firebase/database"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+<!-- <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" /> -->
+<script type="module" src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
 </head>
 <style>
-    @media only screen and  (max-width: 1080px) {
-    .quote-icon{
-        font-size: 100px;
+    @media only screen and (max-width: 1080px) {
+        .quote-icon {
+            font-size: 100px;
+        }
     }
-    }
-    .fontth{
+
+    .fontth {
         font-family: 'Itim', sans-serif !important;
     }
-    @media only screen and  (max-width: 991px) {
 
-    .col-lg-6 {
-        text-align: center;
-    }
-    .pawsomeicon{
-        width: 200px;
-    position: relative;
-    top: 0% !important; 
-     left: auto !important;
-     margin-bottom: 20px;
-    }
-    .col-md-10 p{
-        text-align: right !important;
-    }
+    @media only screen and (max-width: 991px) {
+
+        .col-lg-6 {
+            text-align: center;
+        }
+
+        .pawsomeicon {
+            width: 200px;
+            position: relative;
+            top: 0% !important;
+            left: auto !important;
+            margin-bottom: 20px;
+        }
+
+        .col-md-10 p {
+            text-align: right !important;
+        }
     }
 </style>
+
 <body class="">
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <defs>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15">
-                <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z"
-                ></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15">
-                <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
-                <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"></path>
-            </symbol>
-        </defs>
-    </svg>
-    <div class="preloader-wrapper" style="display: none;">
-        <div class="preloader"></div>
-    </div>
-    <div
-        class="offcanvas offcanvas-end"
-        data-bs-scroll="true"
-        tabindex="-1"
-        id="offcanvasCart"
-        aria-labelledby="My Cart"
-    >
-        <div class="offcanvas-header justify-content-center">
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-            ></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="order-md-last">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-primary">Your cart</span>
-                    <span class="badge bg-primary rounded-circle pt-2">3</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Grey Hoodie</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$12</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Dog Food</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Soft Toy</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$5</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="fw-bold">Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
-                </ul>
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-            </div>
+    <div class="preloader-wrapper">
+        <div class="preloader">
         </div>
     </div>
-    <div
-        class="offcanvas offcanvas-end"
-        data-bs-scroll="true"
-        tabindex="-1"
-        id="offcanvasSearch"
-        aria-labelledby="Search"
-    >
-        <div class="offcanvas-header justify-content-center">
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-            ></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="order-md-last">
-                <h4 class="text-primary text-uppercase mb-3">
-                    Search
-                </h4>
-                <div class="search-bar border rounded-2 border-dark-subtle">
-                    <form
-                        id="search-form"
-                        class="text-center d-flex align-items-center"
-                        action=""
-                        method=""
-                    >
-                        <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here">
-                        <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <defs>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15">
-                <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z"
-                ></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15">
-                <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"></path>
-            </symbol>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
-                <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"></path>
-            </symbol>
-        </defs>
-    </svg>
-    <div class="preloader-wrapper" style="display: none;">
-        <div class="preloader"></div>
-    </div>
-    <div
-        class="offcanvas offcanvas-end"
-        data-bs-scroll="true"
-        tabindex="-1"
-        id="offcanvasCart"
-        aria-labelledby="My Cart"
-    >
-        <div class="offcanvas-header justify-content-center">
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-            ></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="order-md-last">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-primary">Your cart</span>
-                    <span class="badge bg-primary rounded-circle pt-2">3</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Grey Hoodie</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$12</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Dog Food</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Soft Toy</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$5</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="fw-bold">Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
-                </ul>
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-            </div>
-        </div>
-    </div>
-    <div
-        class="offcanvas offcanvas-end"
-        data-bs-scroll="true"
-        tabindex="-1"
-        id="offcanvasSearch"
-        aria-labelledby="Search"
-    >
-        <div class="offcanvas-header justify-content-center">
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-            ></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="order-md-last">
-                <h4 class="text-primary text-uppercase mb-3">
-                    Search
-                </h4>
-                <div class="search-bar border rounded-2 border-dark-subtle">
-                    <form
-                        id="search-form"
-                        class="text-center d-flex align-items-center"
-                        action=""
-                        method=""
-                    >
-                        <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here">
-                        <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
     <header>
+
+
         <div class="container-fluid">
             <hr class="m-0">
         </div>
+
         <div class="container">
             <nav class="main-menu pt-3 d-flex navbar navbar-expand-lg ">
+
                 <div class="d-flex d-lg-none align-items-end mt-3">
                     <ul class="d-flex justify-content-end list-unstyled m-0">
+
+                        <li>
+                            <a href="#" class="mx-3 bookicon">
+                                <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
+                            </a>
+                        </li>
                         <li>
                             <a href="login.html" class="mx-3">
                                 <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                             </a>
-                        </li>
-                        <li>
-                            <a href="admin-manage.html" class="mx-3">
-                                <iconify-icon icon="eva:calendar-fill"class="fs-4"></iconify-icon>
-                            </a>
+                            <span id="usernametext2"></span>
+                            <!-- <span id="usernametext"></span> -->
                         </li>
 
                     </ul>
+
                 </div>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasNavbar"
-                    aria-controls="offcanvasNavbar"
-                >
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div
-                    class="offcanvas offcanvas-end"
-                    tabindex="-1"
-                    id="offcanvasNavbar"
-                    aria-labelledby="offcanvasNavbarLabel"
-                >
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+
                     <div class="offcanvas-header justify-content-center">
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="offcanvas"
-                            aria-label="Close"
-                        ></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
+
                     <div class="offcanvas-body justify-content-between">
                         <div class="main-logo">
                             <a href="index.html">
-                                <img
-                                    src="images/Logo Pawsome.png"
-                                    alt="logo"
-                                    class="img-fluid"
-                                    width="85"
-                                >
+                                <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid" width="85">
                             </a>
                         </div>
+
                         <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
                             <li class="nav-item">
-                                <a href="index.html" class="nav-link ">Home</a>
+                                <a href="index.html" class="nav-link active">Home</a>
                             </li>
+
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Booking online</a>
+                                <a href="#" class="nav-link booking">Booking online</a>
                             </li>
                             <li class="nav-item">
                                 <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="nav-item">
-                                <a href="about.html" class="nav-link active">About</a>
+                                <a href="about.html" class="nav-link">About</a>
                             </li>
-                            <!-- <li class="nav-item">
-                <a href="#" class="nav-link">Contact</a>
-              </li> -->
+
                         </ul>
+
                         <div class="d-none d-lg-flex align-items-end">
                             <ul class="d-flex justify-content-end list-unstyled m-0">
+
+
+                                <li>
+                                    <a href="#" class="mx-3 bookicon">
+                                        <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
+                                    </a>
+                                </li>
                                 <li style="margin-bottom: 10px;">
                                     <a href="login.html" class="mx-3">
                                         <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                                     </a>
-                                </li>
-                                <li>
-                                    <a href="admin-manage.html" class="mx-3">
-                                        <iconify-icon icon="eva:calendar-fill"class="fs-4"></iconify-icon>
-                                    </a>
+                                    <span id="usernametext"></span>
                                 </li>
                             </ul>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </nav>
+
+
+
         </div>
     </header>
     <section id="banner" class="py-3" style="background: #F9F3EC;">
@@ -458,307 +190,223 @@
             <hr>
             <div class="row mt-5 pt-3">
                 <div class="d-flex flex-column flex-md-row align-items-start gap-5">
-                    <div
-                        class="nav flex-row flex-wrap flex-md-column nav-pills me-3 col-lg-3"
-                        id="v-pills-tab"
-                        role="tablist"
-                        aria-orientation="vertical"
-                    >
-                        <button
-                            class="nav-link fs-5 mb-2 text-start active fontth"
-                            id="v-pills-owner-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#v-pills-owner"
-                            type="button"
-                            role="tab"
-                            aria-controls="v-pills-owner"
-                            aria-selected="true"
-                            tabindex="-1"
-                        >ข้อมูลบริการ</button>
-                        <button
-                            class="nav-link fs-5 mb-2 text-start fontth"
-                            id="v-pills-pets-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#v-pills-pets"
-                            type="button"
-                            role="tab"
-                            aria-controls="v-pills-pets"
-                            aria-selected="false"
-                            tabindex="-1"
-                        >ประเภทสัตว์เลี้ยง</button>
-                        <button
-                            class="nav-link fs-5 mb-2 text-start fontth"
-                            id="v-pills-grooming-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#v-pills-grooming"
-                            type="button"
-                            role="tab"
-                            aria-controls="v-pills-grooming"
-                            aria-selected="false"
-                            tabindex="-1"
-                        >ราคาค่าบริการ</button>
-                        <button
-                            class="nav-link fs-5 mb-2 text-start fontth"
-                            id="v-pills-booking-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#v-pills-listbooking"
-                            type="button"
-                            role="tab"
-                            aria-controls="v-pills-listbooking"
-                            aria-selected="false"
-                            tabindex="-1"
-                        >รายการจอง</button>
+                    <div class="nav flex-row flex-wrap flex-md-column nav-pills me-3 col-lg-3" id="v-pills-tab"
+                        role="tablist" aria-orientation="vertical">
+                        <button class="nav-link fs-5 mb-2 text-start active fontth" id="v-pills-owner-tab"
+                            data-bs-toggle="pill" data-bs-target="#v-pills-owner" type="button" role="tab"
+                            aria-controls="v-pills-owner" aria-selected="true" tabindex="-1">ข้อมูลบริการ</button>
+                        <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-pets-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-pets" type="button" role="tab" aria-controls="v-pills-pets"
+                            aria-selected="false" tabindex="-1">ประเภทสัตว์เลี้ยง</button>
+                        <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-grooming-tab"
+                            data-bs-toggle="pill" data-bs-target="#v-pills-grooming" type="button" role="tab"
+                            aria-controls="v-pills-grooming" aria-selected="false" tabindex="-1">ราคาค่าบริการ</button>
+                        <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-booking-tab"
+                            data-bs-toggle="pill" data-bs-target="#v-pills-listbooking" type="button" role="tab"
+                            aria-controls="v-pills-listbooking" aria-selected="false" tabindex="-1">รายการจอง</button>
                     </div>
                     <div class="tab-content w-100" id="v-pills-tabContent">
-                        <div
-                            class="tab-pane fade active show"
-                            id="v-pills-owner"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-owner-tab"
-                            tabindex="0"
-                        >
-                        <h4 class="fontth">ข้อมูลบริการ</h4>
-                        <p></p>
-                        <table class="table w-100 mt-3">
-                            <thead>
-                              <tr>
-                                <th scope="col" class="fontth fw-medium">#</th>
-                                <th scope="col"class="fontth w-25 fw-medium">ชื่อ</th>
-                                <th scope="col"class="fontth fw-medium w-25">ประเภท</th>
-                                <th scope="col"class="fontth fw-medium">แก้ไข</th>
-                              </tr>
-                            </thead>
-                            <tbody class="fontth">
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>มัว</td>
-                                <td>แมว</td>
-                                <td>           <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">แก้ไขข้อมูล
-                                    <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                </button></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>มัว</td>
-                                <td>แมว</td>
-                                <td>           <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">แก้ไขข้อมูล
-                                    <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                </button></td>
-                              </tr>
-                            
-                            </tbody>
-                          </table>
-                       
-                        <div class="rounded-5 card mt-3 border p-4">
-                            <form id="form" class="form-group flex-wrap h5">
-                                <div class="form-input col-lg-12 d-flex mb-3 mt-3">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 me-3"
-                                    >
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 "
-                                    >
+                        <div class="tab-pane fade active show" id="v-pills-owner" role="tabpanel"
+                            aria-labelledby="v-pills-owner-tab" tabindex="0">
+                            <h4 class="fontth">ข้อมูลบริการ</h4>
+                            <p></p>
+                            <table class="table w-100 mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="fontth fw-medium">#</th>
+                                        <th scope="col" class="fontth w-25 fw-medium">ชื่อ</th>
+                                        <th scope="col" class="fontth fw-medium w-25">ประเภท</th>
+                                        <th scope="col" class="fontth fw-medium">แก้ไข</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fontth">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>มัว</td>
+                                        <td>แมว</td>
+                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                                type="submit">แก้ไขข้อมูล
+                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
+                                            </button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>มัว</td>
+                                        <td>แมว</td>
+                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                                type="submit">แก้ไขข้อมูล
+                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
+                                            </button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div class="rounded-5 card mt-3 border p-4">
+                                <form id="form" class="form-group flex-wrap h5">
+                                    <div class="form-input col-lg-12 d-flex mb-3 mt-3">
+                                        <input type="text" name="email" placeholder="xxx"
+                                            class="form-control ps-3 me-3">
+                                        <input type="text" name="name" placeholder="xxx" class="form-control ps-3 ">
+                                    </div>
+                                </form>
+                                <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
+                                <div class="d-grid d-none">
+                                    <button class="btn btn-dark rounded-1 h5">Submit</button>
                                 </div>
-                            </form>
-                            <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
-                            <div class="d-grid d-none">
-                                <button class="btn btn-dark rounded-1 h5">Submit</button>
                             </div>
                         </div>
-                        </div>
-                        <div
-                            class="tab-pane fade"
-                            id="v-pills-pets"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-pets-tab"
-                            tabindex="0"
-                        >
-                        <h4 class="fontth">รายชื่อสัตว์เลี้ยง</h4>
-                        <p></p>
-                        <table class="table w-100 mt-3">
-                            <thead>
-                              <tr>
-                                <th scope="col" class="fontth fw-medium">#</th>
-                                <th scope="col"class="fontth w-25 fw-medium">ชื่อ</th>
-                                <th scope="col"class="fontth fw-medium w-25">ประเภท</th>
-                                <th scope="col"class="fontth fw-medium">แก้ไข</th>
-                              </tr>
-                            </thead>
-                            <tbody class="fontth">
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>มัว</td>
-                                <td>แมว</td>
-                                <td>           <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">แก้ไขข้อมูล
-                                    <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                </button></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>มัว</td>
-                                <td>แมว</td>
-                                <td>           <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">แก้ไขข้อมูล
-                                    <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                </button></td>
-                              </tr>
-                            
-                            </tbody>
-                          </table>
-                       
-                        <div class="rounded-5 card mt-3 border p-4">
-                            <form id="form" class="form-group flex-wrap h5">
-                                <div class="form-input col-lg-12 d-flex mb-3 mt-3">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 me-3"
-                                    >
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 "
-                                    >
+                        <div class="tab-pane fade" id="v-pills-pets" role="tabpanel" aria-labelledby="v-pills-pets-tab"
+                            tabindex="0">
+                            <h4 class="fontth">รายชื่อสัตว์เลี้ยง</h4>
+                            <p></p>
+                            <table class="table w-100 mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="fontth fw-medium">#</th>
+                                        <th scope="col" class="fontth w-25 fw-medium">ชื่อ</th>
+                                        <th scope="col" class="fontth fw-medium w-25">ประเภท</th>
+                                        <th scope="col" class="fontth fw-medium">แก้ไข</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fontth">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>มัว</td>
+                                        <td>แมว</td>
+                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                                type="submit">แก้ไขข้อมูล
+                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
+                                            </button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>มัว</td>
+                                        <td>แมว</td>
+                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                                type="submit">แก้ไขข้อมูล
+                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
+                                            </button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div class="rounded-5 card mt-3 border p-4">
+                                <form id="form" class="form-group flex-wrap h5">
+                                    <div class="form-input col-lg-12 d-flex mb-3 mt-3">
+                                        <input type="text" name="email" placeholder="xxx"
+                                            class="form-control ps-3 me-3">
+                                        <input type="text" name="name" placeholder="xxx" class="form-control ps-3 ">
+                                    </div>
+                                </form>
+                                <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
+                                <div class="d-grid d-none">
+                                    <button class="btn btn-dark rounded-1 h5">Submit</button>
                                 </div>
-                            </form>
-                            <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
-                            <div class="d-grid d-none">
-                                <button class="btn btn-dark rounded-1 h5">Submit</button>
                             </div>
                         </div>
-                        </div>
-                        <div
-                            class="tab-pane fade"
-                            id="v-pills-grooming"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-grooming-tab"
-                            tabindex="0"
-                        >
-                        <h4 class="fontth">ค่าบริการ</h4>
-                        <p></p>
-                        <table class="table w-100 mt-3">
-                            <thead>
-                              <tr>
-                                <th scope="col" class="fontth fw-medium">#</th>
-                                <th scope="col"class="fontth w-25 fw-medium">ชื่อ</th>
-                                <th scope="col"class="fontth fw-medium w-25">ประเภท</th>
-                                <th scope="col"class="fontth fw-medium">แก้ไข</th>
-                              </tr>
-                            </thead>
-                            <tbody class="fontth">
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>มัว</td>
-                                <td>แมว</td>
-                                <td>           <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">แก้ไขข้อมูล
-                                    <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                </button></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>มัว</td>
-                                <td>แมว</td>
-                                <td>           <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">แก้ไขข้อมูล
-                                    <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                </button></td>
-                              </tr>
-                            
-                            </tbody>
-                          </table>
-                       
-                        <div class="rounded-5 card mt-3 border p-4">
-                            <form id="form" class="form-group flex-wrap h5">
-                                <div class="form-input col-lg-12 d-flex mb-3 mt-3">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 me-3"
-                                    >
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 "
-                                    >
+                        <div class="tab-pane fade" id="v-pills-grooming" role="tabpanel"
+                            aria-labelledby="v-pills-grooming-tab" tabindex="0">
+                            <h4 class="fontth">ค่าบริการ</h4>
+                            <p></p>
+                            <table class="table w-100 mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="fontth fw-medium">#</th>
+                                        <th scope="col" class="fontth w-25 fw-medium">ชื่อ</th>
+                                        <th scope="col" class="fontth fw-medium w-25">ประเภท</th>
+                                        <th scope="col" class="fontth fw-medium">แก้ไข</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fontth">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>มัว</td>
+                                        <td>แมว</td>
+                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                                type="submit">แก้ไขข้อมูล
+                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
+                                            </button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>มัว</td>
+                                        <td>แมว</td>
+                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                                type="submit">แก้ไขข้อมูล
+                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
+                                            </button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div class="rounded-5 card mt-3 border p-4">
+                                <form id="form" class="form-group flex-wrap h5">
+                                    <div class="form-input col-lg-12 d-flex mb-3 mt-3">
+                                        <input type="text" name="email" placeholder="xxx"
+                                            class="form-control ps-3 me-3">
+                                        <input type="text" name="name" placeholder="xxx" class="form-control ps-3 ">
+                                    </div>
+                                </form>
+                                <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
+                                <div class="d-grid d-none">
+                                    <button class="btn btn-dark rounded-1 h5">Submit</button>
                                 </div>
-                            </form>
-                            <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
-                            <div class="d-grid d-none">
-                                <button class="btn btn-dark rounded-1 h5">Submit</button>
                             </div>
                         </div>
-                        </div>
-                        <div
-                            class="tab-pane fade"
-                            id="v-pills-listbooking"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-booking-tab"
-                            tabindex="0"
-                        >
-                        <h4 class="fontth">รายการจอง</h4>
-                 
-                        <table class="table w-100 mt-3 table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col" class="fontth fw-medium">#</th>
-                                <th scope="col"class="fontth  fw-medium">ชื่อลูกค้า</th>
-                                <th scope="col"class="fontth fw-medium">วันที่</th>
-                                <th scope="col"class="fontth fw-medium">ประเภทการจอง</th>
-                                <th scope="col"class="fontth fw-medium ">ราคา</th>
-                                <th scope="col"class="fontth fw-medium">ยืนยัน</th>
-                                <th scope="col"class="fontth fw-medium">ยกเลิก</th>
-                              </tr>
-                            </thead>
-                            <tbody class="fontth">
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>มัว</td>
-                                <td>12/03/2567 08:00</td>
-                                <td>อาบน้ำ</td>
-                                <td>350</td>
-                                <td>
-                                    <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">
-                                        <iconify-icon icon="eva:checkmark-circle-outline"></iconify-icon>
-                                </button></td>
-                                <td>
-                                    <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">
-                                        <iconify-icon icon="eva:close-circle-fill"></iconify-icon>
-                                </button></td>
-                              </tr>
-                             
-                            </tbody>
-                          </table>
-                       
-                        <div class="rounded-5 card mt-3 border p-4">
-                            <form id="form" class="form-group flex-wrap h5">
-                                <div class="form-input col-lg-12 d-flex mb-3 mt-3">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 me-3"
-                                    >
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="xxx"
-                                        class="form-control ps-3 "
-                                    >
+                        <div class="tab-pane fade" id="v-pills-listbooking" role="tabpanel"
+                            aria-labelledby="v-pills-booking-tab" tabindex="0">
+                            <h4 class="fontth">รายการจอง</h4>
+
+                            <table class="table w-100 mt-3 table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="fontth fw-medium">#</th>
+                                        <th scope="col" class="fontth  fw-medium">ชื่อลูกค้า</th>
+                                        <th scope="col" class="fontth fw-medium">วันที่</th>
+                                        <th scope="col" class="fontth fw-medium">ประเภทการจอง</th>
+                                        <th scope="col" class="fontth fw-medium ">ราคา</th>
+                                        <th scope="col" class="fontth fw-medium">ยืนยัน</th>
+                                        <th scope="col" class="fontth fw-medium">ยกเลิก</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fontth">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>มัว</td>
+                                        <td>12/03/2567 08:00</td>
+                                        <td>อาบน้ำ</td>
+                                        <td>350</td>
+                                        <td>
+                                            <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">
+                                                <iconify-icon icon="eva:checkmark-circle-outline"></iconify-icon>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="w-auto btn btn-secondary btn-sm p-1" type="submit">
+                                                <iconify-icon icon="eva:close-circle-fill"></iconify-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div class="rounded-5 card mt-3 border p-4">
+                                <form id="form" class="form-group flex-wrap h5">
+                                    <div class="form-input col-lg-12 d-flex mb-3 mt-3">
+                                        <input type="text" name="email" placeholder="xxx"
+                                            class="form-control ps-3 me-3">
+                                        <input type="text" name="name" placeholder="xxx" class="form-control ps-3 ">
+                                    </div>
+                                </form>
+                                <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
+                                <div class="d-grid d-none">
+                                    <button class="btn btn-dark rounded-1 h5">Submit</button>
                                 </div>
-                            </form>
-                            <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
-                            <div class="d-grid d-none">
-                                <button class="btn btn-dark rounded-1 h5">Submit</button>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -819,113 +467,98 @@
     </section>
     <footer id="footer" class="my-5">
         <div class="container py-5 my-5">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="footer-menu">
-                        <img src="images/Logo Pawsome.png" alt="logo" width="120">
-                        <p class="blog-paragraph fs-6 mt-3">Hours of Operation</p>
-                        <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                            Mon - Fri : 9am - 6pm
-                        </p>
-                        <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                            Sat : 10am - 2pm
-                        </p>
-                        <p class="blog-paragraph  mt-0" style="font-size: 12px;">
-                            sun : closed
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="footer-menu">
-                        <h4>Quick Links</h4>
-                        <ul class="menu-list list-unstyled">
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Home</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Booking Online</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="blog.html" class="nav-link">Blog</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="about.html" class="nav-link active">About Us</a>
-                            </li>
-                            <!-- <li class="menu-item">
-                <a href="#" class="nav-link">Conatct Us</a>
-              </li> -->
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="footer-menu">
-                        <h4>Help Center</h4>
-                        <ul class="menu-list list-unstyled">
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">FAQs</a>
-                            </li>
-                            <!-- <li class="menu-item">
-                  <a href="#" class="nav-link">Payment</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Returns & Refunds</a>
-                </li> -->
-                            <li class="menu-item">
-                                <a class="nav-link" id="signOut" style="display: none">Logout</a>
-                            </li>
-                            <!-- <li class="menu-item">
-                  <a href="#" class="nav-link">Delivery Information</a>
-                </li> -->
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div>
-                        <h4>Contact</h4>
-                        <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                            Phone
-                        </p>
-                        <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                            123-456-7890
-                        </p>
-                        <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                            Email
-                        </p>
-                        <p class="blog-paragraph  mt-0" style="font-size: 12px;">
-                            Thiruttikorn.a@mail.kmutt.ac.th
-                        </p>
-                        <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                            Area Of Service
-                        </p>
-                        <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                            Kmutt Univercity
-                        </p>
-                    </div>
-                </div>
+          <div class="row">
+    
+            <div class="col-md-3">
+              <div class="footer-menu">
+                <img src="images/Logo Pawsome.png" alt="logo" width="120">
+                <p class="blog-paragraph fs-6 mt-3">Hours of Operation</p>
+                <p class="blog-paragraph mt-0" style="font-size: 12px;">
+                  Mon - Fri : 9am - 6pm </p>
+                <p class="blog-paragraph mt-0" style="font-size: 12px;">
+    
+                  Sat : 10am - 2pm</p>
+                <p class="blog-paragraph  mt-0" style="font-size: 12px;">
+    
+                  sun : closed </p>
+    
+              </div>
             </div>
+            <div class="col-md-3">
+              <div class="footer-menu">
+                <h4>Quick Links</h4>
+                <ul class="menu-list list-unstyled">
+                  <li class="menu-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="#" class="nav-link booking">Booking Online</a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="blog.html" class="nav-link">Blog </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="footer-menu">
+                <h4>Help Center</h4>
+                <ul class="menu-list list-unstyled">
+                  <li class="menu-item">
+                    <a class="nav-link" id="signOut" style="display: none;cursor: pointer;">Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div>
+                <h4>Contact</h4>
+                <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+                  Phone </p>
+                <p class="blog-paragraph mt-0" style="font-size: 12px;">
+                  123-456-7890 </p>
+                <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+                  Email </p>
+                <p class="blog-paragraph  mt-0" style="font-size: 12px;">
+                  Thiruttikorn.a@mail.kmutt.ac.th </p>
+                <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+                  Area Of Service </p>
+                <p class="blog-paragraph mt-0" style="font-size: 12px;">
+                  Kmutt Univercity</p>
+    
+              </div>
+            </div>
+    
+          </div>
         </div>
-    </footer>
-    <div id="footer-bottom">
+      </footer>
+    
+      <div id="footer-bottom">
         <div class="container">
-            <hr class="m-0">
-            <div class="row mt-3">
-                <div class="col-md-6 copyright">
-                    <p class="secondary-font">©2024 Pawsome. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="secondary-font">
-                        Design by: Thiruttikorn
-                        <a href="#" target="_blank" class="text-decoration-underline fw-bold text-black-50"> Thiruttikorn</a>
-                    </p>
-                </div>
+          <hr class="m-0">
+          <div class="row mt-3">
+            <div class="col-md-6 copyright">
+              <p class="secondary-font">©2024 Pawsome. All rights reserved.</p>
             </div>
+            <div class="col-md-6 text-md-end">
+              <p class="secondary-font">Design by: Thiruttikorn<a href="#" target="_blank"
+                  class="text-decoration-underline fw-bold text-black-50"> Thiruttikorn</a> </p>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
     <script src="js/plugins.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </body>
+
 </html>
