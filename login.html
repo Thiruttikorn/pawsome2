@@ -2,41 +2,52 @@
 <html lang="en">
 
 <head>
-  <title>Pawsome Grooming</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="author" content="">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
+  <title>Pawsome-login</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="author" content="" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
 </head>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="css/vendor.css">
-<link rel="stylesheet" type="text/css" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="css/vendor.css" />
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap"
-  rel="stylesheet">
-  <style>
-    .instagram-item{
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .auth-card {
+  rel="stylesheet" />
+
+<script src="node_modules/@firebase/database"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+
+<!-- <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" /> -->
+<script type="module" src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+<style>
+  .instagram-item {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .auth-card {
     max-width: 650px;
     width: 100%;
-    background-color: #F9F3EC;
+    background-color: #f9f3ec;
     border-radius: 1.125rem;
-}
-.auth-card .card-body{
+  }
+
+  .auth-card .card-body {
     padding: 30px 30px;
-}
-.form-control {
+  }
+
+  .form-control {
     display: block;
     width: 100%;
     padding: 8px 16px;
@@ -46,287 +57,64 @@
     color: #707a82;
     background-color: white;
     background-clip: padding-box;
-    border:1px solid #e7ecf0;
+    border: 1px solid #e7ecf0;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     border-radius: 0.5rem;
     -webkit-box-shadow: unset;
     box-shadow: unset;
-    -webkit-transition: border-color 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out;
-    transition: border-color 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out;
-    transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
-    transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out
-}
+    -webkit-transition: border-color 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+  }
 
+  .bsb-btn-circle {
+    align-items: center;
+    backface-visibility: hidden;
+    border-radius: 50% !important;
+    display: inline-flex;
+    height: 2.5rem;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    width: 2.5rem;
+  }
 
+  .bsb-btn-circle.bsb-btn-circle-2xl {
+    height: 4rem;
+    width: 4rem;
+  }
 
-            .bsb-btn-circle{align-items:center;backface-visibility:hidden;border-radius:50%!important;display:inline-flex;height:2.5rem;justify-content:center;line-height:1;padding:0;width:2.5rem}
- 
-            .bsb-btn-circle.bsb-btn-circle-2xl{height:4rem;width:4rem}
-            .bsb-btn-circle.bsb-btn-circle-3xl{height:4.5rem;width:4.5rem}
-            .bsb-btn-circle.bsb-btn-circle-4xl{height:5rem;width:5rem}
-            .bsb-btn-circle.bsb-btn-circle-5xl{height:5.5rem;width:5.5rem}
-  </style>
-  
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script
-    src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
-    <script>
-        var firebaseConfig = { // enter the details below
-            apiKey: "AIzaSyBtBLjODkH8iFlpPPJ31qeIIM5lDWSNgSc",
-      authDomain: "pawsome-e2cd3.firebaseapp.com",
-      databaseURL: "https://pawsome-e2cd3-default-rtdb.firebaseio.com",
-      projectId: "pawsome-e2cd3",
-      storageBucket: "pawsome-e2cd3.appspot.com",
-      messagingSenderId: "584456719961",
-      appId: "1:584456719961:web:db1bca363db76e90482b48",
-      measurementId: "G-K6NCFMXZ40"
-        };
-        firebase.initializeApp(firebaseConfig);
-    </script>
-    <!-- <script>
-        google.script.run.withSuccessHandler(function(url) {
-            var uiConfig = {
-                signInFlow: 'popup',
-                signInSuccessUrl: url,
-                signInOptions: [
-                    firebase.auth.GoogleAuthProvider.PROVIDER_ID
-                ],
-            };
-            var ui = new firebaseui.auth.AuthUI(firebase.auth());
-            var user = firebase.auth().currentUser;
-            if (user) {
-                document.getElementById("signOut").style.display = "inline-block";
-            } else {
-                ui.start('#firebaseui-auth-container', uiConfig);
-            }
-        }).webAppUrl();
-    </script> -->
-    <script>
-        var uiConfig = {
-        signInSuccessUrl: "index.html",
-        signInOptions: [
-          // Leave the lines as is for the providers you want to offer your users.
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        ],
-        // tosUrl and privacyPolicyUrl accept either url string or a callback
-        // function.
-        // Terms of service url/callback.
-        
-      };
+  .bsb-btn-circle.bsb-btn-circle-3xl {
+    height: 4.5rem;
+    width: 4.5rem;
+  }
 
-      // Initialize the FirebaseUI Widget using Firebase.
-      var ui = new firebaseui.auth.AuthUI(firebase.auth());
-      // The start method will wait until the DOM is loaded.
-      ui.start("#firebaseui-auth-container", uiConfig);
-        initApp = function() {
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    document.getElementById("signOut").style.display = "inline-block";
-                    user.getIdToken().then(function(accessToken) {
-                        document.getElementById('account-details').textContent = JSON.stringify({
-                            displayName: user.displayName,
-                            email: user.email,
-                            emailVerified: user.emailVerified,
-                            phoneNumber: user.phoneNumber,
-                            photoURL: "user.photoURL", // remove quotes to get the photoURL
-                            uid: user.uid,
-                            accessToken: "hidden", // replace "hidden" with accessToken
-                            providerData: "user.providerData" // remove quotes to get the photoURL
-                        }, null, '  ');
-                    });
-                } else {
-                    document.getElementById('account-details').textContent = '';
-                }
-            });
-        };
-        window.addEventListener('load', function() {
-            initApp();
-        });
-    </script>
+  .bsb-btn-circle.bsb-btn-circle-4xl {
+    height: 5rem;
+    width: 5rem;
+  }
+
+  .bsb-btn-circle.bsb-btn-circle-5xl {
+    height: 5.5rem;
+    width: 5.5rem;
+  }
+</style>
+
 <body>
-
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <defs>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15">
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-          d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15">
-        <path fill="currentColor"
-          d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z" />
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
-        <path fill="currentColor"
-          d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z" />
-      </symbol>
-
-    </defs>
-  </svg>
-
   <div class="preloader-wrapper">
     <div class="preloader">
     </div>
   </div>
 
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-circle pt-2">3</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Grey Hoodie</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Dog Food</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Soft Toy</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <span class="fw-bold">Total (USD)</span>
-            <strong>$20</strong>
-          </li>
-        </ul>
+ 
+  <header>
 
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch"
-    aria-labelledby="Search">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-
-      <div class="order-md-last">
-        <h4 class="text-primary text-uppercase mb-3">
-          Search
-        </h4>
-        <div class="search-bar border rounded-2 border-dark-subtle">
-          <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
-            <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here" />
-            <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-<header>
-    <!-- <div class="container py-2">
-      <div class="row py-4 pb-0 pb-sm-4 align-items-center ">
-
-        <div class="col-sm-4 col-lg-3 text-center text-sm-start">
-          <div class="main-logo">
-            <a href="index.html">
-              <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid">
-            </a>
-          </div>
-        </div>
-
-        <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
-          <div class="search-bar border rounded-2 px-3 border-dark-subtle">
-            <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
-              <input type="text" class="form-control border-0 bg-transparent"
-                placeholder="Search for more than 10,000 products" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-              </svg>
-            </form>
-          </div>
-        </div>
-
-        <div
-          class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
-          <div class="support-box text-end d-none d-xl-block">
-            <span class="fs-6 secondary-font text-muted">Phone</span>
-            <h5 class="mb-0">+980-34984089</h5>
-          </div>
-          <div class="support-box text-end d-none d-xl-block">
-            <span class="fs-6 secondary-font text-muted">Email</span>
-            <h5 class="mb-0">waggy@gmail.com</h5>
-          </div>
-
-
-
-        </div>
-      </div>
-    </div> -->
 
     <div class="container-fluid">
       <hr class="m-0">
@@ -337,34 +125,20 @@
 
         <div class="d-flex d-lg-none align-items-end mt-3">
           <ul class="d-flex justify-content-end list-unstyled m-0">
+            
             <li>
-              <a href="#" class="mx-3">
+              <a href="#" class="mx-3 bookicon">
+                <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
+              </a>
+            </li>
+            <li>
+              <a href="login.html" class="mx-3">
                 <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
               </a>
-            </li>
-            <li>
-              <a href="#" class="mx-3">
-                <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
-              </a>
+              <span id="usernametext2"></span>
+              <!-- <span id="usernametext"></span> -->
             </li>
 
-            <li>
-              <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                aria-controls="offcanvasCart">
-                <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
-                <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
-                  03
-                </span>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
-                aria-controls="offcanvasSearch">
-                <iconify-icon icon="tabler:search" class="fs-4"></iconify-icon>
-                </span>
-              </a>
-            </li>
           </ul>
 
         </div>
@@ -382,45 +156,43 @@
 
           <div class="offcanvas-body justify-content-between">
             <div class="main-logo">
-                <a href="index.html">
-                  <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid" width="85">
-                </a>
-              </div>
+              <a href="index.html">
+                <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid" width="85">
+              </a>
+            </div>
 
             <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
               <li class="nav-item">
                 <a href="index.html" class="nav-link active">Home</a>
               </li>
-             
+
               <li class="nav-item">
-                <a href="#" class="nav-link">Booking online</a>
+                <a href="#" class="nav-link booking">Booking online</a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">Blog</a>
+                <a href="blog.html" class="nav-link">Blog</a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">About</a>
+                <a href="about.html" class="nav-link">About</a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Contact</a>
-              </li>
-              
+
             </ul>
 
             <div class="d-none d-lg-flex align-items-end">
               <ul class="d-flex justify-content-end list-unstyled m-0">
+              
+
+                <li>
+                  <a href="#" class="mx-3 bookicon">
+                    <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
+                  </a>
+                </li>
                 <li style="margin-bottom: 10px;">
-                  <a href="#" class="mx-3">
+                  <a href="login.html" class="mx-3">
                     <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                   </a>
+                  <span id="usernametext"></span>
                 </li>
-                <li>
-                  <a href="#" class="mx-3">
-                    <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
-                  </a>
-                </li>
-
-             
               </ul>
 
             </div>
@@ -435,220 +207,217 @@
 
     </div>
   </header>
-
   <section class="login-tabs padding-large">
     <div class="container my-5 py-5">
-        <div class="row">
-            <div class="tabs-listing">
-                <nav>
-                    <div class="nav nav-tabs d-flex justify-content-center border-dark-subtle mb-3" id="nav-tab" role="tablist">
-                        <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase active" id="nav-sign-in-tab" data-bs-toggle="tab" data-bs-target="#nav-sign-in" type="button" role="tab" aria-controls="nav-sign-in" aria-selected="true">Log In</button>
-                        <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase" id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab" aria-controls="nav-register" aria-selected="false" tabindex="-1">Sign Up</button>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade active show" id="nav-sign-in" role="tabpanel" aria-labelledby="nav-sign-in-tab">
-                        <div class="col-lg-8 offset-lg-2 mt-5">
-                            <p
-                            id="account-details"></p>
-                          
-                            <div class="row mt-4 mb-5">
-                                <div id="firebaseui-auth-container"></div>
-                          
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center w-100">
+      <div class="row">
+        <div class="tabs-listing">
+          <nav>
+            <div class="nav nav-tabs d-flex justify-content-center border-dark-subtle mb-3" id="nav-tab" role="tablist">
+              <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase active"
+                id="nav-sign-in-tab" data-bs-toggle="tab" data-bs-target="#nav-sign-in" type="button" role="tab"
+                aria-controls="nav-sign-in" aria-selected="true">
+                Log In
+              </button>
+              <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase"
+                id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab"
+                aria-controls="nav-register" aria-selected="false" tabindex="-1">
+                Sign Up
+              </button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade active show" id="nav-sign-in" role="tabpanel" aria-labelledby="nav-sign-in-tab">
+              <div class="col-lg-8 offset-lg-2 mt-0">
+                <p id="account-details"></p>
 
-                              <div class="card border-0 rounded-4 auth-card">
-                                  <div class="card-body p-3 p-md-4 p-xl-5">
-                                    <div class="row">
-                                      <div class="col-12">
-                                        <div class="mb-4">
-                                          <h3>Sign in</h3>
-                                          <p>Don't have an account? <a href="#!">Sign up</a></p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <form action="code.php" method="POST">
-                                      <a href="index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                          <img src="images/logo.png" width="180" alt="">
-                                        </a>
-                                        <p class="text-center">Your Social Campaigns</p>
-                                      <div class="row gy-3 overflow-hidden">
-                                        <div class="col-12">
-                                          <div class="form-floating mb-3">
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
-                                            <label for="email" class="form-label">Email</label>
-                                          </div>
-                                        </div>
-                                        <div class="col-12">
-                                          <div class="form-floating mb-3">
-                                            <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
-                                            <label for="password" class="form-label">Password</label>
-                                          </div>
-                                        </div>
-                                        <div class="col-12">
+                <div class="row mt-0 mb-0">
+                  <div id="firebaseui-auth-container"></div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center w-100">
+                  <div class="card border-0 rounded-4 auth-card">
+                    <div class="card-body p-3 p-md-4 p-xl-5">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="mb-4">
+                            <h3>Sign in</h3>
+                            <p>
+                              Don't have an account? <a href="#!">Sign up</a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <form action="#" method="POST">
+                        <a href="index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                          <img src="images/Logo Pawsome.png" width="180" alt="" />
+                        </a>
+                        <div class="row gy-3 overflow-hidden">
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="email" class="form-control" name="email" id="email"
+                                placeholder="name@example.com" required />
+                              <label for="email" class="form-label">Email</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="password" class="form-control" name="password" id="password" value=""
+                                placeholder="Password" required />
+                              <label for="password" class="form-label">Password</label>
+                            </div>
+                          </div>
+                          <!-- <div class="col-12">
                                           <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
                                             <label class="form-check-label text-secondary" for="remember_me">
                                               Keep me logged in
                                             </label>
                                           </div>
-                                        </div>
-                                        <div class="col-12">
-                                          <div class="d-grid">
-                                            <button class="btn btn-primary btn-lg" type="submit">Log in now</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </form>
-                                    <div class="row">
-                                      <div class="col-12">
-                                        <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end mt-4">
-                                          <a href="#!">Forgot password</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-12">
-                                        <p class="mt-4 mb-4">Or continue with</p>
-                                        <div class="d-flex gap-2 gap-sm-3 justify-content-centerX">
-                                          <!-- <a href="#!" class="btn btn-outline-danger bsb-btn-circle bsb-btn-circle-2xl">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                                              <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
-                                            </svg>
-                                          </a> -->
-                                          <a href="#!" class="btn btn-outline-primary bsb-btn-circle bsb-btn-circle-2xl">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                                              <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
-                                            </svg>
-                                          </a>
-                                          <a href="#!" class="btn btn-outline-dark bsb-btn-circle bsb-btn-circle-2xl">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                                                  <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
-                                                </svg>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-
-                         
+                                        </div> -->
+                          <div class="col-12">
+                            <div class="d-grid">
+                              <button class="btn btn-primary btn-lg" type="button" onclick="SignIn()">
+                                Log in now
+                              </button>
                             </div>
-
-
+                          </div>
                         </div>
-
+                      </form>
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end mt-4">
+                                          <a href="#!">Forgot password</a>
+                                        </div> -->
+                        </div>
+                      </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
-                        <div class="col-lg-8 offset-lg-2 mt-5">
-                          <div class="d-flex align-items-center justify-content-center w-100">
-                                    
-                            <div class="card border-0 rounded-4 auth-card">
-                                <div class="card-body p-3 p-md-4 p-xl-5">
-                                  <div class="row">
-                                    <div class="col-12">
-                                      <div class="mb-4">
-                                        <h3>Sign Up</h3>
-                                        <p>Do You have an account? <a href="#!">Sign In</a></p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <form action="code.php" method="POST">
-                                    <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                        <img src="images/logo.png" width="180" alt="">
-                                      </a>
-                                      <p class="text-center">Your Social Campaigns</p>
-                                    <div class="row gy-3 overflow-hidden">
-                                        <div class="col-12">
-                                            <div class="form-floating mb-3">
-                                              <input type="text" class="form-control" name="name" id="name" value="" placeholder="Name" required>
-                                              <label for="name" class="form-label">Name</label>
-                                            </div>
-                                          </div>
-                                      <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                          <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
-                                          <label for="email" class="form-label">Email</label>
-                                        </div>
-                                      </div>
-                                      <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                          <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
-                                          <label for="password" class="form-label">Password</label>
-                                        </div>
-                                      </div>
-                                      
-                                   
-                                      <div class="col-12">
-                                        <div class="d-grid">
-                                          <button class="btn btn-primary btn-lg" type="submit" name="save_push_data">Sign Up</button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                              </div>
-
-                            
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+              <div class="col-lg-8 offset-lg-2 mt-2">
+                <div class="d-flex align-items-center justify-content-center w-100">
+                  <div class="card border-0 rounded-4 auth-card">
+                    <div class="card-body p-3 p-md-4 p-xl-5">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="mb-4">
+                            <h3>Sign Up</h3>
+                            <p>
+                              Do You have an account? <a href="#!">Sign In</a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <form action="#" method="POST">
+                        <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                          <img src="images/Logo Pawsome.png" width="180" alt="" />
+                        </a>
+                        <div class="row gy-3 overflow-hidden">
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="fname" id="fname" value=""
+                                placeholder="Name" required />
+                              <label for="fname" class="form-label">firstname</label>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="lname" id="lname" value=""
+                                placeholder="Name" required />
+                              <label for="lname" class="form-label">lastname</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="email" class="form-control" name="email-regis" id="email-regis"
+                                placeholder="name@example.com" required />
+                              <label for="email" class="form-label">Email</label>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="password" class="form-control" name="password-regis" id="password-regis"
+                                value="" placeholder="Password" required />
+                              <label for="password" class="form-label">Password</label>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="password" class="form-control" name="repassword-regis" id="repassword-regis"
+                                value="" placeholder="Re-Password" required />
+                              <label for="repassword-regis" class="form-label">Re-Password</label>
+                            </div>
                           </div>
 
+                          <div class="col-12">
+                            <div class="d-grid">
+                              <button class="btn btn-primary btn-lg" type="button" name="save_push_data"
+                                onclick="SignUp()">
+                                Sign Up
+                              </button>
+                            </div>
+                          </div>
                         </div>
+                      </form>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</section>
+  </section>
   <section id="insta" class="my-5">
     <div class="row g-0 py-5">
-      <div class="col instagram-item  text-center position-relative">
+      <div class="col instagram-item text-center position-relative">
         <div class="icon-overlay d-flex justify-content-center position-absolute">
           <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
         </div>
         <a href="#">
-          <img src="images/insta1.jpg" alt="insta-img" class="img-fluid rounded-3">
+          <img src="images/insta1.jpg" alt="insta-img" class="img-fluid rounded-3" />
         </a>
       </div>
-      <div class="col instagram-item  text-center position-relative">
+      <div class="col instagram-item text-center position-relative">
         <div class="icon-overlay d-flex justify-content-center position-absolute">
           <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
         </div>
         <a href="#">
-          <img src="images/insta2.jpg" alt="insta-img" class="img-fluid rounded-3">
+          <img src="images/insta2.jpg" alt="insta-img" class="img-fluid rounded-3" />
         </a>
       </div>
-      <div class="col instagram-item  text-center position-relative">
+      <div class="col instagram-item text-center position-relative">
         <div class="icon-overlay d-flex justify-content-center position-absolute">
           <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
         </div>
         <a href="#">
-          <img src="images/insta3.jpg" alt="insta-img" class="img-fluid rounded-3">
+          <img src="images/insta3.jpg" alt="insta-img" class="img-fluid rounded-3" />
         </a>
       </div>
-      <div class="col instagram-item  text-center position-relative">
+      <div class="col instagram-item text-center position-relative">
         <div class="icon-overlay d-flex justify-content-center position-absolute">
           <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
         </div>
         <a href="#">
-          <img src="images/insta4.jpg" alt="insta-img" class="img-fluid rounded-3">
+          <img src="images/insta4.jpg" alt="insta-img" class="img-fluid rounded-3" />
         </a>
       </div>
-      <div class="col instagram-item  text-center position-relative">
+      <div class="col instagram-item text-center position-relative">
         <div class="icon-overlay d-flex justify-content-center position-absolute">
           <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
         </div>
         <a href="#">
-          <img src="images/insta5.jpg" alt="insta-img" class="img-fluid rounded-3">
+          <img src="images/insta5.jpg" alt="insta-img" class="img-fluid rounded-3" />
         </a>
       </div>
-      <div class="col instagram-item  text-center position-relative">
+      <div class="col instagram-item text-center position-relative">
         <div class="icon-overlay d-flex justify-content-center position-absolute">
           <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
         </div>
         <a href="#">
-          <img src="images/insta6.jpg" alt="insta-img" class="img-fluid rounded-3">
+          <img src="images/insta6.jpg" alt="insta-img" class="img-fluid rounded-3" />
         </a>
       </div>
     </div>
@@ -660,17 +429,17 @@
 
         <div class="col-md-3">
           <div class="footer-menu">
-            <img src="images/Logo Pawsome.png" alt="logo"width="120">
+            <img src="images/Logo Pawsome.png" alt="logo" width="120">
             <p class="blog-paragraph fs-6 mt-3">Hours of Operation</p>
             <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                Mon - Fri : 9am - 6pm  </p>
-                <p class="blog-paragraph mt-0"style="font-size: 12px;">
-                 
-                    Sat : 10am - 2pm</p>
-                    <p class="blog-paragraph  mt-0"style="font-size: 12px;">
-                    
-                        sun : closed  </p>
-           
+              Mon - Fri : 9am - 6pm </p>
+            <p class="blog-paragraph mt-0" style="font-size: 12px;">
+
+              Sat : 10am - 2pm</p>
+            <p class="blog-paragraph  mt-0" style="font-size: 12px;">
+
+              sun : closed </p>
+
           </div>
         </div>
         <div class="col-md-3">
@@ -678,19 +447,16 @@
             <h4>Quick Links</h4>
             <ul class="menu-list list-unstyled">
               <li class="menu-item">
-                <a href="#" class="nav-link">Home</a>
+                <a href="index.html" class="nav-link">Home</a>
               </li>
               <li class="menu-item">
-                <a href="#" class="nav-link">Booking Online</a>
+                <a href="#" class="nav-link booking">Booking Online</a>
               </li>
               <li class="menu-item">
-                <a href="#" class="nav-link">Blog </a>
+                <a href="blog.html" class="nav-link">Blog </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="nav-link">About Us</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="nav-link">Conatct Us</a>
+                <a href="about.html" class="nav-link">About Us</a>
               </li>
             </ul>
           </div>
@@ -698,41 +464,29 @@
         <div class="col-md-3">
           <div class="footer-menu">
             <h4>Help Center</h4>
-              <ul class="menu-list list-unstyled">
-                <li class="menu-item">
-                  <a href="#" class="nav-link">FAQs</a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="#" class="nav-link">Payment</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Returns & Refunds</a>
-                </li> -->
-                <li class="menu-item">
-                    <a class="nav-link"id="signOut"style="display: none">Logout</a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="#" class="nav-link">Delivery Information</a>
-                </li> -->
-              </ul>
+            <ul class="menu-list list-unstyled">
+              <li class="menu-item">
+                <a class="nav-link" id="signOut" style="display: none;cursor: pointer;">Logout</a>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="col-md-3">
           <div>
             <h4>Contact</h4>
             <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                Phone </p>
-                <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                    123-456-7890 </p>
-                    <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                        Email </p>
-                        <p class="blog-paragraph  mt-0" style="font-size: 12px;">
-                            Thiruttikorn.a@mail.kmutt.ac.th </p>
-                            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-                                Area Of Service </p>
-                                <p class="blog-paragraph mt-0" style="font-size: 12px;">
-                                    Kmutt Univercity</p>
-            
+              Phone </p>
+            <p class="blog-paragraph mt-0" style="font-size: 12px;">
+              123-456-7890 </p>
+            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+              Email </p>
+            <p class="blog-paragraph  mt-0" style="font-size: 12px;">
+              Thiruttikorn.a@mail.kmutt.ac.th </p>
+            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
+              Area Of Service </p>
+            <p class="blog-paragraph mt-0" style="font-size: 12px;">
+              Kmutt Univercity</p>
+
           </div>
         </div>
 
@@ -762,8 +516,8 @@
     crossorigin="anonymous"></script>
   <script src="js/plugins.js"></script>
   <script src="js/script.js"></script>
+  <script src="js/auth.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
 </body>
 
 </html>

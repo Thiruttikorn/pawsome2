@@ -192,12 +192,9 @@
 //     credential: admin.credential.cert(serviceAccount),
 //     databaseURL: "https://pawsome-e2cd3-default-rtdb.firebaseio.com"
 //   });
-document.getElementById('signOut').addEventListener('click', function(event) {
-  firebase.auth().signOut();
-  reload();
-});
-function reload() {
-  google.script.run.withSuccessHandler(function(url) {
-      window.open(url, '_top');
-  }).webAppUrl();
-}
+
+// function reload() {
+//   google.script.run.withSuccessHandler(function(url) {
+//       window.open(url, '_top');
+//   }).webAppUrl();
+// }
