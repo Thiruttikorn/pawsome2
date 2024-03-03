@@ -59,6 +59,141 @@
             text-align: right !important;
         }
     }
+    
+.form-holder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      /* min-height: 100vh; */
+}
+
+.form-holder .form-content {
+    position: relative;
+    text-align: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.form-content .form-items {
+    border: 3px solid #fff;
+    padding: 40px;
+    display: inline-block;
+    background-color: #f9f3ec;
+
+    width: 100%;
+    min-width: 540px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    text-align: left;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+.form-content h3 {
+    color: #944b;
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-content h3.form-title {
+    margin-bottom: 30px;
+}
+
+.form-content p {
+    color: black;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 30px;
+}
+
+
+.form-content label, .was-validated .form-check-input:invalid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label{
+    color: #fff;
+}
+
+.form-content input[type=text], .form-content input[type=password], .form-content input[type=email], .form-content select {
+    width: 100%;
+    padding: 9px 20px;
+    text-align: left;
+    border: 0;
+    outline: 0;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 300;
+    color: #8D8D8D;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+}
+
+
+.btn-primary{
+    background-color: #6C757D;
+    outline: none;
+    border: 0px;
+     box-shadow: none;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active{
+    background-color: #495056;
+    outline: none !important;
+    border: none !important;
+     box-shadow: none;
+}
+
+.form-content textarea {
+    position: static !important;
+    width: 100%;
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
+    font-size: 15px;
+    font-weight: 300;
+    color: #8D8D8D;
+    outline: none;
+    resize: none;
+    height: 120px;
+    -webkit-transition: none;
+    transition: none;
+    margin-bottom: 14px;
+}
+
+.form-content textarea:hover, .form-content textarea:focus {
+    border: 0;
+    background-color: #ebeff8;
+    color: #8D8D8D;
+}
+
+.mv-up{
+    margin-top: -9px !important;
+    margin-bottom: 8px !important;
+}
+
+.invalid-feedback{
+    color: #ff606e;
+}
+
+.valid-feedback{
+   color: #2acc80;
+}
 </style>
 
 <body class="">
@@ -192,21 +327,25 @@
                 <div class="d-flex flex-column flex-md-row align-items-start gap-5">
                     <div class="nav flex-row flex-wrap flex-md-column nav-pills me-3 col-lg-3" id="v-pills-tab"
                         role="tablist" aria-orientation="vertical">
-                        <button class="nav-link fs-5 mb-2 text-start active fontth" id="v-pills-owner-tab"
-                            data-bs-toggle="pill" data-bs-target="#v-pills-owner" type="button" role="tab"
-                            aria-controls="v-pills-owner" aria-selected="true" tabindex="-1">ข้อมูลบริการ</button>
-                        <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-pets-tab" data-bs-toggle="pill"
+                        
+                        <button class="nav-link fs-5 mb-2 text-start active fontth" id="v-pills-pets-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-pets" type="button" role="tab" aria-controls="v-pills-pets"
-                            aria-selected="false" tabindex="-1">ประเภทสัตว์เลี้ยง</button>
+                            aria-selected="false" tabindex="-1">ประเภทสัตว์</button>
+                            <!-- <button class="nav-link fs-5 mb-2 text-start  fontth" id="v-pills-owner-tab"
+                            data-bs-toggle="pill" data-bs-target="#v-pills-owner" type="button" role="tab"
+                            aria-controls="v-pills-owner" aria-selected="true" tabindex="-1">ประเภทบริการ</button>
+                            <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-owner-tab"
+                            data-bs-toggle="pill" data-bs-target="#v-pills-owner" type="button" role="tab"
+                            aria-controls="v-pills-owner" aria-selected="true" tabindex="-1">ประเภทขน</button>
                         <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-grooming-tab"
                             data-bs-toggle="pill" data-bs-target="#v-pills-grooming" type="button" role="tab"
                             aria-controls="v-pills-grooming" aria-selected="false" tabindex="-1">ราคาค่าบริการ</button>
                         <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-booking-tab"
                             data-bs-toggle="pill" data-bs-target="#v-pills-listbooking" type="button" role="tab"
-                            aria-controls="v-pills-listbooking" aria-selected="false" tabindex="-1">รายการจอง</button>
+                            aria-controls="v-pills-listbooking" aria-selected="false" tabindex="-1">รายการจอง</button> -->
                     </div>
                     <div class="tab-content w-100" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show" id="v-pills-owner" role="tabpanel"
+                        <!-- <div class="tab-pane fade active show" id="v-pills-owner" role="tabpanel"
                             aria-labelledby="v-pills-owner-tab" tabindex="0">
                             <h4 class="fontth">ข้อมูลบริการ</h4>
                             <p></p>
@@ -255,58 +394,111 @@
                                     <button class="btn btn-dark rounded-1 h5">Submit</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-pets" role="tabpanel" aria-labelledby="v-pills-pets-tab"
+                        </div> -->
+                        <div class="tab-pane fade active show" id="v-pills-pets" role="tabpanel" aria-labelledby="v-pills-pets-tab"
                             tabindex="0">
-                            <h4 class="fontth">รายชื่อสัตว์เลี้ยง</h4>
+                            <h4 class="fontth">ประเภทสัตว์</h4>
                             <p></p>
                             <table class="table w-100 mt-3">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="fontth fw-medium">#</th>
-                                        <th scope="col" class="fontth w-25 fw-medium">ชื่อ</th>
-                                        <th scope="col" class="fontth fw-medium w-25">ประเภท</th>
-                                        <th scope="col" class="fontth fw-medium">แก้ไข</th>
+                                        <th scope="col" class="fontth fw-medium">ลำดับ</th>
+                                        <th scope="col" class="fontth w-25 fw-medium">ชื่อประเภท</th>
+                                        <th scope="col" class="fontth fw-medium w-25">รหัสประเภท</th>
+                                        <th scope="col" class="fontth fw-medium w-25">การใช้งาน</th>
+
+                                        <!-- <th scope="col" class="fontth fw-medium">แก้ไข</th> -->
                                     </tr>
                                 </thead>
                                 <tbody class="fontth">
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td>มัว</td>
                                         <td>แมว</td>
-                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
+                                        <td>ANM01</td>
+                                        <td>                                                <iconify-icon icon="ic:baseline-fiber-manual-record" style="color: greenyellow;"></iconify-icon>
+                                            ปกติ</td>
+                                        <!-- <td> <button class="w-auto btn btn-secondary btn-sm p-1"
                                                 type="submit">แก้ไขข้อมูล
                                                 <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                            </button></td>
+                                            </button></td> -->
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>มัว</td>
-                                        <td>แมว</td>
-                                        <td> <button class="w-auto btn btn-secondary btn-sm p-1"
-                                                type="submit">แก้ไขข้อมูล
-                                                <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-                                            </button></td>
-                                    </tr>
-
+                              
                                 </tbody>
                             </table>
-
-                            <div class="rounded-5 card mt-3 border p-4">
-                                <form id="form" class="form-group flex-wrap h5">
-                                    <div class="form-input col-lg-12 d-flex mb-3 mt-3">
-                                        <input type="text" name="email" placeholder="xxx"
-                                            class="form-control ps-3 me-3">
-                                        <input type="text" name="name" placeholder="xxx" class="form-control ps-3 ">
+                                <div class="row">
+                                    <div class="form-holder">
+                                        <div class="form-content">
+                                            <div class="form-items fontth">
+                                                <h3 class="fontth"><iconify-icon icon="cil:animal"></iconify-icon> เพิ่มข้อมูลประเภทสัตว์</h3>
+                                                <p>กรุณากรอกข้อมูลให้ถูกต้อง</p>
+                                                <form class="requires-validation" novalidate>
+                        
+                                                    <div class="col-md-12">
+                                                       <input class="form-control" type="text" id="animaltype" name="animaltype" placeholder="เช่น แมว" required>
+                                                       <!-- <div class="valid-feedback">Username field is valid!</div>
+                                                       <div class="invalid-feedback">Username field cannot be blank!</div> -->
+                                                    </div>
+                        
+                                                    <!-- <div class="col-md-12">
+                                                        <input class="form-control" type="email" name="email" placeholder="E-mail Address" required>
+                                                         <div class="valid-feedback">Email field is valid!</div>
+                                                         <div class="invalid-feedback">Email field cannot be blank!</div>
+                                                    </div>
+                        
+                                                   <div class="col-md-12">
+                                                        <select class="form-select mt-3" required>
+                                                              <option selected disabled value="">Position</option>
+                                                              <option value="jweb">Junior Web Developer</option>
+                                                              <option value="sweb">Senior Web Developer</option>
+                                                              <option value="pmanager">Project Manager</option>
+                                                       </select>
+                                                        <div class="valid-feedback">You selected a position!</div>
+                                                        <div class="invalid-feedback">Please select a position!</div>
+                                                   </div>
+                        
+                        
+                                                   <div class="col-md-12">
+                                                      <input class="form-control" type="password" name="password" placeholder="Password" required>
+                                                       <div class="valid-feedback">Password field is valid!</div>
+                                                       <div class="invalid-feedback">Password field cannot be blank!</div>
+                                                   </div>
+                        
+                        
+                                                   <div class="col-md-12 mt-3">
+                                                    <label class="mb-3 mr-1" for="gender">Gender: </label>
+                        
+                                                    <input type="radio" class="btn-check" name="gender" id="male" autocomplete="off" required>
+                                                    <label class="btn btn-sm btn-outline-secondary" for="male">Male</label>
+                        
+                                                    <input type="radio" class="btn-check" name="gender" id="female" autocomplete="off" required>
+                                                    <label class="btn btn-sm btn-outline-secondary" for="female">Female</label>
+                        
+                                                    <input type="radio" class="btn-check" name="gender" id="secret" autocomplete="off" required>
+                                                    <label class="btn btn-sm btn-outline-secondary" for="secret">Secret</label>
+                                                       <div class="valid-feedback mv-up">You selected a gender!</div>
+                                                        <div class="invalid-feedback mv-up">Please select a gender!</div>
+                                                    </div>
+                        
+                                                <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                                  <label class="form-check-label">I confirm that all data are correct</label>
+                                                 <div class="invalid-feedback">Please confirm that the entered data are all correct!</div>
+                                                </div> -->
+                                          
+                        
+                                                    <div class="form-button mt-3 text-center">
+                                                        <button id="saveanimal" type="button" class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon icon="mage:save-floppy"></iconify-icon> บันทึก</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                </form>
-                                <h4 class="fontth text-center">อยู่ระหว่างการพัฒนา</h4>
-                                <div class="d-grid d-none">
-                                    <button class="btn btn-dark rounded-1 h5">Submit</button>
-                                </div>
+                               
                             </div>
+                        
+                         
                         </div>
-                        <div class="tab-pane fade" id="v-pills-grooming" role="tabpanel"
+                        <!-- <div class="tab-pane fade" id="v-pills-grooming" role="tabpanel"
                             aria-labelledby="v-pills-grooming-tab" tabindex="0">
                             <h4 class="fontth">ค่าบริการ</h4>
                             <p></p>
@@ -407,7 +599,7 @@
                                     <button class="btn btn-dark rounded-1 h5">Submit</button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -558,6 +750,8 @@
     <script src="js/plugins.js"></script>
     <script src="js/script.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </body>
 
