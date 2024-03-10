@@ -210,6 +210,9 @@ a {
   left: 0;
   z-index: 111;
   background: #fff;
+
+
+  
 }
 
 .preloader-wrapper .preloader {
@@ -594,4 +597,8 @@ Single Product section style start
 .nav-pills .show>.nav-link {
   color: var(--light-color);
   background-color: var(--accent-color);
+}
+
+.active-icon{
+  color:#DEAD6F;
 }

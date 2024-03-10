@@ -104,9 +104,12 @@
     height: 5.5rem;
     width: 5.5rem;
   }
+  .hide-page{
+    content-visibility: hidden;
+  }
 </style>
 
-<body>
+<body class="hide-page">
   <div class="preloader-wrapper">
     <div class="preloader">
     </div>
@@ -133,12 +136,16 @@
             </li>
             <li>
               <a href="login.html" class="mx-3">
-                <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
+                <iconify-icon icon="healthicons:person" class="fs-4 icon-person"></iconify-icon>
               </a>
               <span id="usernametext2"></span>
               <!-- <span id="usernametext"></span> -->
             </li>
-
+            <li>
+              <a id="signOut" class="mx-3 signout rounded-2 ps-2 pe-2 pt-1 pb-1" style="background-color: antiquewhite;">
+                Logout
+              </a>
+            </li>
           </ul>
 
         </div>
@@ -163,7 +170,7 @@
 
             <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
               <li class="nav-item">
-                <a href="index.html" class="nav-link active">Home</a>
+                <a href="index.html" class="nav-link ">Home</a>
               </li>
 
               <li class="nav-item">
@@ -188,10 +195,15 @@
                   </a>
                 </li>
                 <li style="margin-bottom: 10px;">
-                  <a href="login.html" class="mx-3">
-                    <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
+                  <a href="login.html" class="mx-3 active">
+                    <iconify-icon icon="healthicons:person" class="fs-4 icon-person"></iconify-icon>
                   </a>
                   <span id="usernametext"></span>
+                </li>
+                <li>
+                  <a id="signOut" class="mx-3 signout rounded-2 ps-2 pe-2 pt-1 pb-1" style="background-color: antiquewhite;">
+                    Logout
+                  </a>
                 </li>
               </ul>
 
@@ -218,11 +230,11 @@
                 aria-controls="nav-sign-in" aria-selected="true">
                 Log In
               </button>
-              <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase"
+              <!-- <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase"
                 id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab"
                 aria-controls="nav-register" aria-selected="false" tabindex="-1">
                 Sign Up
-              </button>
+              </button> -->
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">
@@ -294,7 +306,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+            <!-- <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
               <div class="col-lg-8 offset-lg-2 mt-2">
                 <div class="d-flex align-items-center justify-content-center w-100">
                   <div class="card border-0 rounded-4 auth-card">
@@ -364,7 +376,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -427,7 +439,7 @@
     <div class="container py-5 my-5">
       <div class="row">
 
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="footer-menu">
             <img src="images/Logo Pawsome.png" alt="logo" width="120">
             <p class="blog-paragraph fs-6 mt-3">Hours of Operation</p>
@@ -442,7 +454,7 @@
 
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="footer-menu">
             <h4>Quick Links</h4>
             <ul class="menu-list list-unstyled">
@@ -461,7 +473,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <div class="footer-menu">
             <h4>Help Center</h4>
             <ul class="menu-list list-unstyled">
@@ -470,8 +482,8 @@
               </li>
             </ul>
           </div>
-        </div>
-        <div class="col-md-3">
+        </div> -->
+        <div class="col-md-4">
           <div>
             <h4>Contact</h4>
             <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
@@ -516,7 +528,9 @@
     crossorigin="anonymous"></script>
   <script src="js/plugins.js"></script>
   <script src="js/script.js"></script>
-  <script src="js/auth.js"></script>
+  <script src="js/checklogin.js"></script>
+  
+  <!-- <script src="js/auth.js"></script> -->
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </body>
 
