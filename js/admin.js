@@ -1,8 +1,7 @@
-// var postListRef = firebase.database().ref('animal_type');
-// var newPostRef = postListRef.push();
 
 window.addEventListener('load', function () {
-  selectAnimal()
+  selectAnimal();
+
 })
 document
   .getElementById('v-pills-pets-tab')
@@ -15,16 +14,15 @@ document
     selectService()
   })
 
-async function selectAnimal () {
+ function selectAnimal () {
   var postListRef = firebase.database().ref('animal_type')
   var html = ''
   document.getElementById('table-animaltype').innerHTML = ''
   postListRef.on(
     'value',
-    await function (snapshot) {
+     function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
         const data = childSnapshot.val()
-
         html += `<tr>
     <th scope="row">${data.ANM_ID}</th>
     <td>${data.ANM_Name}</td>
@@ -37,25 +35,28 @@ async function selectAnimal () {
         : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
     ไม่ใช้งาน`
     }</td>
-    <!-- <td> <button class="w-auto btn btn-secondary btn-sm p-1"
-            type="submit">แก้ไขข้อมูล
-            <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-        </button></td> -->
+   <td> <button class="w-auto btn btn-secondary btn-sm p-1 delanimal"
+            type="button" value="${childSnapshot.key}"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
+      
+        </button></td> 
 </tr>`
       })
-      document.getElementById('table-animaltype').innerHTML = html
+      document.getElementById('table-animaltype').innerHTML = html;
+      delanimal();
+
     }
   )
+ 
 }
 
 
-async function selectService () {
+ function selectService () {
   var postListRef = firebase.database().ref('service_type')
   var html = ''
   document.getElementById('table-servicetype').innerHTML = ''
   postListRef.on(
     'value',
-    await function (snapshot) {
+     function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
         const data = childSnapshot.val()
 
@@ -71,13 +72,14 @@ async function selectService () {
         : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
     ไม่ใช้งาน`
     }</td>
-    <!-- <td> <button class="w-auto btn btn-secondary btn-sm p-1"
-            type="submit">แก้ไขข้อมูล
-            <iconify-icon icon="ic:baseline-keyboard-arrow-right"></iconify-icon>
-        </button></td> -->
+    <td> <button class="w-auto btn btn-secondary btn-sm p-1 delservice"
+    type="button" value="${childSnapshot.key}"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
+
+</button></td> 
 </tr>`
       })
-      document.getElementById('table-servicetype').innerHTML = html
+      document.getElementById('table-servicetype').innerHTML = html;
+      delservice();
     }
   )
 }
@@ -169,3 +171,81 @@ document
       )
     }
   })
+
+
+
+
+  
+function delanimal(){
+  console.log(document.querySelectorAll(".delanimal"))
+  document.querySelectorAll(".delanimal").forEach(item => {
+    item.addEventListener("click", function (event) {
+      document.getElementById('table-animaltype').innerHTML = '';
+      firebase.database().ref("animal_type").child(event.target.value).update({'ANM_Active': "0"}).then(() => {
+        document.getElementById('table-animaltype').innerHTML = '';
+          alert('อัพเดทสถานะสำเร็จ');
+          selectAnimal()
+              })
+              .catch(error => {
+                alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+              })
+      // firebase.database().ref("animal_type/"+event.target.value).update({
+      //   ANM_Active : 0
+      // }).then(() => {
+      
+      //   alert('อัพเดทสถานะสำเร็จ');
+      //   selectAnimal()
+      //       })
+      //       .catch(error => {
+      //         alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+      //       })
+      // firebase.database().ref("animal_type/"+event.target.value).remove().then(() => {
+      
+      //   alert('อัพเดทสถานะสำเร็จ');
+      //   selectAnimal()
+      //       })
+      //       .catch(error => {
+      //         alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+      //       })
+    });
+
+
+
+});
+}
+function delservice(){
+  document.querySelectorAll(".delservice").forEach(item => {
+    item.addEventListener("click", function (event) {
+      document.getElementById('table-servicetype').innerHTML = '';
+      firebase.database().ref("service_type").child(event.target.value).update({'SV_Active': "0"}).then(() => {
+        document.getElementById('table-servicetype').innerHTML = '';
+          alert('อัพเดทสถานะสำเร็จ');
+          selectService()
+              })
+              .catch(error => {
+                alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+              })
+      // firebase.database().ref("animal_type/"+event.target.value).update({
+      //   ANM_Active : 0
+      // }).then(() => {
+      
+      //   alert('อัพเดทสถานะสำเร็จ');
+      //   selectAnimal()
+      //       })
+      //       .catch(error => {
+      //         alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+      //       })
+      // firebase.database().ref("animal_type/"+event.target.value).remove().then(() => {
+      
+      //   alert('อัพเดทสถานะสำเร็จ');
+      //   selectAnimal()
+      //       })
+      //       .catch(error => {
+      //         alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+      //       })
+    });
+
+
+
+});
+}
