@@ -442,12 +442,19 @@
                         
                                                     <div class="col-md-12">
                                                        <input class="form-control" type="text" id="animaltype" name="animaltype" placeholder="เช่น แมว" required>
+                                                       <input class="form-control" type="hidden" id="animalid" name="animalid"  >
+                                                       <input class="form-control" type="hidden" id="animalcode" name="animalcode"  >
+                                                       <input class="form-control" type="hidden" id="animalactive" name="animalactive"  >
+                                                       <input class="form-control" type="hidden" id="animalkey" name="animalkey"  >
+
                                                        <!-- <div class="valid-feedback">Username field is valid!</div>
                                                        <div class="invalid-feedback">Username field cannot be blank!</div> -->
                                                     </div>
                         
                                                     <div class="form-button mt-3 text-center">
-                                                        <button id="saveanimal" type="button" class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon icon="mage:save-floppy"></iconify-icon> บันทึก</button>
+                                                        <button id="saveanimal" type="button" class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon icon="mage:save-floppy"></iconify-icon> บันทึกข้อมูล</button>
+                                                        <button id="updateanimal" type="button" class="btn btn-success fontth p-2 ps-4 pe-4"  style="display: none;"><iconify-icon icon="mdi:newspaper-check"></iconify-icon> อัพเดทข้อมูล</button>
+
                                                     </div>
                                                 </form>
                                             </div>
