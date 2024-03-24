@@ -409,4 +409,206 @@ function updateservice () {
 // ========= And Service Type ==============================
 
 
+// ========= FUR Type ==============================
+document
+  .getElementById('v-pills-fur-tab')
+  .addEventListener('click', function (event) {
+     document.getElementById('tb-fur').style.display =
+     'inline-table';
+    selectFur()
+  })
+function selectFur () {
+  var postListRef = firebase.database().ref('fur_type')
+  var html = ''
+  document.getElementById('updatefur').style.display = 'none';
+  document.getElementById('savefur').style.display = 'inline-block';
+
+  document.getElementById('furtype').value = '';
+
+  document.getElementById('furid').value = '';
+
+  document.getElementById('furcode').value = '';
+
+  document.getElementById('furactive').value = '';
+  document.getElementById('furkey').value = '';
+
+  document.getElementById('table-furtype').innerHTML = '';
+  postListRef.on('value', function (snapshot) {
+    snapshot.forEach(function (childSnapshot) {
+      const data = childSnapshot.val()
+
+      html += `<tr>
+    <th scope="row">${data.FUR_ID}</th>
+    <td>${data.FUR_Name}</td>
+    <td>${data.FUR_Code}</td>
+    <td>
+    ${
+      data.FUR_Active == '1'
+        ? `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: greenyellow;"></iconify-icon>
+    ปกติ`
+        : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
+    ไม่ใช้งาน`
+    }</td>
+    <td> <button class="w-auto btn btn-secondary btn-sm p-1 delfur"
+    type="button" value="${
+      childSnapshot.key
+    }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
+
+</button>
+<button class="w-auto btn btn-warning btn-sm p-1 updatefur"
+type="button" value="${
+  childSnapshot.key
+}"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
+
+</button>
+</td> 
+</tr>`
+    })
+    document.getElementById('table-furtype').style.display =
+    'table-row-group'
+    document.getElementById('table-furtype').innerHTML = html
+    delfur();
+    editfur()
+  })
+}
+document
+  .getElementById('savefur')
+  .addEventListener('click', function (event) {
+    const furtype = document.getElementById('furtype').value
+
+    if (furtype == '') {
+      alert('กรุณาระบุประเภทขน')
+      return false
+    } else {
+      let coll = 0
+
+      var postListRef = firebase.database().ref('fur_type')
+      postListRef.on('value', function (snapshot) {
+        document.getElementById('tb-fur').style.display = 'none';        if (snapshot.numChildren() != undefined) {
+          coll = snapshot.numChildren()
+        }
+      })
+      var newPostRef = postListRef.push()
+      newPostRef.set(
+        {
+          FUR_ID: coll == 0 ? 1 : coll + 1,
+          FUR_Name: furtype,
+          FUR_Code: 'FUR0' + (coll == 0 ? 1 : coll + 1),
+          FUR_Active: '1'
+        },
+        error => {
+          if (error) {
+            alert('เพิ่มข้อมูลไม่สำเร็จ')
+            document
+            .getElementById('v-pills-fur-tab').click();
+            return false
+            // The write failed...
+          } else {
+            alert('เพิ่มข้อมูลสำเร็จ')
+
+            document
+            .getElementById('v-pills-fur-tab').click();
+            // Data saved successfully!
+            return false
+          }
+        }
+      )
+    }
+  })
+function delfur () {
+  document.querySelectorAll('.delfur').forEach(item => {
+    item.addEventListener('click', function (event) {
+      document.getElementById('tb-fur').style.display = 'none';
+      firebase
+        .database()
+        .ref('fur_type')
+        .child(event.target.value)
+        .update({ FUR_Active: '0' })
+        .then(() => {
+           alert('อัพเดทสถานะสำเร็จ')
+          document
+          .getElementById('v-pills-fur-tab').click();
+         
+        })
+        .catch(error => {
+          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
+          document
+          .getElementById('v-pills-fur-tab').click();
+        })
+      
+    })
+  })
+}
+function editfur () {
+  document.querySelectorAll('.updatefur').forEach(item => {
+    item.addEventListener('click', function (event) {
+      document.getElementById('updatefur').style.display = 'inline-block'
+      document.getElementById('savefur').style.display = 'none'
+      document.getElementById('furkey').value = event.target.value
+      firebase
+        .database()
+        .ref('fur_type')
+        .child(event.target.value)
+        .on('child_added', snapshot => {
+          const newPost = snapshot.val()
+          if (snapshot.key == 'FUR_Name') {
+            document.getElementById('furtype').value = newPost
+          } else if (snapshot.key == 'FUR_ID') {
+            document.getElementById('furid').value = newPost
+          } else if (snapshot.key == 'FUR_Code') {
+            document.getElementById('furcode').value = newPost
+          } else if (snapshot.key == 'FUR_Active') {
+            document.getElementById('furactive').value = newPost
+          }
+        })
+      document
+        .getElementById('updatefur')
+        .addEventListener('click', function (event) {
+          document.getElementById('tb-fur').style.display = 'none';
+          updatefur()
+        })
+     
+    })
+  })
+}
+function updatefur () {
+  const furtype = document.getElementById('furtype').value
+  const furid = document.getElementById('furid').value
+  const furactive = document.getElementById('furactive').value
+  const furcode = document.getElementById('furcode').value
+  const furkey = document.getElementById('furkey').value
+
+  if (furtype == '') {
+    document.getElementById('tb-fur').style.display = 'inline-table';
+
+    alert('กรุณาระบุประเภทขน')
+    return false
+  } else {
+    document.getElementById('tb-fur').style.display = 'none';
+    firebase
+      .database()
+      .ref('fur_type')
+      .child(furkey)
+      .update({
+        FUR_ID: furid,
+        FUR_Name: furtype,
+        FUR_Code: furcode,
+        FUR_Active: furactive
+      })
+      .then(() => {
+        alert('อัพเดทข้อมูลสำเร็จ')
+
+        document
+          .getElementById('v-pills-fur-tab').click();
+      })
+      .catch(error => {
+        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
+        document
+          .getElementById('v-pills-fur-tab').click();
+      })
+  }
+
+}
+// ========= And fur Type ==============================
+
 
