@@ -395,6 +395,7 @@
       color: #908F8D;
       font-size: 1rem;
       font-weight: 400;
+      word-break: break-all;
       line-height: normal;
       font-family: var(--secondary-font);
     }
@@ -475,8 +476,17 @@
       border: 1px solid #DEAD6F;
       background: #DEAD6F;
     }
-
-
+    @media screen and (max-width: 1399px) {
+    .container {
+      max-width: 1340px !important;
+  }
+}
+@media only screen and (max-width: 1260px) {
+  table td button{
+    min-width: 80px !important;
+    width: 100%;
+  }
+}
     @media screen and (max-width: 991px) {
 
       /* offcanvas menu */
@@ -510,9 +520,51 @@
         right: 0;
         top: 21px;
       }
+      
+      #footer{
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    
+      }
+      .nav-pills{
+        align-self: center;
+      }
+   
     }
+    @media screen and (max-width: 768px) {
 
+    .container, .container-sm {
+      max-width:680px !important;
+  }
+  #footer img{
+    width: 80px;
+  }
+  .my-5 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+.py-5 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+.form-content .form-items{
+  max-width: 100%;
+  min-width: auto !important;
+}
+}
+@media screen and (max-width: 576px) {
+#footer .col-sm-4{
+  width: 50%;
 
+}
+.form-content h3 {
+  color: #944b;
+  text-align: left;
+  font-size: 20px !important;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+}
     /*--------------------------------------------------------------
 faqs section style start
 --------------------------------------------------------------*/
@@ -600,4 +652,11 @@ Single Product section style start
 
     .active-icon {
       color: #DEAD6F;
+    }
+ 
+    .tab-pane{
+      padding: 20px;
+    /* padding-right: 20px; */
+    border: 1px solid #eed6b6;
+    border-radius: 20px;
     }
