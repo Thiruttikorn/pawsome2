@@ -340,6 +340,7 @@
                 <p class=" text-center h5 mb-5">Manage data you need</p>
             </div>
             <div class="row mt-5 pt-3">
+                
                 <div class="d-flex flex-column flex-lg-row align-items-start gap-3">
                     <div class="nav flex-row flex-wrap flex-lg-column nav-pills me-3 col-lg-3" id="v-pills-tab"
                         role="tablist" aria-orientation="vertical">
@@ -352,6 +353,9 @@
                         <button class="nav-link fs-5 mb-2 text-start  fontth" id="v-pills-fur-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-fur" type="button" role="tab" aria-controls="v-pills-fur"
                             aria-selected="true" tabindex="-1">ประเภทขน</button>
+                            <button class="nav-link fs-5 mb-2 text-start  fontth" id="v-pills-size-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-size" type="button" role="tab" aria-controls="v-pills-size"
+                            aria-selected="true" tabindex="-1">ขนาดสัตว์เลี้ยง</button>
 
                     </div>
                     <div class="tab-content w-100" id="v-pills-tabContent">
@@ -493,7 +497,7 @@
                                         <th scope="col" class="fontth fw-medium">ลำดับ</th>
                                         <th scope="col" class="fontth w-25 fw-medium">ประเภทขน</th>
                                         <th scope="col" class="fontth fw-medium w-25">รหัสประเภท</th>
-                                        <th scope="col" class="fontth fw-medium w-25">การใช้งาน</th>
+                                        <th scope="col" class="fontth fw-medium">การใช้งาน</th>
                                         <th scope="col" class="fontth fw-medium">จัดการข้อมูล</th>
                                     </tr>
                                 </thead>
@@ -544,6 +548,74 @@
 
 
                     </div>
+                    <div class="tab-pane fade" id="v-pills-size" role="tabpanel"
+                    aria-labelledby="v-pills-size-tab" tabindex="0">
+                    <h4 class="fontth">ขนาดสัตว์เลี้ยง</h4>
+                    <p></p>
+                    <div class="table-responsive">
+                        <table class="table w-100 mt-3 table-striped" id="tb-size">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="fontth fw-medium">ลำดับ</th>
+                                    <th scope="col" class="fontth fw-medium">ขนาด</th>
+                                    <th scope="col" class="fontth fw-medium w-25">น้ำหนัก</th>
+                                    <th scope="col" class="fontth fw-medium">รหัสขนาด</th>
+                                    <th scope="col" class="fontth fw-medium">การใช้งาน</th>
+                                    <th scope="col" class="fontth fw-medium">จัดการข้อมูล</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fontth" id="table-size"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-holder">
+                            <div class="form-content">
+                                <div class="form-items fontth">
+                                    <h3 class="fontth text-center"><iconify-icon icon="mdi:cat" style="font-size: 30px;"></iconify-icon>
+                                        เพิ่มข้อมูลขนาดสัตว์เลี้ยง</h3>
+                                    <p class="mb-0 mt-5">กรุณากรอกข้อมูลให้ถูกต้อง</p>
+                                    <form class="requires-validation mt-0 row" novalidate>
+
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" id="size"
+                                                name="size" placeholder="เช่น size s" required>
+                                            <input class="form-control" type="hidden" id="sizeid"
+                                                name="sizeid">
+                                            <input class="form-control" type="hidden" id="sizecode"
+                                                name="sizecode">
+                                            <input class="form-control" type="hidden" id="sizeactive"
+                                                name="sizeactive">
+                                            <input class="form-control" type="hidden" id="sizekey"
+                                                name="sizekey">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" id="weight"
+                                                name="weight" placeholder="เช่น 0 - 5" required>
+                                            
+                                        </div>
+
+                                        <div class="form-button mt-3 text-center col-md-12">
+                                            <button id="savesize" type="button"
+                                                class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon
+                                                    icon="mage:save-floppy"></iconify-icon>
+                                                บันทึกข้อมูล</button>
+                                            <button id="updatesize" type="button"
+                                                class="btn btn-success fontth p-2 ps-4 pe-4"
+                                                style="display: none;"><iconify-icon
+                                                    icon="mdi:newspaper-check"></iconify-icon>
+                                                อัพเดทข้อมูล</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
                         <!-- <div class="tab-pane fade" id="v-pills-grooming" role="tabpanel"
                             aria-labelledby="v-pills-grooming-tab" tabindex="0">
                             <h4 class="fontth">ค่าบริการ</h4>
