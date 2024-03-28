@@ -1,37 +1,36 @@
 window.addEventListener('load', function () {
-
   selectAnimal()
 })
 // ========= Animal Type ==============================
 document
   .getElementById('v-pills-pets-tab')
   .addEventListener('click', function (event) {
- 
-    document.getElementById('tb-animal').style.display =
-    'inline-table';
+    document.getElementById('tb-animal').style.display = 'inline-table'
     selectAnimal()
   })
-  function selectAnimal () {
-    var postListRef = firebase.database().ref('animal_type')
-    var html = ''
-    document.getElementById('updateanimal').style.display = 'none'
-    document.getElementById('saveanimal').style.display = 'inline-block'
+function selectAnimal () {
+  var postListRef = firebase.database().ref('animal_type')
+  var html = ''
+  document.getElementById('updateanimal').style.display = 'none'
+  document.getElementById('saveanimal').style.display = 'inline-block'
 
-    document.getElementById('animaltype').value = ''
+  document.getElementById('animaltype').value = ''
 
-    document.getElementById('animalid').value = ''
+  document.getElementById('animalid').value = ''
 
-    document.getElementById('animalcode').value = ''
+  document.getElementById('animalcode').value = ''
 
-    document.getElementById('animalactive').value = ''
-    document.getElementById('animalkey').value = ''
-    document.getElementById('table-animaltype').innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
-    </td></tr>`;
-    // document.getElementById('table-animaltype').innerHTML = ''
-    postListRef.on('value', function (snapshot) {
-      snapshot.forEach(function (childSnapshot) {
-        const data = childSnapshot.val()
-        html += `<tr>
+  document.getElementById('animalactive').value = ''
+  document.getElementById('animalkey').value = ''
+  document.getElementById(
+    'table-animaltype'
+  ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
+    </td></tr>`
+  // document.getElementById('table-animaltype').innerHTML = ''
+  postListRef.on('value', function (snapshot) {
+    snapshot.forEach(function (childSnapshot) {
+      const data = childSnapshot.val()
+      html += `<tr>
       <th scope="row">${data.ANM_ID}</th>
       <td>${data.ANM_Name}</td>
       <td>${data.ANM_Code}</td>
@@ -57,15 +56,15 @@ document
           </button></td> 
           
   </tr>`
-      })
-      document.getElementById('table-animaltype').style.display =
-        'table-row-group'
-
-      document.getElementById('table-animaltype').innerHTML = html
-      delanimal()
-      editanimal()
     })
-  }
+    document.getElementById('table-animaltype').style.display =
+      'table-row-group'
+
+    document.getElementById('table-animaltype').innerHTML = html
+    delanimal()
+    editanimal()
+  })
+}
 document
   .getElementById('saveanimal')
   .addEventListener('click', function (event) {
@@ -78,7 +77,8 @@ document
       let coll = 0
       var postListRef = firebase.database().ref('animal_type')
       postListRef.on('value', function (snapshot) {
-        document.getElementById('tb-animal').style.display = 'none';        if (snapshot.numChildren() != undefined) {
+        document.getElementById('tb-animal').style.display = 'none'
+        if (snapshot.numChildren() != undefined) {
           coll = snapshot.numChildren()
         }
       })
@@ -93,15 +93,13 @@ document
         error => {
           if (error) {
             alert('เพิ่มข้อมูลไม่สำเร็จ')
-            document
-            .getElementById('v-pills-pets-tab').click();
+            document.getElementById('v-pills-pets-tab').click()
             return false
             // The write failed...
           } else {
             alert('เพิ่มข้อมูลสำเร็จ')
 
-            document
-            .getElementById('v-pills-pets-tab').click();
+            document.getElementById('v-pills-pets-tab').click()
             // Data saved successfully!
             return false
           }
@@ -109,126 +107,119 @@ document
       )
     }
   })
-  function delanimal () {
-    document.querySelectorAll('.delanimal').forEach(item => {
-      item.addEventListener('click', function (event) {
-        document.getElementById('tb-animal').style.display = 'none';
-        firebase
-          .database()
-          .ref('animal_type')
-          .child(event.target.value)
-          .update({ ANM_Active: '0' })
-          .then(() => {
-            alert('อัพเดทสถานะสำเร็จ')
-            document
-            .getElementById('v-pills-pets-tab').click();
-          })
-          .catch(error => {
-            alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-            document
-            .getElementById('v-pills-pets-tab').click();
-          })
-       
-      })
-    })
-  }
-  function editanimal () {
-    document.querySelectorAll('.updateanimal').forEach(item => {
-      item.addEventListener('click', function (event) {
-        document.getElementById('updateanimal').style.display = 'inline-block'
-        document.getElementById('saveanimal').style.display = 'none'
-        document.getElementById('animalkey').value = event.target.value
-        firebase
-          .database()
-          .ref('animal_type')
-          .child(event.target.value)
-          .on('child_added', snapshot => {
-            const newPost = snapshot.val()
-            if (snapshot.key == 'ANM_Name') {
-              document.getElementById('animaltype').value = newPost
-            } else if (snapshot.key == 'ANM_ID') {
-              document.getElementById('animalid').value = newPost
-            } else if (snapshot.key == 'ANM_Code') {
-              document.getElementById('animalcode').value = newPost
-            } else if (snapshot.key == 'ANM_Active') {
-              document.getElementById('animalactive').value = newPost
-            }
-          })
-        document
-          .getElementById('updateanimal')
-          .addEventListener('click', function (event) {
-            document.getElementById('tb-animal').style.display = 'none';
-            updateanimal()
-          })
-       
-      })
-    })
-  }
-  function updateanimal () {
-    const animaltype = document.getElementById('animaltype').value
-    const animalid = document.getElementById('animalid').value
-    const animalactive = document.getElementById('animalactive').value
-    const animalcode = document.getElementById('animalcode').value
-    const animalkey = document.getElementById('animalkey').value
-    if (animaltype == '') {
-      document.getElementById('tb-animal').style.display = 'inline-table';
-
-      alert('กรุณาระบุประเภทสัตว์')
-      return false
-    } else {
-      document.getElementById('tb-animal').style.display = 'none';
+function delanimal () {
+  document.querySelectorAll('.delanimal').forEach(item => {
+    item.addEventListener('click', function (event) {
+      document.getElementById('tb-animal').style.display = 'none'
       firebase
         .database()
         .ref('animal_type')
-        .child(animalkey)
-        .update({
-          ANM_ID: animalid,
-          ANM_Name: animaltype,
-          ANM_Code: animalcode,
-          ANM_Active: animalactive
-        })
+        .child(event.target.value)
+        .update({ ANM_Active: '0' })
         .then(() => {
-          alert('อัพเดทข้อมูลสำเร็จ')
-  
-          document
-          .getElementById('v-pills-pets-tab').click();
+          alert('อัพเดทสถานะสำเร็จ')
+          document.getElementById('v-pills-pets-tab').click()
         })
         .catch(error => {
           alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
-          document
-          .getElementById('v-pills-pets-tab').click();
-
+          document.getElementById('v-pills-pets-tab').click()
         })
-    }
-  
+    })
+  })
+}
+function editanimal () {
+  document.querySelectorAll('.updateanimal').forEach(item => {
+    item.addEventListener('click', function (event) {
+      document.getElementById('updateanimal').style.display = 'inline-block'
+      document.getElementById('saveanimal').style.display = 'none'
+      document.getElementById('animalkey').value = event.target.value
+      firebase
+        .database()
+        .ref('animal_type')
+        .child(event.target.value)
+        .on('child_added', snapshot => {
+          const newPost = snapshot.val()
+          if (snapshot.key == 'ANM_Name') {
+            document.getElementById('animaltype').value = newPost
+          } else if (snapshot.key == 'ANM_ID') {
+            document.getElementById('animalid').value = newPost
+          } else if (snapshot.key == 'ANM_Code') {
+            document.getElementById('animalcode').value = newPost
+          } else if (snapshot.key == 'ANM_Active') {
+            document.getElementById('animalactive').value = newPost
+          }
+        })
+      document
+        .getElementById('updateanimal')
+        .addEventListener('click', function (event) {
+          document.getElementById('tb-animal').style.display = 'none'
+          updateanimal()
+        })
+    })
+  })
+}
+function updateanimal () {
+  const animaltype = document.getElementById('animaltype').value
+  const animalid = document.getElementById('animalid').value
+  const animalactive = document.getElementById('animalactive').value
+  const animalcode = document.getElementById('animalcode').value
+  const animalkey = document.getElementById('animalkey').value
+  if (animaltype == '') {
+    document.getElementById('tb-animal').style.display = 'inline-table'
+
+    alert('กรุณาระบุประเภทสัตว์')
+    return false
+  } else {
+    document.getElementById('tb-animal').style.display = 'none'
+    firebase
+      .database()
+      .ref('animal_type')
+      .child(animalkey)
+      .update({
+        ANM_ID: animalid,
+        ANM_Name: animaltype,
+        ANM_Code: animalcode,
+        ANM_Active: animalactive
+      })
+      .then(() => {
+        alert('อัพเดทข้อมูลสำเร็จ')
+
+        document.getElementById('v-pills-pets-tab').click()
+      })
+      .catch(error => {
+        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+        document.getElementById('v-pills-pets-tab').click()
+      })
   }
+}
 // ========= End Animal Type ==============================
 
 // ========= Service Type ==============================
 document
   .getElementById('v-pills-service-tab')
   .addEventListener('click', function (event) {
-     document.getElementById('tb-service').style.display =
-     'inline-table';
+    document.getElementById('tb-service').style.display = 'inline-table'
     selectService()
   })
 function selectService () {
   var postListRef = firebase.database().ref('service_type')
   var html = ''
-  document.getElementById('updateservice').style.display = 'none';
-  document.getElementById('saveservice').style.display = 'inline-block';
+  document.getElementById('updateservice').style.display = 'none'
+  document.getElementById('saveservice').style.display = 'inline-block'
 
-  document.getElementById('servicetype').value = '';
+  document.getElementById('servicetype').value = ''
 
-  document.getElementById('serviceid').value = '';
+  document.getElementById('serviceid').value = ''
 
-  document.getElementById('servicecode').value = '';
+  document.getElementById('servicecode').value = ''
 
-  document.getElementById('serviceactive').value = '';
-  document.getElementById('servicekey').value = '';
+  document.getElementById('serviceactive').value = ''
+  document.getElementById('servicekey').value = ''
 
-  document.getElementById('table-servicetype').innerHTML =  `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
-  </td></tr>`;
+  document.getElementById(
+    'table-servicetype'
+  ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
+  </td></tr>`
   postListRef.on('value', function (snapshot) {
     snapshot.forEach(function (childSnapshot) {
       const data = childSnapshot.val()
@@ -253,17 +244,17 @@ function selectService () {
 </button>
 <button class="w-auto btn btn-warning btn-sm p-1 updateservice"
 type="button" value="${
-  childSnapshot.key
-}"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
+        childSnapshot.key
+      }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
 
 </button>
 </td> 
 </tr>`
     })
     document.getElementById('table-servicetype').style.display =
-    'table-row-group'
+      'table-row-group'
     document.getElementById('table-servicetype').innerHTML = html
-    delservice();
+    delservice()
     editservice()
   })
 }
@@ -280,7 +271,8 @@ document
 
       var postListRef = firebase.database().ref('service_type')
       postListRef.on('value', function (snapshot) {
-        document.getElementById('tb-service').style.display = 'none';        if (snapshot.numChildren() != undefined) {
+        document.getElementById('tb-service').style.display = 'none'
+        if (snapshot.numChildren() != undefined) {
           coll = snapshot.numChildren()
         }
       })
@@ -295,15 +287,13 @@ document
         error => {
           if (error) {
             alert('เพิ่มข้อมูลไม่สำเร็จ')
-            document
-            .getElementById('v-pills-service-tab').click();
+            document.getElementById('v-pills-service-tab').click()
             return false
             // The write failed...
           } else {
             alert('เพิ่มข้อมูลสำเร็จ')
 
-            document
-            .getElementById('v-pills-service-tab').click();
+            document.getElementById('v-pills-service-tab').click()
             // Data saved successfully!
             return false
           }
@@ -314,7 +304,7 @@ document
 function delservice () {
   document.querySelectorAll('.delservice').forEach(item => {
     item.addEventListener('click', function (event) {
-      document.getElementById('tb-service').style.display = 'none';
+      document.getElementById('tb-service').style.display = 'none'
       firebase
         .database()
         .ref('service_type')
@@ -324,19 +314,16 @@ function delservice () {
           // document.getElementById('table-servicetype').style.display = 'none';
           // document.getElementById('table-servicetype').innerHTML = '';
 
-           alert('อัพเดทสถานะสำเร็จ')
-          document
-          .getElementById('v-pills-service-tab').click();
-         
+          alert('อัพเดทสถานะสำเร็จ')
+          document.getElementById('v-pills-service-tab').click()
         })
         .catch(error => {
-          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-          document
-          .getElementById('v-pills-service-tab').click();
+          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+          document.getElementById('v-pills-service-tab').click()
         })
-      
-        // document.getElementById('tb-service').style.display =
-        // 'block'
+
+      // document.getElementById('tb-service').style.display =
+      // 'block'
     })
   })
 }
@@ -365,10 +352,9 @@ function editservice () {
       document
         .getElementById('updateservice')
         .addEventListener('click', function (event) {
-          document.getElementById('tb-service').style.display = 'none';
+          document.getElementById('tb-service').style.display = 'none'
           updateservice()
         })
-     
     })
   })
 }
@@ -380,12 +366,12 @@ function updateservice () {
   const servicekey = document.getElementById('servicekey').value
 
   if (servicetype == '') {
-    document.getElementById('tb-service').style.display = 'inline-table';
+    document.getElementById('tb-service').style.display = 'inline-table'
 
     alert('กรุณาระบุประเภทบริการ')
     return false
   } else {
-    document.getElementById('tb-service').style.display = 'none';
+    document.getElementById('tb-service').style.display = 'none'
     firebase
       .database()
       .ref('service_type')
@@ -399,45 +385,42 @@ function updateservice () {
       .then(() => {
         alert('อัพเดทข้อมูลสำเร็จ')
 
-        document
-          .getElementById('v-pills-service-tab').click();
+        document.getElementById('v-pills-service-tab').click()
       })
       .catch(error => {
-        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-        document
-          .getElementById('v-pills-service-tab').click();
+        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+        document.getElementById('v-pills-service-tab').click()
       })
   }
-
 }
 // ========= And Service Type ==============================
-
 
 // ========= FUR Type ==============================
 document
   .getElementById('v-pills-fur-tab')
   .addEventListener('click', function (event) {
-     document.getElementById('tb-fur').style.display =
-     'inline-table';
+    document.getElementById('tb-fur').style.display = 'inline-table'
     selectFur()
   })
 function selectFur () {
   var postListRef = firebase.database().ref('fur_type')
   var html = ''
-  document.getElementById('updatefur').style.display = 'none';
-  document.getElementById('savefur').style.display = 'inline-block';
+  document.getElementById('updatefur').style.display = 'none'
+  document.getElementById('savefur').style.display = 'inline-block'
 
-  document.getElementById('furtype').value = '';
+  document.getElementById('furtype').value = ''
 
-  document.getElementById('furid').value = '';
+  document.getElementById('furid').value = ''
 
-  document.getElementById('furcode').value = '';
+  document.getElementById('furcode').value = ''
 
-  document.getElementById('furactive').value = '';
-  document.getElementById('furkey').value = '';
+  document.getElementById('furactive').value = ''
+  document.getElementById('furkey').value = ''
 
-  document.getElementById('table-furtype').innerHTML =  `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
-  </td></tr>`;
+  document.getElementById(
+    'table-furtype'
+  ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
+  </td></tr>`
   postListRef.on('value', function (snapshot) {
     snapshot.forEach(function (childSnapshot) {
       const data = childSnapshot.val()
@@ -462,85 +445,77 @@ function selectFur () {
 </button>
 <button class="w-auto btn btn-warning btn-sm p-1 updatefur"
 type="button" value="${
-  childSnapshot.key
-}"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
+        childSnapshot.key
+      }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
 
 </button>
 </td> 
 </tr>`
     })
-    document.getElementById('table-furtype').style.display =
-    'table-row-group'
+    document.getElementById('table-furtype').style.display = 'table-row-group'
     document.getElementById('table-furtype').innerHTML = html
-    delfur();
+    delfur()
     editfur()
   })
 }
-document
-  .getElementById('savefur')
-  .addEventListener('click', function (event) {
-    const furtype = document.getElementById('furtype').value
+document.getElementById('savefur').addEventListener('click', function (event) {
+  const furtype = document.getElementById('furtype').value
 
-    if (furtype == '') {
-      alert('กรุณาระบุประเภทขน')
-      return false
-    } else {
-      let coll = 0
+  if (furtype == '') {
+    alert('กรุณาระบุประเภทขน')
+    return false
+  } else {
+    let coll = 0
 
-      var postListRef = firebase.database().ref('fur_type')
-      postListRef.on('value', function (snapshot) {
-        document.getElementById('tb-fur').style.display = 'none';        if (snapshot.numChildren() != undefined) {
-          coll = snapshot.numChildren()
+    var postListRef = firebase.database().ref('fur_type')
+    postListRef.on('value', function (snapshot) {
+      document.getElementById('tb-fur').style.display = 'none'
+      if (snapshot.numChildren() != undefined) {
+        coll = snapshot.numChildren()
+      }
+    })
+    var newPostRef = postListRef.push()
+    newPostRef.set(
+      {
+        FUR_ID: coll == 0 ? 1 : coll + 1,
+        FUR_Name: furtype,
+        FUR_Code: 'FUR0' + (coll == 0 ? 1 : coll + 1),
+        FUR_Active: '1'
+      },
+      error => {
+        if (error) {
+          alert('เพิ่มข้อมูลไม่สำเร็จ')
+          document.getElementById('v-pills-fur-tab').click()
+          return false
+          // The write failed...
+        } else {
+          alert('เพิ่มข้อมูลสำเร็จ')
+
+          document.getElementById('v-pills-fur-tab').click()
+          // Data saved successfully!
+          return false
         }
-      })
-      var newPostRef = postListRef.push()
-      newPostRef.set(
-        {
-          FUR_ID: coll == 0 ? 1 : coll + 1,
-          FUR_Name: furtype,
-          FUR_Code: 'FUR0' + (coll == 0 ? 1 : coll + 1),
-          FUR_Active: '1'
-        },
-        error => {
-          if (error) {
-            alert('เพิ่มข้อมูลไม่สำเร็จ')
-            document
-            .getElementById('v-pills-fur-tab').click();
-            return false
-            // The write failed...
-          } else {
-            alert('เพิ่มข้อมูลสำเร็จ')
-
-            document
-            .getElementById('v-pills-fur-tab').click();
-            // Data saved successfully!
-            return false
-          }
-        }
-      )
-    }
-  })
+      }
+    )
+  }
+})
 function delfur () {
   document.querySelectorAll('.delfur').forEach(item => {
     item.addEventListener('click', function (event) {
-      document.getElementById('tb-fur').style.display = 'none';
+      document.getElementById('tb-fur').style.display = 'none'
       firebase
         .database()
         .ref('fur_type')
         .child(event.target.value)
         .update({ FUR_Active: '0' })
         .then(() => {
-           alert('อัพเดทสถานะสำเร็จ')
-          document
-          .getElementById('v-pills-fur-tab').click();
-         
+          alert('อัพเดทสถานะสำเร็จ')
+          document.getElementById('v-pills-fur-tab').click()
         })
         .catch(error => {
-          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-          document
-          .getElementById('v-pills-fur-tab').click();
+          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+          document.getElementById('v-pills-fur-tab').click()
         })
-      
     })
   })
 }
@@ -569,10 +544,9 @@ function editfur () {
       document
         .getElementById('updatefur')
         .addEventListener('click', function (event) {
-          document.getElementById('tb-fur').style.display = 'none';
+          document.getElementById('tb-fur').style.display = 'none'
           updatefur()
         })
-     
     })
   })
 }
@@ -584,12 +558,12 @@ function updatefur () {
   const furkey = document.getElementById('furkey').value
 
   if (furtype == '') {
-    document.getElementById('tb-fur').style.display = 'inline-table';
+    document.getElementById('tb-fur').style.display = 'inline-table'
 
     alert('กรุณาระบุประเภทขน')
     return false
   } else {
-    document.getElementById('tb-fur').style.display = 'none';
+    document.getElementById('tb-fur').style.display = 'none'
     firebase
       .database()
       .ref('fur_type')
@@ -603,46 +577,43 @@ function updatefur () {
       .then(() => {
         alert('อัพเดทข้อมูลสำเร็จ')
 
-        document
-          .getElementById('v-pills-fur-tab').click();
+        document.getElementById('v-pills-fur-tab').click()
       })
       .catch(error => {
-        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-        document
-          .getElementById('v-pills-fur-tab').click();
+        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+        document.getElementById('v-pills-fur-tab').click()
       })
   }
-
 }
 // ========= And fur Type ==============================
-
 
 // ========= Pets Size  ==============================
 document
   .getElementById('v-pills-size-tab')
   .addEventListener('click', function (event) {
-     document.getElementById('tb-size').style.display =
-     'inline-table';
+    document.getElementById('tb-size').style.display = 'inline-table'
     selectSize()
   })
 function selectSize () {
   var postListRef = firebase.database().ref('pets_size')
   var html = ''
-  document.getElementById('updatesize').style.display = 'none';
-  document.getElementById('savesize').style.display = 'inline-block';
+  document.getElementById('updatesize').style.display = 'none'
+  document.getElementById('savesize').style.display = 'inline-block'
 
-  document.getElementById('size').value = '';
-  document.getElementById('weight').value = '';
+  document.getElementById('size').value = ''
+  document.getElementById('weight').value = ''
 
-  document.getElementById('sizeid').value = '';
+  document.getElementById('sizeid').value = ''
 
-  document.getElementById('sizecode').value = '';
+  document.getElementById('sizecode').value = ''
 
-  document.getElementById('sizeactive').value = '';
-  document.getElementById('sizekey').value = '';
+  document.getElementById('sizeactive').value = ''
+  document.getElementById('sizekey').value = ''
 
-  document.getElementById('table-size').innerHTML =  `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
-  </td></tr>`;
+  document.getElementById(
+    'table-size'
+  ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
+  </td></tr>`
   postListRef.on('value', function (snapshot) {
     snapshot.forEach(function (childSnapshot) {
       const data = childSnapshot.val()
@@ -668,92 +639,82 @@ function selectSize () {
 </button>
 <button class="w-auto btn btn-warning btn-sm p-1 updatesize"
 type="button" value="${
-  childSnapshot.key
-}"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
+        childSnapshot.key
+      }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
 
 </button>
 </td> 
 </tr>`
     })
-    document.getElementById('table-size').style.display =
-    'table-row-group'
+    document.getElementById('table-size').style.display = 'table-row-group'
     document.getElementById('table-size').innerHTML = html
-    delsize();
+    delsize()
     editsize()
   })
 }
-document
-  .getElementById('savesize')
-  .addEventListener('click', function (event) {
-    const size = document.getElementById('size').value
-    const weight = document.getElementById('weight').value
+document.getElementById('savesize').addEventListener('click', function (event) {
+  const size = document.getElementById('size').value
+  const weight = document.getElementById('weight').value
 
-    if (size == '') {
-      alert('กรุณาระบุขนาดสัตว์เลี้ยง')
-      return false
-    }
-    else if (weight == '') {
-      alert('กรุณาระบุน้ำหนักสัตว์เลี้ยง')
-      return false
-    } 
-     else {
-      let coll = 0
+  if (size == '') {
+    alert('กรุณาระบุขนาดสัตว์เลี้ยง')
+    return false
+  } else if (weight == '') {
+    alert('กรุณาระบุน้ำหนักสัตว์เลี้ยง')
+    return false
+  } else {
+    let coll = 0
 
-      var postListRef = firebase.database().ref('pets_size')
-      postListRef.on('value', function (snapshot) {
-        document.getElementById('tb-size').style.display = 'none';        if (snapshot.numChildren() != undefined) {
-          coll = snapshot.numChildren()
+    var postListRef = firebase.database().ref('pets_size')
+    postListRef.on('value', function (snapshot) {
+      document.getElementById('tb-size').style.display = 'none'
+      if (snapshot.numChildren() != undefined) {
+        coll = snapshot.numChildren()
+      }
+    })
+    var newPostRef = postListRef.push()
+    newPostRef.set(
+      {
+        PZ_ID: coll == 0 ? 1 : coll + 1,
+        PZ_Name: size,
+        PZ_Detail: weight,
+        PZ_Code: 'PZ0' + (coll == 0 ? 1 : coll + 1),
+        PZ_Active: '1'
+      },
+      error => {
+        if (error) {
+          alert('เพิ่มข้อมูลไม่สำเร็จ')
+          document.getElementById('v-pills-size-tab').click()
+          return false
+          // The write failed...
+        } else {
+          alert('เพิ่มข้อมูลสำเร็จ')
+
+          document.getElementById('v-pills-size-tab').click()
+          // Data saved successfully!
+          return false
         }
-      })
-      var newPostRef = postListRef.push()
-      newPostRef.set(
-        {
-          PZ_ID: coll == 0 ? 1 : coll + 1,
-          PZ_Name: size,
-          PZ_Detail: weight,
-          PZ_Code: 'PZ0' + (coll == 0 ? 1 : coll + 1),
-          PZ_Active: '1'
-        },
-        error => {
-          if (error) {
-            alert('เพิ่มข้อมูลไม่สำเร็จ')
-            document
-            .getElementById('v-pills-size-tab').click();
-            return false
-            // The write failed...
-          } else {
-            alert('เพิ่มข้อมูลสำเร็จ')
-
-            document
-            .getElementById('v-pills-size-tab').click();
-            // Data saved successfully!
-            return false
-          }
-        }
-      )
-    }
-  })
+      }
+    )
+  }
+})
 function delsize () {
   document.querySelectorAll('.delsize').forEach(item => {
     item.addEventListener('click', function (event) {
-      document.getElementById('tb-size').style.display = 'none';
+      document.getElementById('tb-size').style.display = 'none'
       firebase
         .database()
         .ref('pets_size')
         .child(event.target.value)
         .update({ PZ_Active: '0' })
         .then(() => {
-           alert('อัพเดทสถานะสำเร็จ')
-          document
-          .getElementById('v-pills-size-tab').click();
-         
+          alert('อัพเดทสถานะสำเร็จ')
+          document.getElementById('v-pills-size-tab').click()
         })
         .catch(error => {
-          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-          document
-          .getElementById('v-pills-size-tab').click();
+          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+          document.getElementById('v-pills-size-tab').click()
         })
-      
     })
   })
 }
@@ -771,11 +732,9 @@ function editsize () {
           const newPost = snapshot.val()
           if (snapshot.key == 'PZ_Name') {
             document.getElementById('size').value = newPost
-          }
-          else if (snapshot.key == 'PZ_Detail') {
+          } else if (snapshot.key == 'PZ_Detail') {
             document.getElementById('weight').value = newPost
-          }
-           else if (snapshot.key == 'PZ_ID') {
+          } else if (snapshot.key == 'PZ_ID') {
             document.getElementById('sizeid').value = newPost
           } else if (snapshot.key == 'PZ_Code') {
             document.getElementById('sizecode').value = newPost
@@ -786,10 +745,9 @@ function editsize () {
       document
         .getElementById('updatesize')
         .addEventListener('click', function (event) {
-          document.getElementById('tb-size').style.display = 'none';
+          document.getElementById('tb-size').style.display = 'none'
           updatesize()
         })
-     
     })
   })
 }
@@ -803,19 +761,17 @@ function updatesize () {
   const sizekey = document.getElementById('sizekey').value
 
   if (size == '') {
-    document.getElementById('tb-size').style.display = 'inline-table';
+    document.getElementById('tb-size').style.display = 'inline-table'
 
     alert('กรุณาระบุขนาดสัตว์เลี้ยง')
     return false
-  } 
-  else if (weight == '') {
-    document.getElementById('tb-size').style.display = 'inline-table';
+  } else if (weight == '') {
+    document.getElementById('tb-size').style.display = 'inline-table'
 
     alert('กรุณาระบุน้ำหนักสัตว์เลี้ยง')
     return false
-  }
-  else {
-    document.getElementById('tb-size').style.display = 'none';
+  } else {
+    document.getElementById('tb-size').style.display = 'none'
     firebase
       .database()
       .ref('pets_size')
@@ -830,15 +786,166 @@ function updatesize () {
       .then(() => {
         alert('อัพเดทข้อมูลสำเร็จ')
 
-        document
-          .getElementById('v-pills-size-tab').click();
+        document.getElementById('v-pills-size-tab').click()
       })
       .catch(error => {
-        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-        document
-          .getElementById('v-pills-size-tab').click();
+        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+        document.getElementById('v-pills-size-tab').click()
       })
   }
-
 }
 // ========= And Size animal ==============================
+
+// ========= Price Service ==============================
+document
+  .getElementById('v-pills-price-tab')
+  .addEventListener('click', function (event) {
+    document.getElementById('tb-price').style.display = 'inline-table'
+    selectOption('service')
+    selectOption('animal')
+    selectOption('fur')
+    selectOption('size')
+  })
+
+function selectOption (type) {
+  if (type == 'service') {
+    var postListRef = firebase.database().ref('service_type')
+    var html = ''
+    document.getElementById(
+      'p_service'
+    ).innerHTML = `<option value="">กรุณาเลือก</option>`
+    postListRef.on('value', function (snapshot) {
+      html += `<option value="">กรุณาเลือก</option>`
+
+      snapshot.forEach(function (childSnapshot) {
+        const data = childSnapshot.val()
+        if (data.SV_Active == '1') {
+          html += `<option value="${data.SV_Code}">${data.SV_Name}</option>`
+        }
+      })
+
+      document.getElementById('p_service').innerHTML = html
+    })
+  } else if (type == 'animal') {
+    var postListRef = firebase.database().ref('animal_type')
+    var html = ''
+    document.getElementById(
+      'p_animal'
+    ).innerHTML = `<option value="">กรุณาเลือก</option>`
+    postListRef.on('value', function (snapshot) {
+      html += `<option value="">กรุณาเลือก</option>`
+
+      snapshot.forEach(function (childSnapshot) {
+        const data = childSnapshot.val()
+        if (data.ANM_Active == '1') {
+          html += `<option value="${data.ANM_Code}">${data.ANM_Name}</option>`
+        }
+      })
+
+      document.getElementById('p_animal').innerHTML = html
+    })
+  }
+  else if (type == 'fur') {
+    var postListRef = firebase.database().ref('fur_type')
+    var html = ''
+    document.getElementById(
+      'p_fur'
+    ).innerHTML = `<option value="">กรุณาเลือก</option>`
+    postListRef.on('value', function (snapshot) {
+      html += `<option value="">กรุณาเลือก</option>`
+
+      snapshot.forEach(function (childSnapshot) {
+        const data = childSnapshot.val()
+        if (data.FUR_Active == '1') {
+          html += `<option value="${data.FUR_Code}">${data.FUR_Name}</option>`
+        }
+      })
+
+      document.getElementById('p_fur').innerHTML = html
+    })
+  }
+  else if (type == 'size') {
+    var postListRef = firebase.database().ref('pets_size')
+    var html = ''
+    document.getElementById(
+      'p_size'
+    ).innerHTML = `<option value="">กรุณาเลือก</option>`
+    postListRef.on('value', function (snapshot) {
+      html += `<option value="">กรุณาเลือก</option>`
+
+      snapshot.forEach(function (childSnapshot) {
+        const data = childSnapshot.val()
+        if (data.PZ_Active == '1') {
+          html += `<option value="${data.PZ_Code}">${data.PZ_Name} (${data.PZ_Detail
+          })</option>`
+        }
+      })
+
+      document.getElementById('p_size').innerHTML = html
+    })
+  }
+}
+
+document.getElementById('saveprice').addEventListener('click', function (event) {
+  const p_service = document.getElementById('p_service').value;
+  const p_animal = document.getElementById('p_animal').value;
+  const p_fur = document.getElementById('p_fur').value;
+  const p_size = document.getElementById('p_size').value;
+  const price = document.getElementById('price').value;
+  if (p_service == '') {
+    alert('กรุณาเลือกประเภทบริการ')
+    return false
+  } else if (p_animal == '') {
+    alert('กรุณาเลือกประเภทสัตว์')
+    return false
+  }
+  else if (p_fur == '') {
+    alert('กรุณาเลือกประเภทขน')
+    return false
+  }
+  else if (p_size == '') {
+    alert('กรุณาเลือกขนาดสัตว์เลี้ยง')
+    return false
+  }
+  else if (price == '') {
+    alert('กรุณากรอกราคาค่าบริการ')
+    return false
+  } else {
+    let coll = 0
+
+    var postListRef = firebase.database().ref('service_price')
+    postListRef.on('value', function (snapshot) {
+      document.getElementById('tb-price').style.display = 'none'
+      if (snapshot.numChildren() != undefined) {
+        coll = snapshot.numChildren()
+      }
+    })
+    var newPostRef = postListRef.push()
+    newPostRef.set(
+      {
+        SP_ID: coll == 0 ? 1 : coll + 1,
+        SP_Code: 'SP0' + (coll == 0 ? 1 : coll + 1),
+        SP_SV_ID: p_service,
+        SP_ANM_ID: p_animal,
+        SP_FUR_ID: p_fur,
+        SP_PZ_ID: p_size,
+        SP_Price: price,
+        SP_Active: '1'
+      },
+      error => {
+        if (error) {
+          alert('เพิ่มข้อมูลไม่สำเร็จ')
+          document.getElementById('v-pills-price-tab').click()
+          return false
+          // The write failed...
+        } else {
+          alert('เพิ่มข้อมูลสำเร็จ')
+
+          document.getElementById('v-pills-price-tab').click()
+          // Data saved successfully!
+          return false
+        }
+      }
+    )
+  }
+})
