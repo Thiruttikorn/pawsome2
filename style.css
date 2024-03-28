@@ -532,7 +532,11 @@
    
     }
     @media screen and (max-width: 768px) {
-
+      .nav-pills .nav-link {
+        border-radius: var(--bs-nav-pills-border-radius);
+        font-size: 15px !important;
+        padding: 6px 12px;
+    }
     .container, .container-sm {
       max-width:680px !important;
   }
@@ -660,3 +664,6 @@ Single Product section style start
     border: 1px solid #eed6b6;
     border-radius: 20px;
     }
+    .table>:not(caption)>*>* {
+      vertical-align: top;
+  }
