@@ -800,12 +800,75 @@ function updatesize () {
 document
   .getElementById('v-pills-price-tab')
   .addEventListener('click', function (event) {
-    document.getElementById('tb-price').style.display = 'inline-table'
     selectOption('service')
     selectOption('animal')
     selectOption('fur')
     selectOption('size')
+    document.getElementById('tb-price').style.display = 'inline-table';
+    selectPrice();
+ 
   })
+
+  function selectPrice () {
+    var postListRef = firebase.database().ref('service_price')
+    var html = ''
+    document.getElementById('updateprice').style.display = 'none'
+    document.getElementById('saveprice').style.display = 'inline-block'
+  
+    document.getElementById('price').value = ''
+    document.getElementById('priceid').value = ''
+  
+    document.getElementById('pricecode').value = ''
+  
+    document.getElementById('priceactive').value = ''
+  
+    document.getElementById('pricekey').value = ''
+  
+    document.getElementById(
+      'table-price'
+    ).innerHTML = `<tr class="bg-light"><td colspan="8" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
+    </td></tr>`
+    postListRef.on('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        const data = childSnapshot.val()
+  
+        html += `<tr>
+      <th scope="row">${data.SP_ID}</th>
+      <td>${getTextInOption("p_service",data.SP_SV_ID)}</td>
+      <td>${getTextInOption("p_animal",data.SP_ANM_ID)}</td>
+      <td>${getTextInOption("p_fur",data.SP_FUR_ID)}</td>
+      <td>${getTextInOption("p_size",data.SP_PZ_ID)}</td>
+      <td>${data.SP_Price}</td>
+      <td>
+      ${
+        data.SP_Active == '1'
+          ? `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: greenyellow;"></iconify-icon>
+      ปกติ`
+          : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
+      ไม่ใช้งาน`
+      }</td>
+      <td> <button class="w-auto btn btn-secondary btn-sm p-1 delprice d-none"
+      type="button" value="${
+        childSnapshot.key
+      }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
+  
+  </button>
+  <button class="w-auto btn btn-warning btn-sm p-1 updateprice d-none"
+  type="button" value="${
+          childSnapshot.key
+        }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
+  
+  </button>
+  </td> 
+  </tr>`
+      })
+      document.getElementById('table-price').style.display = 'table-row-group'
+      document.getElementById('table-price').innerHTML = html
+      // delprice()
+      // editprice()
+    })
+  }
+
 
 function selectOption (type) {
   if (type == 'service') {
@@ -949,3 +1012,8 @@ document.getElementById('saveprice').addEventListener('click', function (event) 
     )
   }
 })
+
+function getTextInOption(id,value){
+  return document.querySelector(`#${id} option[value=${value}]`).innerText;
+
+}
