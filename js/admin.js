@@ -847,13 +847,13 @@ document
           : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
       ไม่ใช้งาน`
       }</td>
-      <td> <button class="w-auto btn btn-secondary btn-sm p-1 delprice d-none"
+      <td> <button class="w-auto btn btn-secondary btn-sm p-1 delprice"
       type="button" value="${
         childSnapshot.key
       }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
   
   </button>
-  <button class="w-auto btn btn-warning btn-sm p-1 updateprice d-none"
+  <button class="w-auto btn btn-warning btn-sm p-1 updateprice"
   type="button" value="${
           childSnapshot.key
         }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
@@ -864,8 +864,8 @@ document
       })
       document.getElementById('table-price').style.display = 'table-row-group'
       document.getElementById('table-price').innerHTML = html
-      // delprice()
-      // editprice()
+      delprice()
+      editprice()
     })
   }
 
@@ -1012,6 +1012,126 @@ document.getElementById('saveprice').addEventListener('click', function (event) 
     )
   }
 })
+
+function editprice () {
+  document.querySelectorAll('.updateprice').forEach(item => {
+    item.addEventListener('click', function (event) {
+      document.getElementById('updateprice').style.display = 'inline-block'
+      document.getElementById('saveprice').style.display = 'none'
+      document.getElementById('pricekey').value = event.target.value
+      firebase
+        .database()
+        .ref('service_price')
+        .child(event.target.value)
+        .on('child_added', snapshot => {
+          const newPost = snapshot.val()
+          if (snapshot.key == 'SP_ANM_ID') {
+            document.getElementById('p_animal').value = newPost
+          } else if (snapshot.key == 'SP_Code') {
+            document.getElementById('pricecode').value = newPost
+          } else if (snapshot.key == 'SP_Active') {
+            document.getElementById('priceactive').value = newPost
+          } else if (snapshot.key == 'SP_FUR_ID') {
+            document.getElementById('p_fur').value = newPost
+          } else if (snapshot.key == 'SP_ID') {
+            document.getElementById('priceid').value = newPost
+          }
+          else if (snapshot.key == 'SP_PZ_ID') {
+            document.getElementById('p_size').value = newPost
+          }
+          else if (snapshot.key == 'SP_Price') {
+            document.getElementById('price').value = newPost
+          }
+          else if (snapshot.key == 'SP_SV_ID') {
+            document.getElementById('p_service').value = newPost
+          }
+        })
+      document
+        .getElementById('updateprice')
+        .addEventListener('click', function (event) {
+          document.getElementById('tb-price').style.display = 'none'
+          updateprice()
+        })
+    })
+  })
+}
+function updateprice () {
+  const p_service = document.getElementById('p_service').value;
+  const p_animal = document.getElementById('p_animal').value;
+  const p_fur = document.getElementById('p_fur').value;
+  const p_size = document.getElementById('p_size').value;
+  const price = document.getElementById('price').value;
+  const pricekey = document.getElementById('pricekey').value;
+  const priceid = document.getElementById('priceid').value;
+  const pricecode = document.getElementById('pricecode').value;
+  const priceactive = document.getElementById('priceactive').value;
+  if (p_service == '') {
+    alert('กรุณาเลือกประเภทบริการ')
+    return false
+  } else if (p_animal == '') {
+    alert('กรุณาเลือกประเภทสัตว์')
+    return false
+  }
+  else if (p_fur == '') {
+    alert('กรุณาเลือกประเภทขน')
+    return false
+  }
+  else if (p_size == '') {
+    alert('กรุณาเลือกขนาดสัตว์เลี้ยง')
+    return false
+  }
+  else if (price == '') {
+    alert('กรุณากรอกราคาค่าบริการ')
+    return false
+  } else {
+    document.getElementById('tb-price').style.display = 'none'
+    firebase
+      .database()
+      .ref('service_price')
+      .child(pricekey)
+      .update({
+        SP_ID: priceid,
+        SP_Code: pricecode,
+        SP_SV_ID: p_service,
+        SP_ANM_ID: p_animal,
+        SP_FUR_ID: p_fur,
+        SP_PZ_ID: p_size,
+        SP_Price: price,
+        SP_Active: priceactive
+      })
+      .then(() => {
+        alert('อัพเดทข้อมูลสำเร็จ')
+
+        document.getElementById('v-pills-price-tab').click()
+      })
+      .catch(error => {
+        alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+        document.getElementById('v-pills-price-tab').click()
+      })
+  }
+}
+
+function delprice () {
+  document.querySelectorAll('.delprice').forEach(item => {
+    item.addEventListener('click', function (event) {
+      document.getElementById('tb-price').style.display = 'none'
+      firebase
+        .database()
+        .ref('service_price')
+        .child(event.target.value)
+        .update({ SP_Active: '0' })
+        .then(() => {
+          alert('อัพเดทสถานะสำเร็จ')
+          document.getElementById('v-pills-price-tab').click()
+        })
+        .catch(error => {
+          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+          document.getElementById('v-pills-price-tab').click()
+        })
+    })
+  })
+}
+
 
 function getTextInOption(id,value){
   return document.querySelector(`#${id} option[value=${value}]`).innerText;
