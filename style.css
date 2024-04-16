@@ -667,3 +667,11 @@ Single Product section style start
     .table>:not(caption)>*>* {
       vertical-align: top;
   }
+  iconify-icon{
+    position: relative;
+    top: 3px;
+  }
+.bg-readonly {
+background-color: #e6e6e6 !important;
+pointer-events: none;
+  }   
