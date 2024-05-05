@@ -1130,11 +1130,15 @@ document
     // selectOption('size','_booking')
     document.getElementById('tb-booking').style.display = 'inline-table';
     selectBooking();
+    const e = new Event("change");
+const element = document.querySelector('#booking_update_active')
+element.dispatchEvent(e);
+    document.getElementById("booking_update_active").selectedIndex = "1";
  
   })
 
   function selectBooking () {
-    var postListRef = firebase.database().ref('booking')
+    var postListRef = firebase.database().ref('booking').orderByChild('BOOKGING_DATE')
     var html = ''
     document.getElementById('updatebooking').style.display = 'none'
     document.getElementById('savebooking').style.display = 'inline-block'
@@ -1149,12 +1153,25 @@ document
   
     document.getElementById(
       'table-booking'
-    ).innerHTML = `<tr class="bg-light"><td colspan="10" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
+    ).innerHTML = `<tr class="bg-light"><td colspan="10" class="text-center bg-white">
+    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105">
+    </iconify-icon>
     </td></tr>`
     postListRef.on('value', function (snapshot) {
       if (snapshot.exists()) {
       snapshot.forEach(function (childSnapshot) {
-        const data = childSnapshot.val()
+        const data = childSnapshot.val();
+        let objectDate = new Date(data.BOOKGING_DATE);
+        let day = objectDate.getDate();
+        let month = objectDate.getMonth();
+        let year = objectDate.getFullYear();
+        if (day < 10) {
+          day = '0' + day;
+      }
+      
+      if (month < 10) {
+          month = `0${month}`;
+      }
         // <td><select class="form-select mt-0" id="booking_payment" name="booking_payment">
         // <option value="0"${data.Payment_Active == '0'? `selected` : ``}>รอการชำระ</option>
         // <option value="1"${data.Payment_Active == '1'? `selected` : ``}>ชำระเงินแล้ว</option>
@@ -1170,28 +1187,35 @@ document
       <td>${data.BOOKGING_CUSOMER_NAME}</td>
       <td>${data.BOOKGING_CUSOMER_TEL}</td>
       <td>${getTextInOption("p_service_booking",data.BOOKGING_SV_ID)}</td>
-      <td>${data.BOOKGING_DATE}</td>
+      <td>${day}/${month}/${year}</td>
       <td>${data.BOOKGING_TIME}</td>
       <td>${data.BOOKGING_PETS_NAME}</td>
       <td>${data.BOOKGING_PRICE}</td>
-      <td><select class="form-select mt-0" id="booking_active"  name="booking_active">
-      <option value="0"${data.BOOKGING_Active == '1'? `selected` : ``}>รอให้บริการ</option>
-      <option value="1"${data.BOOKGING_Active == '2'? `selected` : ``}>ให้บริการเสร็จสิ้น</option>
-      </select></td>
-    
-      <td> <button class="w-auto btn btn-secondary btn-sm p-1 delbooking"
+      
+      <td class="text-center"><button class="w-auto btn btn-secondary btn-sm p-1"data-bs-toggle="modal" data-bs-target="#detailbooking"
+      type="button" value="${
+        childSnapshot.key
+      }"><iconify-icon icon="mdi:clipboard-list-outline" style="color:yellow"></iconify-icon>
+  
+  </button></td>
+      <td> ${data.BOOKGING_Active!='0' ? `<button class="w-auto btn btn-secondary btn-sm p-1 cancelbooking"
       type="button" value="${
         childSnapshot.key
       }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> 
   
-  </button>
-
+  </button>`: ''}
   </td> 
-  </tr>`
+  </tr>`;
+  if(data.BOOKGING_Active=='0'){
+    document.getElementById("cellcancel").style.display='none'
+  }else{
+    document.getElementById("cellcancel").style.display='block'
+
+  }
       })
       document.getElementById('table-booking').style.display = 'table-row-group'
       document.getElementById('table-booking').innerHTML = html
-      // delbooking()
+      cancelbooking()
       // editbooking()
     }else{
       
@@ -1509,6 +1533,120 @@ document
       )
     }
   })
+
+  document.getElementById('booking_update_active').addEventListener('change', function (event) {
+    if(event.target.value!=''){
+      if(event.target.value=='0'){
+        document.getElementById("cellcancel").style.display='none'
+      }else{
+        document.getElementById("cellcancel").style.display='block'
+    
+      }
+      var postListRef = firebase.database().ref('booking');
+      var html = ''
+      document.getElementById('updatebooking').style.display = 'none'
+      document.getElementById('savebooking').style.display = 'inline-block'
+    
+      document.getElementById('bookingid').value = ''
+    
+      document.getElementById('bookingcode').value = ''
+    
+      document.getElementById('bookingactive').value = ''
+    
+      document.getElementById('bookingkey').value = ''
+    
+      document.getElementById(
+        'table-booking'
+      ).innerHTML = `<tr class="bg-light"><td colspan="10" class="text-center bg-white">
+      <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105">
+      </iconify-icon>
+      </td></tr>`
+      
+        postListRef.orderByChild('BOOKGING_Active')
+        .equalTo(event.target.value)
+        .on('value', function(snapshot) {
+          console.log(snapshot) 
+          if (snapshot.exists()) {
+            snapshot.forEach(function (childSnapshot) {
+              const data = childSnapshot.val();
+              let objectDate = new Date(data.BOOKGING_DATE);
+              let day = objectDate.getDate();
+              let month = objectDate.getMonth();
+              let year = objectDate.getFullYear();
+              if (day < 10) {
+                day = '0' + day;
+            }
+            
+            if (month < 10) {
+                month = `0${month}`;
+            }
+              html += `<tr>
+            <td scope="row">${data.BOOKGING_ID}</td>
+            <td>${data.BOOKGING_CUSOMER_NAME}</td>
+            <td>${data.BOOKGING_CUSOMER_TEL}</td>
+            <td>${getTextInOption("p_service_booking",data.BOOKGING_SV_ID)}</td>
+            <td>${day}/${month}/${year}</td>
+            <td>${data.BOOKGING_TIME}</td>
+            <td>${data.BOOKGING_PETS_NAME}</td>
+            <td>${data.BOOKGING_PRICE}</td>
+            
+            <td class="text-center"><button class="w-auto btn btn-secondary btn-sm p-1"data-bs-toggle="modal" data-bs-target="#detailbooking"
+            type="button" value="${
+              childSnapshot.key
+            }"><iconify-icon icon="mdi:clipboard-list-outline"   style="color: yellow"></iconify-icon>
+        
+        </button></td>
+        <td> ${data.BOOKGING_Active!='0' ? `<button class="w-auto btn btn-secondary btn-sm p-1 cancelbooking"
+        type="button" value="${
+          childSnapshot.key
+        }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> 
+    
+    </button>`: ''}
+    </td> 
+        </tr>`;
+    
+            })
+            document.getElementById('table-booking').style.display = 'table-row-group'
+            document.getElementById('table-booking').innerHTML = html;
+         
+            cancelbooking()
+            // editbooking()
+          }else{
+            
+            document.getElementById(
+              'table-booking'
+            ).innerHTML = `<tr class="bg-light"><td colspan="10" class="text-center bg-white"> ไม่พบข้อมูล
+            </td></tr>`
+          }
+        })
+   
+  
+      
+  
+    
+    }
+  })
+  function cancelbooking () {
+    document.querySelectorAll('.cancelbooking').forEach(item => {
+      item.addEventListener('click', function (event) {
+        document.getElementById('tb-booking').style.display = 'none'
+        firebase
+          .database()
+          .ref('booking')
+          .child(event.target.value)
+          .update({BOOKGING_Active: '0' })
+          .then(() => {
+            alert('ยกเลิกการจองสำเร็จ')
+            document.getElementById('v-pills-booking-tab').click()
+          })
+          .catch(error => {
+            alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
+            document.getElementById('v-pills-booking-tab').click()
+          })
+      })
+    })
+  }
+  
   function selectOption (type,id) {
     if (type == 'service') {
       var postListRef = firebase.database().ref('service_type')
