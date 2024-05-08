@@ -323,9 +323,9 @@
                         <button class="nav-link fs-5 mb-2 text-start active fontth" id="v-pills-booking-tab"
                             data-bs-toggle="pill" data-bs-target="#v-pills-booking" type="button" role="tab"
                             aria-controls="v-pills-booking" aria-selected="false" tabindex="-1">จองบริการ</button>
-                        <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-pets-tab"
-                            data-bs-toggle="pill" data-bs-target="#v-pills-pets" type="button" role="tab"
-                            aria-controls="v-pills-pets" aria-selected="false" tabindex="-1">ประเภทสัตว์</button>
+                        <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-pets-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-pets" type="button" role="tab" aria-controls="v-pills-pets"
+                            aria-selected="false" tabindex="-1">ประเภทสัตว์</button>
                         <button class="nav-link fs-5 mb-2 text-start fontth" id="v-pills-service-tab"
                             data-bs-toggle="pill" data-bs-target="#v-pills-service" type="button" role="tab"
                             aria-controls="v-pills-service" aria-selected="true" tabindex="-1">ประเภทบริการ</button>
@@ -342,144 +342,163 @@
 
                     </div>
                     <div class="tab-content w-100" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show" id="v-pills-booking" role="tabpanel" aria-labelledby="v-pills-booking-tab"
-                        tabindex="0">
-                        <h4 class="fontth">จองบริการ</h4>
-                        <p></p>
-                        <div class="table-responsive">
-                          
-                            <table class="table w-100 mt-3 table-striped paginated" id="tb-booking">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="fontth fw-medium">ลำดับ</th>
-                                        <th scope="col" class="fontth fw-medium">ลูกค้า</th>
-                                        <th scope="col" class="fontth fw-medium">เบอร์โทรติดต่อ</th>
-                                        <th scope="col" class="fontth fw-medium">บริการที่จอง</th>
-                                        <th scope="col" class="fontth fw-medium">วันที่จอง</th>
-                                        <th scope="col" class="fontth fw-medium">เวลาที่จอง</th>
-                                        <th scope="col" class="fontth fw-medium">สัตว์เลี้ยง</th>
-                                        <th scope="col" class="fontth fw-medium">ราคา</th>
-                                        <th scope="col" class="fontth fw-medium text-center" width="15%">สถานะ</th>
-                                        <th scope="col" class="fontth fw-medium">ยกเลิก</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="fontth" id="table-booking"></tbody>
-                            </table>
-                        </div>
+                        <div class="tab-pane fade active show" id="v-pills-booking" role="tabpanel"
+                            aria-labelledby="v-pills-booking-tab" tabindex="0">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h4 class="fontth">จองบริการ</h4>
+                                </div>
+                                <div class="col-sm-2 text-end fontth">สถานะ:</div>
+                                <div class="col-sm-2">
+                                    <select class="form-select mt-0 fontth" style="    background-color: #dead6f;
+                                color: white;" id="booking_update_active" name="booking_update_active">
+                                        <option value="0">ยกเลิก</option>
+                                        <option value="1" selected>รอให้บริการ</option>
+                                        <option value="2">ให้บริการเสร็จสิ้น</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                        <div class="row">
-                            <div class="form-holder">
-                                <div class="form-content">
-                                    <div class="form-items fontth">
-                                        <h3 class="fontth text-center"><iconify-icon icon="mdi:cat"
-                                                style="font-size: 30px;"></iconify-icon>
-                                            จองบริการ
-                                        
-                                      </h3>
-                                        <p class="mb-0 mt-3">กรุณากรอกข้อมูลให้ถูกต้อง</p>
-                                        <form class="requires-validation mt-2 row" novalidate>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ชื่อลูกค้า</label>
-                                                <input class="form-control mt-0"type="text" id="name_customer" name="name_customer"
-                                                    placeholder="เช่น สุนัน (นัน)" required>
-                                               
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">เบอร์โทรติดต่อ</label>
-                                                <input class="form-control mt-0"type="text" id="tel_customer" name="tel_customer"
-                                                    placeholder="เช่น 0855555555" required>
-                                               
-                                            </div>
-                                           
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">บริการที่จอง</label>
-                                                <select class="form-select mt-0"  id="p_service_booking" name="p_service_booking"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">วันที่จอง</label>
-                                                <input class="form-control mt-0"type="date" id="booking_date" name="booking_date"
-                                                    placeholder="เช่น 16/05/2024" required>
-                                               
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">เวลาที่จอง</label>
-                                                <input class="form-control mt-0"type="time" id="booking_time" name="booking_time"
-                                                    placeholder="เช่น 08:20" required>
-                                               
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ชื่อสัตว์เลี้ยง</label>
-                                                <input class="form-control mt-0"type="text" id="pets_name" name="pets_name"
-                                                    placeholder="เช่น micky" required>
-                                               
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ประเภทสัตว์</label>
 
-                                                <select class="form-select mt-0 bg-readonly"  id="p_animal_booking" name="p_animal_booking"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ประเภทขน</label>
+                            <p></p>
+                            <div class="table-responsive">
 
-                                                <select class="form-select mt-0 bg-readonly"  id="p_fur_booking" name="p_fur_booking"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ขนาดสัตว์เลี้ยง</label>
-                                                <select class="form-select mt-0 bg-readonly"  id="p_size_booking" name="p_size_booking"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            
-                                                <input class="form-control" type="hidden" id="bookingid" name="bookingid">
+                                <table class="table w-100 mt-3 table-striped paginated" id="tb-booking">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="fontth fw-medium">ลำดับ</th>
+                                            <th scope="col" class="fontth fw-medium">ลูกค้า</th>
+                                            <th scope="col" class="fontth fw-medium">เบอร์โทรติดต่อ</th>
+                                            <th scope="col" class="fontth fw-medium">บริการที่จอง</th>
+                                            <th scope="col" class="fontth fw-medium">วันที่จอง</th>
+                                            <th scope="col" class="fontth fw-medium">เวลาที่จอง</th>
+                                            <th scope="col" class="fontth fw-medium">สัตว์เลี้ยง</th>
+                                            <th scope="col" class="fontth fw-medium">ราคา</th>
+                                            <th scope="col" class="fontth fw-medium text-center">รายละเอียด</th>
+                                            <th scope="col" class="fontth fw-medium text-center" id="cellcancel">ยกเลิก
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fontth" id="table-booking"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-holder">
+                                    <div class="form-content">
+                                        <div class="form-items fontth">
+                                            <h3 class="fontth text-center"><iconify-icon icon="mdi:cat"
+                                                    style="font-size: 30px;"></iconify-icon>
+                                                จองบริการ
+
+                                            </h3>
+                                            <p class="mb-0 mt-3">กรุณากรอกข้อมูลให้ถูกต้อง</p>
+                                            <form class="requires-validation mt-2 row" novalidate>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ชื่อลูกค้า</label>
+                                                    <input class="form-control mt-0" type="text" id="name_customer"
+                                                        name="name_customer" placeholder="เช่น สุนัน (นัน)" required>
+
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">เบอร์โทรติดต่อ</label>
+                                                    <input class="form-control mt-0" type="text" id="tel_customer"
+                                                        name="tel_customer" placeholder="เช่น 0855555555" required>
+
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">บริการที่จอง</label>
+                                                    <select class="form-select mt-0" id="p_service_booking"
+                                                        name="p_service_booking" required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">วันที่จอง</label>
+                                                    <input class="form-control mt-0" type="date" id="booking_date"
+                                                        name="booking_date" placeholder="เช่น 16/05/2024" required
+                                                        disabled>
+
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">เวลาที่จอง</label>
+                                                    <input class="form-control mt-0" type="time" id="booking_time"
+                                                        name="booking_time" placeholder="เช่น 08:20" required disabled
+                                                        min="09:00" max="20:00">
+
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ชื่อสัตว์เลี้ยง</label>
+                                                    <input class="form-control mt-0" type="text" id="pets_name"
+                                                        name="pets_name" placeholder="เช่น micky" required>
+
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ประเภทสัตว์</label>
+
+                                                    <select class="form-select mt-0 bg-readonly" id="p_animal_booking"
+                                                        name="p_animal_booking" required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ประเภทขน</label>
+
+                                                    <select class="form-select mt-0 bg-readonly" id="p_fur_booking"
+                                                        name="p_fur_booking" required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ขนาดสัตว์เลี้ยง</label>
+                                                    <select class="form-select mt-0 bg-readonly" id="p_size_booking"
+                                                        name="p_size_booking" required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+
+                                                <input class="form-control" type="hidden" id="bookingid"
+                                                    name="bookingid">
                                                 <input class="form-control" type="hidden" id="bookingcode"
                                                     name="bookingcode">
                                                 <input class="form-control" type="hidden" id="bookingactive"
                                                     name="bookingactive">
                                                 <input class="form-control" type="hidden" id="bookingkey"
                                                     name="bookingkey">
-                                                    <input class="form-control" type="hidden" id="booking_price"
+                                                <input class="form-control" type="hidden" id="booking_price"
                                                     name="booking_price">
-                                                    <div class="mt-3 text-center col-md-12 fw-bold" id="div-showprice" style="font-size: 26px;color:brown;display: none;">
-                                                  
-                                                        ราคารวม : <span id="txt-price">150</span> บาท
-                                                    
-</div>
-                                            <div class="form-button mt-3 text-center col-md-12">
-                                                <button id="calbooking" type="button"
-                                                class="btn btn-warning fontth p-2 ps-4 pe-4"><iconify-icon icon="mdi:calculator-variant"></iconify-icon>
-                                                คำนวนราคา</button>
-                                                <button id="savebooking" type="button"
-                                                    class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon
-                                                        icon="mage:save-floppy"></iconify-icon>
-                                                    ยืนยันการจอง</button>
-                                                <button id="updatebooking" type="button"
-                                                    class="btn btn-success fontth p-2 ps-4 pe-4"
-                                                    style="display: none;"><iconify-icon
-                                                        icon="mdi:newspaper-check"></iconify-icon>
-                                                    อัพเดทข้อมูล</button>
+                                                <div class="mt-3 text-center col-md-12 fw-bold" id="div-showprice"
+                                                    style="font-size: 26px;color:brown;display: none;">
 
-                                            </div>
-                                        </form>
+                                                    ราคารวม : <span id="txt-price">150</span> บาท
+
+                                                </div>
+                                                <div class="form-button mt-3 text-center col-md-12">
+                                                    <button id="calbooking" type="button"
+                                                        class="btn btn-warning fontth p-2 ps-4 pe-4"><iconify-icon
+                                                            icon="mdi:calculator-variant"></iconify-icon>
+                                                        คำนวนราคา</button>
+                                                    <button id="savebooking" type="button" disabled
+                                                        class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon
+                                                            icon="mage:save-floppy"></iconify-icon>
+                                                        ยืนยันการจอง</button>
+                                                 
+
+                                                </div>
+                                                <p class="text-center fontth mt-2 text-black-50">
+                                                    กรุณากดคำนวนราคาก่อนยืนยันการจอง</p>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
 
+
                         </div>
-
-
-                    </div>
-                        <div class="tab-pane fade" id="v-pills-pets" role="tabpanel"
-                            aria-labelledby="v-pills-pets-tab" tabindex="0">
+                        <div class="tab-pane fade" id="v-pills-pets" role="tabpanel" aria-labelledby="v-pills-pets-tab"
+                            tabindex="0">
                             <h4 class="fontth">ประเภทสัตว์</h4>
                             <p></p>
                             <div class="table-responsive">
@@ -735,104 +754,103 @@
 
 
                         </div>
-                        <div class="tab-pane fade" id="v-pills-price" role="tabpanel" aria-labelledby="v-pills-price-tab"
-                        tabindex="0">
-                        <h4 class="fontth">รายละเอียดบริการและราคา</h4>
-                        <p></p>
-                        <div class="table-responsive" style="height:350px;overflow-y: auto;">
-                            <table class="table w-100 mt-3 table-striped" id="tb-price">
-                                <thead class="bg-white shadow-sm" style="    position: sticky;
+                        <div class="tab-pane fade" id="v-pills-price" role="tabpanel"
+                            aria-labelledby="v-pills-price-tab" tabindex="0">
+                            <h4 class="fontth">รายละเอียดบริการและราคา</h4>
+                            <p></p>
+                            <div class="table-responsive" style="height:350px;overflow-y: auto;">
+                                <table class="table w-100 mt-3 table-striped" id="tb-price">
+                                    <thead class="bg-white shadow-sm" style="    position: sticky;
                                 top: 0;
                                 width: 100%;">
-                                    <tr>
-                                        <th scope="col" class="fontth fw-medium">ลำดับ</th>
-                                        <th scope="col" class="fontth fw-medium">บริการ</th>
-                                        <th scope="col" class="fontth fw-medium">ประเภทสัตว์</th>
-                                        <th scope="col" class="fontth fw-medium">ประเภทขน</th>
-                                        <th scope="col" class="fontth fw-medium">ขนาดสัตว์เลี้ยง</th>
-                                        <th scope="col" class="fontth fw-medium">ราคา</th>
-                                        <th scope="col" class="fontth fw-medium">การใช้งาน</th>
-                                        <th scope="col" class="fontth fw-medium">จัดการข้อมูล</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="fontth" id="table-price"></tbody>
-                            </table>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-holder">
-                                <div class="form-content">
-                                    <div class="form-items fontth">
-                                        <h3 class="fontth text-center"><iconify-icon icon="mdi:cat"
-                                                style="font-size: 30px;"></iconify-icon>
-                                            เพิ่มข้อมูลบริการและราคา</h3>
-                                        <p class="mb-0 mt-3">กรุณากรอกข้อมูลให้ถูกต้อง</p>
-                                        <form class="requires-validation mt-2 row" novalidate>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ประเภทบริการ</label>
-                                                <select class="form-select mt-0"  id="p_service" name="p_service"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ประเภทสัตว์</label>
-
-                                                <select class="form-select mt-0"  id="p_animal" name="p_animal"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4">
-                                                <label class="mb-0 text-primary pb-0">ประเภทขน</label>
-
-                                                <select class="form-select mt-0"  id="p_fur" name="p_fur"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4 col-md-6">
-                                                <label class="mb-0 text-primary pb-0">ขนาดสัตว์เลี้ยง</label>
-                                                <select class="form-select mt-0"  id="p_size" name="p_size"
-                                                     required>
-                                                     <option value="">กรุณาเลือก</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-8 col-md-6">
-                                                <label class="mb-0 text-primary pb-0">ราคาค่าบริการ</label>
-                                                <input class="form-control mt-0"type="text" id="price" name="price"
-                                                    placeholder="เช่น 250" required>
-                                                <input class="form-control" type="hidden" id="priceid" name="priceid">
-                                                <input class="form-control" type="hidden" id="pricecode"
-                                                    name="pricecode">
-                                                <input class="form-control" type="hidden" id="priceactive"
-                                                    name="priceactive">
-                                                <input class="form-control" type="hidden" id="pricekey"
-                                                    name="pricekey">
-                                            </div>
-                                        
-
-                                            <div class="form-button mt-3 text-center col-md-12">
-                                                <button id="saveprice" type="button"
-                                                    class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon
-                                                        icon="mage:save-floppy"></iconify-icon>
-                                                    บันทึกข้อมูล</button>
-                                                <button id="updateprice" type="button"
-                                                    class="btn btn-success fontth p-2 ps-4 pe-4"
-                                                    style="display: none;"><iconify-icon
-                                                        icon="mdi:newspaper-check"></iconify-icon>
-                                                    อัพเดทข้อมูล</button>
-
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                                        <tr>
+                                            <th scope="col" class="fontth fw-medium">ลำดับ</th>
+                                            <th scope="col" class="fontth fw-medium">บริการ</th>
+                                            <th scope="col" class="fontth fw-medium">ประเภทสัตว์</th>
+                                            <th scope="col" class="fontth fw-medium">ประเภทขน</th>
+                                            <th scope="col" class="fontth fw-medium">ขนาดสัตว์เลี้ยง</th>
+                                            <th scope="col" class="fontth fw-medium">ราคา</th>
+                                            <th scope="col" class="fontth fw-medium">การใช้งาน</th>
+                                            <th scope="col" class="fontth fw-medium">จัดการข้อมูล</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fontth" id="table-price"></tbody>
+                                </table>
                             </div>
 
+                            <div class="row">
+                                <div class="form-holder">
+                                    <div class="form-content">
+                                        <div class="form-items fontth">
+                                            <h3 class="fontth text-center"><iconify-icon icon="mdi:cat"
+                                                    style="font-size: 30px;"></iconify-icon>
+                                                เพิ่มข้อมูลบริการและราคา</h3>
+                                            <p class="mb-0 mt-3">กรุณากรอกข้อมูลให้ถูกต้อง</p>
+                                            <form class="requires-validation mt-2 row" novalidate>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ประเภทบริการ</label>
+                                                    <select class="form-select mt-0" id="p_service" name="p_service"
+                                                        required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ประเภทสัตว์</label>
+
+                                                    <select class="form-select mt-0" id="p_animal" name="p_animal"
+                                                        required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label class="mb-0 text-primary pb-0">ประเภทขน</label>
+
+                                                    <select class="form-select mt-0" id="p_fur" name="p_fur" required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <label class="mb-0 text-primary pb-0">ขนาดสัตว์เลี้ยง</label>
+                                                    <select class="form-select mt-0" id="p_size" name="p_size" required>
+                                                        <option value="">กรุณาเลือก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-8 col-md-6">
+                                                    <label class="mb-0 text-primary pb-0">ราคาค่าบริการ</label>
+                                                    <input class="form-control mt-0" type="text" id="price" name="price"
+                                                        placeholder="เช่น 250" required>
+                                                    <input class="form-control" type="hidden" id="priceid"
+                                                        name="priceid">
+                                                    <input class="form-control" type="hidden" id="pricecode"
+                                                        name="pricecode">
+                                                    <input class="form-control" type="hidden" id="priceactive"
+                                                        name="priceactive">
+                                                    <input class="form-control" type="hidden" id="pricekey"
+                                                        name="pricekey">
+                                                </div>
+
+
+                                                <div class="form-button mt-3 text-center col-md-12">
+                                                    <button id="saveprice" type="button"
+                                                        class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon
+                                                            icon="mage:save-floppy"></iconify-icon>
+                                                        บันทึกข้อมูล</button>
+                                                    <button id="updateprice" type="button"
+                                                        class="btn btn-success fontth p-2 ps-4 pe-4"
+                                                        style="display: none;"><iconify-icon
+                                                            icon="mdi:newspaper-check"></iconify-icon>
+                                                        อัพเดทข้อมูล</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
                         </div>
-
-
-                    </div>
                         <!-- <div class="tab-pane fade" id="v-pills-grooming" role="tabpanel"
                             aria-labelledby="v-pills-grooming-tab" tabindex="0">
                             <h4 class="fontth">ค่าบริการ</h4>
@@ -1065,7 +1083,29 @@
             </div>
         </div>
     </footer>
+   <div class="modal fade" id="detailbooking" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="detailbookingLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable"style="max-width: 600px;width: 100%;">
+            <div class="modal-content h-100" >
+                <div class="modal-header" style="    background-color: burlywood;
+                ">
+                    <h5 class="modal-title fontth" id="detailbookingLabel">รายละเอียดการจอง</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                 
+                    <div class="card p-2 shadow-sm" id="detailbook" style="display: contents;">
 
+                    </div>
+                  
+             
+                    
+                </div>
+              
+                      
+            </div>
+        </div>
+    </div>
     <div id="footer-bottom">
         <div class="container">
             <hr class="m-0">
@@ -1080,6 +1120,7 @@
             </div>
         </div>
     </div>
+ 
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

@@ -675,3 +675,18 @@ Single Product section style start
 background-color: #e6e6e6 !important;
 pointer-events: none;
   }   
+  input[type=time]:disabled,input[type=date]:disabled{
+    background-color: #e6e6e6 !important;
+pointer-events: none;
+  }
+  .bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgb(215 193 164) !important;
+}
+.list-group-item:last-child {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+  border-bottom: 1px dashed #f4e4cf;
+  padding-left: 24px;
+  padding-right: 24px;
+}
