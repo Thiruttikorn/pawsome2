@@ -137,6 +137,7 @@
         width: 100%;
         padding: 9px 20px;
         text-align: left;
+    text-align-last: left;
         border: 0;
         outline: 0;
         border-radius: 6px;
@@ -426,7 +427,9 @@
                                                     <input class="form-control mt-0" type="time" id="booking_time"
                                                         name="booking_time" placeholder="เช่น 08:20" required disabled
                                                         min="09:00" max="20:00">
-
+                                                    <span class="fontth mt-1 pt-1" id="text-errortime" style="font-size: 12px;color:red;line-height: 12px;
+                                                    display: none;">มีผู้จองใช้บริการวันและเวลานี้แล้ว                     
+                                                    </span>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4">
                                                     <label class="mb-0 text-primary pb-0">ชื่อสัตว์เลี้ยง</label>
@@ -476,11 +479,11 @@
                                                 </div>
                                                 <div class="form-button mt-3 text-center col-md-12">
                                                     <button id="calbooking" type="button"
-                                                        class="btn btn-warning fontth p-2 ps-4 pe-4"><iconify-icon
+                                                        class="btn btn-warning fontth p-2 ps-4 pe-4 mb-2"><iconify-icon
                                                             icon="mdi:calculator-variant"></iconify-icon>
                                                         คำนวนราคา</button>
                                                     <button id="savebooking" type="button" disabled
-                                                        class="btn btn-primary fontth p-2 ps-4 pe-4"><iconify-icon
+                                                        class="btn btn-primary fontth p-2 ps-4 pe-4 mb-2"><iconify-icon
                                                             icon="mage:save-floppy"></iconify-icon>
                                                         ยืนยันการจอง</button>
                                                  
