@@ -1,5 +1,4 @@
 window.addEventListener('load', function() {
-
   document.getElementById('v-pills-booking-tab').click();
   selectBooking()
 })
@@ -1206,7 +1205,7 @@ function selectBooking() {
     <td>${data.BOOKGING_PETS_NAME}</td>
     <td>${numberWithCommas(data.BOOKGING_PRICE)}</td>
     
-    <td class="text-center"><button class="w-auto btn btn-secondary btn-sm p-1" id="setbookingdetail" value="${
+    <td class="text-center"><button class="w-auto btn btn-secondary btn-sm p-1 setbookingdetail" value="${
       childSnapshot.key
     }" 
     type="button" ><iconify-icon icon="mdi:clipboard-list-outline" style="color:yellow"></iconify-icon>
@@ -1337,9 +1336,12 @@ document.getElementById('booking_time').addEventListener('change', function(even
   var postListRef = firebase.database().ref('booking');
   let servicebooking = document.getElementById('p_service_booking').value;
   let datebooking = document.getElementById('booking_date').value;
-
+  document.getElementById('savebooking').disabled = true;
+  document.getElementById('booking_price').value = '';
+  document.getElementById('div-showprice').style.display = 'none';
+  document.getElementById('txt-price').innerHTML = '';
+  document.getElementById('text-errortime').style.display='none';
   if (event.target.value != '') {
-
       postListRef.orderByChild('BOOKGING_SV_ID')
           .equalTo(servicebooking)
           .on('value', function(snapshot) {
@@ -1358,10 +1360,12 @@ document.getElementById('booking_time').addEventListener('change', function(even
                       if (month < 10) {
                           month = `0${month}`;
                       }
+                  
                       if (data.BOOKGING_TIME == event.target.value && data.BOOKGING_DATE == `${year}-${month}-${day}` && data.BOOKGING_Active == 1) {
-                          
-                        alert('ไม่สามารถจองเวลานี้ได้ เนื่องจากบริการที่ท่านเลือก \nมีผู้จองใช้บริการวันและเวลานี้แล้ว\n กรุณาเลือกเวลาอื่น')
-                          document.getElementById('booking_time').value = '';
+                        document.getElementById('booking_time').value = '';
+                        document.getElementById('div-showprice').style.display='none';
+                        document.getElementById('text-errortime').style.display='block';
+                        return;
                       }
                   })
               } else {
@@ -1375,165 +1379,168 @@ document.getElementById('booking_time').addEventListener('change', function(even
 
 function eventdetail() {
   selectOption('fur', '')
-  selectOption('size', '')
-  document.getElementById('setbookingdetail').addEventListener('click', function(event) {
+  selectOption('size', '');
+  document.querySelectorAll('.setbookingdetail').forEach(item => {
+    item.addEventListener('click', function(event) {
+        if (event.target.value != '') {
+            // var postListRef = firebase.database().ref('booking').child(event.target.value);
+            let html = '';
+            if (firebase.database().ref(`/booking/${event.target.value}`).key == 'undefined' || firebase.database().ref(`/booking/${event.target.value}`).key == undefined) {
+                document.getElementById('detailbook').innerHTML = '<p class="fontth text-center text-black">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>';
+                $('#detailbooking').modal('show');
+            } else {
+                firebase.database().ref(`/booking/${event.target.value}`).on('child_added', snapshot => {
+  
+                    if (snapshot.exists()) {
+  
+                        let objectDate = '';
+                        let day = '';
+                        let month = '';
+                        let year = '';
+  
+                        const data = snapshot.val();
+                        html += `<ul class="list-group fontth">`;
+                        if (snapshot.key == 'BOOKGING_ID') {
+                            html += `<input type="hidden" id="input_bookingid" value="${data}">`;
+                        } else if (snapshot.key == 'BOOKGING_CODE') {
+                            html += `<input type="hidden" id="input_bookingcode" value="${data}">`;
+                        } else if (snapshot.key == 'BOOKGING_ANM_ID') {
+                            html += `<input type="hidden" id="input_bookinganmid" value="${data}">`;
+                        } else if (snapshot.key == 'BOOKGING_CUSOMER_NAME') {
+                            html += `<input type="hidden" id="input_bookingcusname" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+              ชื่อลูกค้า<span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_CUSOMER_TEL') {
+                            html += `<input type="hidden" id="input_bookingcustel" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                เบอร์โทรติดต่อ<span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_SV_ID') {
+                            html += `<input type="hidden" id="input_bookingsvid" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                บริการที่จอง<span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${getTextInOption("p_service_booking",data)}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_DATE') {
+                            objectDate = new Date(data);
+                            day = objectDate.getDate();
+                            month = objectDate.getMonth() + 1;
+                            year = objectDate.getFullYear();
+                            if (day < 10) {
+                                day = '0' + day;
+                            }
+  
+                            if (month < 10) {
+                                month = `0${month}`;
+                            }
+                            html += `<input type="hidden" id="input_bookingdate" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                วันที่จอง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${day}/${month}/${year}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_TIME') {
+                            html += `<input type="hidden" id="input_bookingtime" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                เวลาที่จอง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_PETS_NAME') {
+                            html += `<input type="hidden" id="input_bookingpetname" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                ชื่อสัตว์เลี้ยง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_FUR_ID') {
+                            html += `<input type="hidden" id="input_bookingfurid" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                ประเภทขน <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${getTextInOption("p_fur",data)}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_PZ_ID') {
+                            html += `<input type="hidden" id="input_bookingpzid" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                น้ำหนักสัตว์เลี้ยง <span class="badge text-primary   rounded-pill p-2" style="font-size:14px">${getTextInOption("p_size",data)}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_PRICE') {
+                            html += `<input type="hidden" id="input_bookingprice" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                ราคาค่าบริการ <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${numberWithCommas(data)}</span></li>`;
+                        } else if (snapshot.key == 'BOOKGING_Active') {
+  
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                สถานะการจอง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">
+                <select class="form-select mt-0" id="p_booking_active" name="p_booking_active">
+                                  <option value="0"${(data=='0' ? 'selected': '')}>ยกเลิก</option>
+                                  <option value="1"${(data=='1' ? 'selected': '')}>รอให้บริการ</option>
+                                  <option value="2"${(data=='2' ? 'selected': '')}>ให้บริการเสร็จสิ้น</option>
+                                  </select>
+                
+               </span></li>`;
+                        } else if (snapshot.key == 'Payment_Active') {
+  
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                สถานะการชำระเงิน <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">
+                <select class="form-select mt-0" id="p_payment_active" name="p_payment_active">
+                                  <option value="0"${(data=='0' ? 'selected': '')}>ยังไม่ชำระ</option>
+                                  <option value="1"${(data=='1' ? 'selected': '')}>ชำระเงินแล้ว</option>
+                              </select>
+                              </span></li>`;
+                        } else {}
+                        html += `  </ul>`;
+                        // })
+                    } else {
+                        html += '<p class="fontth text-center text-black">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>';
+  
+                    }
+                })
+                document.getElementById('detailbook').innerHTML = html + `<p class="text-end mt-2 mb-0" style="float: right;">
+    <button type="button"
+    class="btn btn-warning fontth d-block p-1 ps-4 pe-4 updatebook" value="${event.target.value}">อัพเดทข้อมูล
+    </button></p>`;
+                $('#detailbooking').modal('show');
+                document.querySelector('.updatebook').addEventListener('click', function(event) {
+                    let payment = document.getElementById('p_payment_active').value;
+                    let active = document.getElementById('p_booking_active').value;
+                    let bookid = document.getElementById('input_bookingid').value;
+                    let bookcode = document.getElementById('input_bookingcode').value;
+                    let booksvid = document.getElementById('input_bookingsvid').value;
+                    let bookanmid = document.getElementById('input_bookinganmid').value;
+                    let bookfurid = document.getElementById('input_bookingfurid').value;
+                    let bookpzid = document.getElementById('input_bookingpzid').value;
+                    let bookcusname = document.getElementById('input_bookingcusname').value;
+                    let bookcustel = document.getElementById('input_bookingcustel').value;
+                    let bookdate = document.getElementById('input_bookingdate').value;
+                    let booktime = document.getElementById('input_bookingtime').value;
+                    let bookpets = document.getElementById('input_bookingpetname').value;
+                    let bookprice = document.getElementById('input_bookingprice').value;
+  
+                    firebase
+                        .database()
+                        .ref('booking')
+                        .child(event.target.value)
+                        .update({
+                            BOOKGING_ID: bookid,
+                            BOOKGING_CODE: bookcode,
+                            BOOKGING_SV_ID: booksvid,
+                            BOOKGING_ANM_ID: bookanmid,
+                            BOOKGING_FUR_ID: bookfurid,
+                            BOOKGING_PZ_ID: bookpzid,
+                            BOOKGING_CUSOMER_NAME: bookcusname,
+                            BOOKGING_CUSOMER_TEL: bookcustel,
+                            BOOKGING_DATE: bookdate,
+                            BOOKGING_TIME: booktime,
+                            BOOKGING_PETS_NAME: bookpets,
+                            BOOKGING_PRICE: bookprice,
+                            BOOKGING_Active: active,
+                            Payment_Active: payment
+                        })
+                        .then(() => {
+                            alert('อัพเดทข้อมูลสำเร็จ')
+                            $('#detailbooking').modal('hide');
+                            document.getElementById('v-pills-booking-tab').click();
+                            const e = new Event("change");
+                            const element = document.querySelector('#booking_update_active')
+                            element.dispatchEvent(e);
+                            document.getElementById("booking_update_active").selectedIndex = "1";
+                        })
+                        .catch(error => {
+                            alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
+                            $('#detailbooking').modal('hide');
+                            document.getElementById('v-pills-booking-tab').click();
+                            const e = new Event("change");
+                            const element = document.querySelector('#booking_update_active')
+                            element.dispatchEvent(e);
+                            document.getElementById("booking_update_active").selectedIndex = "1";
+                        })
+  
+                });
+            }
+  
+  
+  
+        }
+    });
 
-      if (event.target.value != '') {
-          // var postListRef = firebase.database().ref('booking').child(event.target.value);
-          let html = '';
-          if (firebase.database().ref(`/booking/${event.target.value}`).key == 'undefined' || firebase.database().ref(`/booking/${event.target.value}`).key == undefined) {
-              document.getElementById('detailbook').innerHTML = '<p class="fontth text-center text-black">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>';
-              $('#detailbooking').modal('show');
-          } else {
-              firebase.database().ref(`/booking/${event.target.value}`).on('child_added', snapshot => {
-
-                  if (snapshot.exists()) {
-
-                      let objectDate = '';
-                      let day = '';
-                      let month = '';
-                      let year = '';
-
-                      const data = snapshot.val();
-                      html += `<ul class="list-group fontth">`;
-                      if (snapshot.key == 'BOOKGING_ID') {
-                          html += `<input type="hidden" id="input_bookingid" value="${data}">`;
-                      } else if (snapshot.key == 'BOOKGING_CODE') {
-                          html += `<input type="hidden" id="input_bookingcode" value="${data}">`;
-                      } else if (snapshot.key == 'BOOKGING_ANM_ID') {
-                          html += `<input type="hidden" id="input_bookinganmid" value="${data}">`;
-                      } else if (snapshot.key == 'BOOKGING_CUSOMER_NAME') {
-                          html += `<input type="hidden" id="input_bookingcusname" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-            ชื่อลูกค้า<span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_CUSOMER_TEL') {
-                          html += `<input type="hidden" id="input_bookingcustel" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              เบอร์โทรติดต่อ<span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_SV_ID') {
-                          html += `<input type="hidden" id="input_bookingsvid" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              บริการที่จอง<span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${getTextInOption("p_service_booking",data)}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_DATE') {
-                          objectDate = new Date(data);
-                          day = objectDate.getDate();
-                          month = objectDate.getMonth() + 1;
-                          year = objectDate.getFullYear();
-                          if (day < 10) {
-                              day = '0' + day;
-                          }
-
-                          if (month < 10) {
-                              month = `0${month}`;
-                          }
-                          html += `<input type="hidden" id="input_bookingdate" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              วันที่จอง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${day}/${month}/${year}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_TIME') {
-                          html += `<input type="hidden" id="input_bookingtime" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              เวลาที่จอง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_PETS_NAME') {
-                          html += `<input type="hidden" id="input_bookingpetname" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              ชื่อสัตว์เลี้ยง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${data}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_FUR_ID') {
-                          html += `<input type="hidden" id="input_bookingfurid" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              ประเภทขน <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${getTextInOption("p_fur",data)}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_PZ_ID') {
-                          html += `<input type="hidden" id="input_bookingpzid" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              น้ำหนักสัตว์เลี้ยง <span class="badge text-primary   rounded-pill p-2" style="font-size:14px">${getTextInOption("p_size",data)}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_PRICE') {
-                          html += `<input type="hidden" id="input_bookingprice" value="${data}"><li class="list-group-item d-flex justify-content-between align-items-center">
-              ราคาค่าบริการ <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">${numberWithCommas(data)}</span></li>`;
-                      } else if (snapshot.key == 'BOOKGING_Active') {
-
-                          html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-              สถานะการจอง <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">
-              <select class="form-select mt-0" id="p_booking_active" name="p_booking_active">
-                                <option value="0"${(data=='0' ? 'selected': '')}>ยกเลิก</option>
-                                <option value="1"${(data=='1' ? 'selected': '')}>รอให้บริการ</option>
-                                <option value="2"${(data=='2' ? 'selected': '')}>ให้บริการเสร็จสิ้น</option>
-                                </select>
-              
-             </span></li>`;
-                      } else if (snapshot.key == 'Payment_Active') {
-
-                          html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-              สถานะการชำระเงิน <span class="badge text-primary  rounded-pill p-2" style="font-size:14px">
-              <select class="form-select mt-0" id="p_payment_active" name="p_payment_active">
-                                <option value="0"${(data=='0' ? 'selected': '')}>ยังไม่ชำระ</option>
-                                <option value="1"${(data=='1' ? 'selected': '')}>ชำระเงินแล้ว</option>
-                            </select>
-                            </span></li>`;
-                      } else {}
-                      html += `  </ul>`;
-                      // })
-                  } else {
-                      html += '<p class="fontth text-center text-black">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>';
-
-                  }
-              })
-              document.getElementById('detailbook').innerHTML = html + `<p class="text-end mt-2 mb-0" style="float: right;">
-  <button type="button"
-  class="btn btn-warning fontth d-block p-1 ps-4 pe-4 updatebook" value="${event.target.value}">อัพเดทข้อมูล
-  </button></p>`;
-              $('#detailbooking').modal('show');
-              document.querySelector('.updatebook').addEventListener('click', function(event) {
-                  let payment = document.getElementById('p_payment_active').value;
-                  let active = document.getElementById('p_booking_active').value;
-                  let bookid = document.getElementById('input_bookingid').value;
-                  let bookcode = document.getElementById('input_bookingcode').value;
-                  let booksvid = document.getElementById('input_bookingsvid').value;
-                  let bookanmid = document.getElementById('input_bookinganmid').value;
-                  let bookfurid = document.getElementById('input_bookingfurid').value;
-                  let bookpzid = document.getElementById('input_bookingpzid').value;
-                  let bookcusname = document.getElementById('input_bookingcusname').value;
-                  let bookcustel = document.getElementById('input_bookingcustel').value;
-                  let bookdate = document.getElementById('input_bookingdate').value;
-                  let booktime = document.getElementById('input_bookingtime').value;
-                  let bookpets = document.getElementById('input_bookingpetname').value;
-                  let bookprice = document.getElementById('input_bookingprice').value;
-
-                  firebase
-                      .database()
-                      .ref('booking')
-                      .child(event.target.value)
-                      .update({
-                          BOOKGING_ID: bookid,
-                          BOOKGING_CODE: bookcode,
-                          BOOKGING_SV_ID: booksvid,
-                          BOOKGING_ANM_ID: bookanmid,
-                          BOOKGING_FUR_ID: bookfurid,
-                          BOOKGING_PZ_ID: bookpzid,
-                          BOOKGING_CUSOMER_NAME: bookcusname,
-                          BOOKGING_CUSOMER_TEL: bookcustel,
-                          BOOKGING_DATE: bookdate,
-                          BOOKGING_TIME: booktime,
-                          BOOKGING_PETS_NAME: bookpets,
-                          BOOKGING_PRICE: bookprice,
-                          BOOKGING_Active: active,
-                          Payment_Active: payment
-                      })
-                      .then(() => {
-                          alert('อัพเดทข้อมูลสำเร็จ')
-                          $('#detailbooking').modal('hide');
-                          document.getElementById('v-pills-booking-tab').click();
-                          const e = new Event("change");
-                          const element = document.querySelector('#booking_update_active')
-                          element.dispatchEvent(e);
-                          document.getElementById("booking_update_active").selectedIndex = "1";
-                      })
-                      .catch(error => {
-                          alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่');
-                          $('#detailbooking').modal('hide');
-                          document.getElementById('v-pills-booking-tab').click();
-                          const e = new Event("change");
-                          const element = document.querySelector('#booking_update_active')
-                          element.dispatchEvent(e);
-                          document.getElementById("booking_update_active").selectedIndex = "1";
-                      })
-
-              });
-          }
-
-
-
-      }
+     
   })
 }
 
@@ -1749,6 +1756,8 @@ document.getElementById('savebooking').addEventListener('click', function(event)
       alert('กรุณาเลือกขนาดสัตว์เลี้ยง')
       return false
   } else {
+
+ 
       document.getElementById('calbooking').click();
       let coll = 0
 
@@ -1779,18 +1788,19 @@ document.getElementById('savebooking').addEventListener('click', function(event)
           error => {
               if (error) {
                   alert('จองบริการไม่สำเร็จ')
-                  document.getElementById('v-pills-booking-tab').click()
+                 location.reload()
                   return false
                   // The write failed...
               } else {
                   alert('จองบริการสำเร็จ')
-
-                  document.getElementById('v-pills-booking-tab').click()
-                  // Data saved successfully!
+                    document.getElementById('div-showprice').style.display='none';
+                    location.reload()                  // Data saved successfully!
                   return false
               }
           }
       )
+   
+
   }
 })
 
@@ -1852,7 +1862,7 @@ document.getElementById('booking_update_active').addEventListener('change', func
           <td>${data.BOOKGING_PETS_NAME}</td>
           <td>${numberWithCommas(data.BOOKGING_PRICE)}</td>
           
-          <td class="text-center"><button class="w-auto btn btn-secondary btn-sm p-1" id="setbookingdetail" value="${
+          <td class="text-center"><button class="w-auto btn btn-secondary btn-sm p-1 setbookingdetail" value="${
             childSnapshot.key
           }"
           type="button"><iconify-icon icon="mdi:clipboard-list-outline"   style="color: yellow"></iconify-icon>

@@ -8,7 +8,8 @@ function initApp () {
         if (user.email == 'admin@admin.com') {
           location.replace('booking-manage.html')
         } else {
-          location.replace('user-manage.html')
+          location.replace('index.html')
+          // location.replace('user-manage.html')
         }
       })
     } else {
