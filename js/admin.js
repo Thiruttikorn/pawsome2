@@ -1347,8 +1347,20 @@ document.getElementById('booking_time').addEventListener('change', function(even
               if (snapshot.exists()) {
                   snapshot.forEach(function(childSnapshot) {
                       const data = childSnapshot.val();
-                      if (data.BOOKGING_TIME == event.target.value && data.BOOKGING_DATE == datebooking && data.BOOKGING_Active == 1) {
-                          alert('ไม่สามารถจองเวลานี้ได้ เนื่องจากบริการที่ท่านเลือก \nมีผู้จองใช้บริการวันและเวลานี้แล้ว\n กรุณาเลือกเวลาอื่น')
+                      let objectDate = new Date(datebooking);
+                      let day = objectDate.getDate();
+                      let month = objectDate.getMonth() + 1;
+                      let year = objectDate.getFullYear();
+                      if (day < 10) {
+                          day = '0' + day;
+                      }
+        
+                      if (month < 10) {
+                          month = `0${month}`;
+                      }
+                      if (data.BOOKGING_TIME == event.target.value && data.BOOKGING_DATE == `${year}-${month}-${day}` && data.BOOKGING_Active == 1) {
+                          
+                        alert('ไม่สามารถจองเวลานี้ได้ เนื่องจากบริการที่ท่านเลือก \nมีผู้จองใช้บริการวันและเวลานี้แล้ว\n กรุณาเลือกเวลาอื่น')
                           document.getElementById('booking_time').value = '';
                       }
                   })
