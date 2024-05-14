@@ -15,6 +15,13 @@
     --header-height: 100px;
     --header-height-min: 80px;
   }
+  .modal.show .modal-dialog {
+    transform: none;
+    max-width: 500px !important;
+    width: 100%!important;
+    margin-right: auto!important;
+    margin-left: auto!important;
+  }
 }
 
 /* Theme Colors */
@@ -569,7 +576,19 @@ iconify-icon.send-icon {
     font-weight: 600;
     margin-bottom: 0px;
   }
+
 }
+@media only screen and (max-width: 400px) {
+
+.modal.show .modal-dialog {
+  transform: none;
+  max-width: 350px !important;
+  width: 100%!important;
+  margin-right: auto!important;
+  margin-left: auto!important;
+}
+}
+
 @media only screen and (max-width: 375px) {
 .navbar{
   margin: 0;
