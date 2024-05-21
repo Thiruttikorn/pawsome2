@@ -36,6 +36,12 @@
   --light-primary-color: #eef1f3;
 }
 
+thead{
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
 /* Fonts */
 :root {
   --body-font: 'Chilanka', cursive;
@@ -690,7 +696,9 @@ Single Product section style start
 .active-icon {
   color: #dead6f;
 }
-
+.justify-content-center {
+  justify-content: flex-end !important;
+}
 .tab-pane {
   padding: 20px;
   /* padding-right: 20px; */

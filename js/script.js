@@ -1,5 +1,5 @@
 var firebaseConfig = { // enter the details below
-  apiKey: "AIzaSyBtBLjODkH8iFlpPPJ31qeIIM5lDWSNgSc",
+apiKey: "AIzaSyBtBLjODkH8iFlpPPJ31qeIIM5lDWSNgSc",
 authDomain: "pawsome-e2cd3.firebaseapp.com",
 databaseURL: "https://pawsome-e2cd3-default-rtdb.firebaseio.com",
 projectId: "pawsome-e2cd3",
@@ -56,6 +56,7 @@ function hideBooking(style){
     item.style.display = style;
   });
 }
+
 document.querySelectorAll(".booking").forEach(item => {
   item.addEventListener("click", () => {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -98,3 +99,4 @@ document.querySelectorAll(".signout").forEach(item => {
 
 
 });
+
