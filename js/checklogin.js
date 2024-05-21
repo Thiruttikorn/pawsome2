@@ -1,6 +1,7 @@
 window.addEventListener('load', function () {
   initApp()
 })
+
 function initApp () {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
