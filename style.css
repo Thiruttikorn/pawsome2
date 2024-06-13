@@ -601,7 +601,7 @@ iconify-icon.send-icon {
     flex-direction: row-reverse;
 }
 #usernametext2{
-  display: none !important;
+  word-break: break-all;
 }
 .form-holder {
   padding: 0px !important;

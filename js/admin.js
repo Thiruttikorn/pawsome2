@@ -1,6 +1,8 @@
 var arr
 var obj
 window.addEventListener('load', function () {
+    checkLogin();
+
     document.getElementById('v-pills-booking-tab').click()
     selectBooking()
 })

@@ -25,58 +25,38 @@ firebase.initializeApp(firebaseConfig);
   }
 
 
-
-  var initSwiper = function() {
-
-    var swiper = new Swiper(".main-swiper", {
-      speed: 500,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-
-
-  }
-
   // document ready
   $(document).ready(function() {
-    
     initPreloader();
-    initSwiper();
-
-     
-   
+    if (document.body.classList.contains('hide-page')) {
+      document.body.classList.remove('hide-page')
+    }
   }); // End of a document
 
 })(jQuery);
 
-function hideBooking(style){
-  document.querySelectorAll(".bookicon").forEach(item => {
-    item.style.display = style;
-  });
-}
-
-document.querySelectorAll(".booking").forEach(item => {
-  item.addEventListener("click", () => {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        if(user.email=="admin@admin.com"){
-          setHrefManage('booking-manage.html');
-          window.location.href = 'booking-manage.html';
+function checkLogin() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      user.getIdToken().then(function (accessToken) {
+        if (user.email != 'admin@admin.com') {
+          location.replace('login.html')
         }else{
-          setHrefManage('user-manage.html');
-          window.location.href = 'user-manage.html';
+          document.getElementById('usernametext').innerHTML = user.email
+          document.getElementById('usernametext2').innerHTML = user.email
+          document.getElementById('signOut').style.display = 'inline-block'
         }
-        
-      } else {
-        alert('กรุณาลงชื่อเข้าใช้ระบบ');
-        window.location.href = 'login.html';
+      })
+    } else {
+      if (document.body.classList.contains('hide-page')) {
+          document.body.classList.remove('hide-page')
       }
-    })
-  });
-});
-
+      document.getElementById('signOut').style.display = 'none'
+      document.getElementById('usernametext').innerHTML = ''
+      document.getElementById('usernametext2').innerHTML = ''
+    }
+  })
+}
 document.querySelectorAll(".signout").forEach(item => {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {

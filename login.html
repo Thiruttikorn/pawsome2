@@ -31,10 +31,6 @@
 <!-- <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" /> -->
 <script type="module" src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
 <style>
-  .instagram-item {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
 
   .auth-card {
     max-width: 650px;
@@ -114,129 +110,11 @@
     <div class="preloader">
     </div>
   </div>
-
- 
-  <header>
-
-
-    <div class="container-fluid">
-      <hr class="m-0">
-    </div>
-
-    <div class="container">
-      <nav class="main-menu pt-3 d-flex navbar navbar-expand-lg ">
-
-        <div class="d-flex d-lg-none align-items-end mt-3">
-          <ul class="d-flex justify-content-end list-unstyled m-0">
-            
-            <li>
-              <a href="#" class="mx-3 bookicon">
-                <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
-              </a>
-            </li>
-            <li>
-              <a href="login.html" class="mx-3">
-                <iconify-icon icon="healthicons:person" class="fs-4 icon-person"></iconify-icon>
-              </a>
-              <span id="usernametext2"></span>
-              <!-- <span id="usernametext"></span> -->
-            </li>
-            <li>
-              <a id="signOut" class="mx-3 signout rounded-2 ps-2 pe-2 pt-1 pb-1" style="background-color: antiquewhite;">
-                Logout
-              </a>
-            </li>
-          </ul>
-
-        </div>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-
-          <div class="offcanvas-header justify-content-center">
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-
-          <div class="offcanvas-body justify-content-between">
-            <div class="main-logo">
-              <a href="index.html">
-                <img src="images/Logo Pawsome.png" alt="logo" class="img-fluid" width="85">
-              </a>
-            </div>
-
-            <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
-              <li class="nav-item">
-                <a href="index.html" class="nav-link ">Home</a>
-              </li>
-
-              <li class="nav-item">
-                <a href="#" class="nav-link booking">Booking online</a>
-              </li>
-              <li class="nav-item">
-                <a href="blog.html" class="nav-link">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="about.html" class="nav-link">About</a>
-              </li>
-
-            </ul>
-
-            <div class="d-none d-lg-flex align-items-end">
-              <ul class="d-flex justify-content-end list-unstyled m-0">
-              
-
-                <li>
-                  <a href="#" class="mx-3 bookicon">
-                    <iconify-icon icon="eva:calendar-fill" class="fs-4"></iconify-icon>
-                  </a>
-                </li>
-                <li style="margin-bottom: 10px;">
-                  <a href="login.html" class="mx-3 active">
-                    <iconify-icon icon="healthicons:person" class="fs-4 icon-person"></iconify-icon>
-                  </a>
-                  <span id="usernametext"></span>
-                </li>
-                <li>
-                  <a id="signOut" class="mx-3 signout rounded-2 ps-2 pe-2 pt-1 pb-1" style="background-color: antiquewhite;">
-                    Logout
-                  </a>
-                </li>
-              </ul>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </nav>
-
-
-
-    </div>
-  </header>
   <section class="login-tabs padding-large">
     <div class="container my-5 py-5">
       <div class="row">
         <div class="tabs-listing">
-          <nav>
-            <div class="nav nav-tabs d-flex justify-content-center border-dark-subtle mb-3" id="nav-tab" role="tablist">
-              <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase active"
-                id="nav-sign-in-tab" data-bs-toggle="tab" data-bs-target="#nav-sign-in" type="button" role="tab"
-                aria-controls="nav-sign-in" aria-selected="true">
-                Log In
-              </button>
-              <!-- <button class="nav-link mx-3 fs-3 border-bottom border-dark-subtle border-0 text-uppercase"
-                id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab"
-                aria-controls="nav-register" aria-selected="false" tabindex="-1">
-                Sign Up
-              </button> -->
-            </div>
-          </nav>
+        
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade active show" id="nav-sign-in" role="tabpanel" aria-labelledby="nav-sign-in-tab">
               <div class="col-lg-8 offset-lg-2 mt-0">
@@ -382,147 +260,6 @@
       </div>
     </div>
   </section>
-  <section id="insta" class="my-5">
-    <div class="row g-0 py-5">
-      <div class="col instagram-item text-center position-relative">
-        <div class="icon-overlay d-flex justify-content-center position-absolute">
-          <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-        </div>
-        <a href="#">
-          <img src="images/insta1.jpg" alt="insta-img" class="img-fluid rounded-3" />
-        </a>
-      </div>
-      <div class="col instagram-item text-center position-relative">
-        <div class="icon-overlay d-flex justify-content-center position-absolute">
-          <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-        </div>
-        <a href="#">
-          <img src="images/insta2.jpg" alt="insta-img" class="img-fluid rounded-3" />
-        </a>
-      </div>
-      <div class="col instagram-item text-center position-relative">
-        <div class="icon-overlay d-flex justify-content-center position-absolute">
-          <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-        </div>
-        <a href="#">
-          <img src="images/insta3.jpg" alt="insta-img" class="img-fluid rounded-3" />
-        </a>
-      </div>
-      <div class="col instagram-item text-center position-relative">
-        <div class="icon-overlay d-flex justify-content-center position-absolute">
-          <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-        </div>
-        <a href="#">
-          <img src="images/insta4.jpg" alt="insta-img" class="img-fluid rounded-3" />
-        </a>
-      </div>
-      <div class="col instagram-item text-center position-relative">
-        <div class="icon-overlay d-flex justify-content-center position-absolute">
-          <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-        </div>
-        <a href="#">
-          <img src="images/insta5.jpg" alt="insta-img" class="img-fluid rounded-3" />
-        </a>
-      </div>
-      <div class="col instagram-item text-center position-relative">
-        <div class="icon-overlay d-flex justify-content-center position-absolute">
-          <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-        </div>
-        <a href="#">
-          <img src="images/insta6.jpg" alt="insta-img" class="img-fluid rounded-3" />
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer id="footer" class="my-5">
-    <div class="container py-5 my-5">
-      <div class="row">
-
-  
-        <div class="col-sm-4">
-          <div class="footer-menu">
-            <img src="images/Logo Pawsome.png" alt="logo" width="120">
-            <p class="blog-paragraph fs-6 mt-3">Hours of Operation</p>
-            <p class="blog-paragraph mt-0" style="font-size: 12px;">
-              Mon - Fri : 9am - 6pm </p>
-            <p class="blog-paragraph mt-0" style="font-size: 12px;">
-
-              Sat : 10am - 2pm</p>
-            <p class="blog-paragraph  mt-0" style="font-size: 12px;">
-
-              sun : closed </p>
-
-          </div>
-        </div>
- 
-        <div class="col-sm-4">
-          <div class="footer-menu">
-            <h4>Quick Links</h4>
-            <ul class="menu-list list-unstyled">
-              <li class="menu-item">
-                <a href="index.html" class="nav-link">Home</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="nav-link booking">Booking Online</a>
-              </li>
-              <li class="menu-item">
-                <a href="blog.html" class="nav-link">Blog </a>
-              </li>
-              <li class="menu-item">
-                <a href="about.html" class="nav-link">About Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- <div class="col-md-3">
-          <div class="footer-menu">
-            <h4>Help Center</h4>
-            <ul class="menu-list list-unstyled">
-              <li class="menu-item">
-                <a class="nav-link" id="signOut" style="display: none;cursor: pointer;">Logout</a>
-              </li>
-            </ul>
-          </div>
-        </div> -->
-  
-        <div class="col-sm-4">
-          <div>
-            <h4>Contact</h4>
-            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-              Phone </p>
-            <p class="blog-paragraph mt-0" style="font-size: 12px;">
-              123-456-7890 </p>
-            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-              Email </p>
-            <p class="blog-paragraph  mt-0" style="font-size: 12px;">
-              Thiruttikorn.a@mail.kmutt.ac.th </p>
-            <p class="blog-paragraph mt-0 mb-0" style="font-size: 13px;">
-              Area Of Service </p>
-            <p class="blog-paragraph mt-0" style="font-size: 12px;">
-              Kmutt Univercity</p>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </footer>
-
-  <div id="footer-bottom">
-    <div class="container">
-      <hr class="m-0">
-      <div class="row mt-3">
-        <div class="col-md-6 copyright">
-          <p class="secondary-font">©2024 Pawsome. All rights reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <p class="secondary-font">Design by: Thiruttikorn<a href="#" target="_blank"
-              class="text-decoration-underline fw-bold text-black-50"> Thiruttikorn</a> </p>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script src="js/jquery-1.11.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
@@ -532,9 +269,7 @@
   <script src="js/plugins.js"></script>
   <script src="js/script.js"></script>
   <script src="js/checklogin.js"></script>
-  
-  <!-- <script src="js/auth.js"></script> -->
-  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </body>
 
 </html>
