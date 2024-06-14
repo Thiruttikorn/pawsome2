@@ -1,3 +1,4 @@
+//////// connect firebase ////////////
 var firebaseConfig = { // enter the details below
 apiKey: "AIzaSyBtBLjODkH8iFlpPPJ31qeIIM5lDWSNgSc",
 authDomain: "pawsome-e2cd3.firebaseapp.com",
@@ -13,6 +14,7 @@ firebase.initializeApp(firebaseConfig);
   
   "use strict";
 
+//////// use loader ////////////
   var initPreloader = function() {
     $(document).ready(function($) {
     var Body = $('body');
@@ -34,7 +36,7 @@ firebase.initializeApp(firebaseConfig);
   }); // End of a document
 
 })(jQuery);
-
+//////// check login ////////////
 function checkLogin() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -57,6 +59,7 @@ function checkLogin() {
     }
   })
 }
+//////// signout ////////////
 document.querySelectorAll(".signout").forEach(item => {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
