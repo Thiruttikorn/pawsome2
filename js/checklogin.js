@@ -26,7 +26,7 @@ function SignIn () {
             .auth()
             .signOut()
             .then(() => {
-              location.replace('login.html')
+              location.replace('index.html')
             })
             .catch(error => {
               alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')

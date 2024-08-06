@@ -42,7 +42,7 @@ function checkLogin() {
     if (user) {
       user.getIdToken().then(function (accessToken) {
         if (user.email != 'admin@admin.com') {
-          location.replace('login.html')
+          location.replace('index.html')
         }else{
           document.getElementById('usernametext').innerHTML = user.email
           document.getElementById('usernametext2').innerHTML = user.email
@@ -69,7 +69,7 @@ document.querySelectorAll(".signout").forEach(item => {
         .auth()
         .signOut()
         .then(() => {
-          location.replace("login.html")
+          location.replace("index.html")
         })
         .catch(error => {
           alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
