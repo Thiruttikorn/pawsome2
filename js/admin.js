@@ -1,119 +1,131 @@
-var arr
-var obj
+var arr,obj;
+// ========= Window on load ==============================
 window.addEventListener('load', function () {
-    document.getElementById('v-pills-booking-tab').click()
-    selectBooking()
+    // 1. เช็คสถานะว่ามีการ login หรือยัง
+    checkLogin();
+    // 2. กดปุ่ม booking
+    document.getElementById('v-pills-booking-tab').click();
 })
 
 // ========= Animal Type ==============================
 document
     .getElementById('v-pills-pets-tab')
     .addEventListener('click', function (event) {
+        // 1. โชว์ตาราง
         document.getElementById('tb-animal').style.display = 'inline-table'
+        // 2. ดึงข้อมูลประเภทสัตว์ จาก database
         selectAnimal()
     })
+// ========= Select AnimalType Table ==============================
 
 function selectAnimal() {
-    var postListRef = firebase.database().ref('animal_type')
+    var postListRef = firebase.database().ref('animal_type') //สำหรับติดต่อฐานข้อมูล และเชื่อมต่อตาราง animal_Type
     var html = ''
-    document.getElementById('updateanimal').style.display = 'none'
-    document.getElementById('saveanimal').style.display = 'inline-block'
+    document.getElementById('updateanimal').style.display = 'none' // ซ่อนปุ่มอัพเดทข้อมูล
+    document.getElementById('saveanimal').style.display = 'inline-block'//โชว์ปุ่มบันทึกข้อมูล
 
-    document.getElementById('animaltype').value = ''
+    // << Input สำหรับเก็บค่า หากมีการเลือกคลิกปุ่ม update ข้อมูล เพื่อใช้อ้างอิงตอนอัพเดทลงฐานข้อมูล>>
+    //set ค่าว่างไว้ก่อนเพราะยังไม่มีการกดคลิกอัพเดทข้อมูล
+    document.getElementById('animaltype').value = ''  //สำหรับไว้เก็บค่า ประเภทสัตว์
+    document.getElementById('animalid').value = ''    //สำหรับไว้เก็บค่า ID ประเภทสัตว์
+    document.getElementById('animalcode').value = ''  //สำหรับไว้เก็บค่า code ประเภทสัตว์
+    document.getElementById('animalactive').value = '' //สำหรับไว้เก็บค่า ใช้หรือไม่ใช้ ประเภทสัตว์
+    document.getElementById('animalkey').value = ''    //สำหรับไว้เก็บค่า คีย์ของข้อมูลประเภทสัตว์นั้นๆ
+    // <<------------->>
 
-    document.getElementById('animalid').value = ''
-
-    document.getElementById('animalcode').value = ''
-
-    document.getElementById('animalactive').value = ''
-    document.getElementById('animalkey').value = ''
+    //สร้าง row ของตารางให้กว้างเต็มจำนวนคอลัมน์ ให้ใส่ loding ก่อนดึงข้อมูล
     document.getElementById(
         'table-animaltype'
-    ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white">    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon>
-  </td></tr>`
-    // document.getElementById('table-animaltype').innerHTML = ''
+    ).innerHTML = `<tr class="bg-light">
+    <td colspan="5" class="text-center bg-white">
+    <iconify-icon icon="svg-spinners:blocks-shuffle-3" width="48" height="48"  style="color: #574105"></iconify-icon></td></tr>`
+
+
+     //นำตาราง animal type มาแสดงข้อมูล
+
     postListRef
-        .orderByChild('ANM_Active')
-        .equalTo('1')
-        .on('value', function (snapshot) {
-            if (snapshot.exists()) {
-                let i = 0
-                snapshot.forEach(function (childSnapshot) {
-                    const data = childSnapshot.val()
-                    html += `<tr>
-    <th scope="row">${i + 1}</th>
-    <td>${data.ANM_Name}</td>
-    <td>${data.ANM_Code}</td>
-    <td>
-    ${data.ANM_Active == '1'
-                            ? `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: greenyellow;"></iconify-icon>
-    ปกติ`
-                            : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
-    ไม่ใช้งาน`
-                        }</td>
-  <td> <button class="w-auto btn btn-danger btn-sm p-1 delanimal"
-            type="button" value="${childSnapshot.key
-                        }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
-      
-        </button>
-        <button class="w-auto btn btn-warning btn-sm p-1 updateanimal"
-            type="button" value="${childSnapshot.key
-                        }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
-      
-        </button></td> 
-        
-</tr>`
+        .orderByChild('ANM_Active') //เลือกจากสถานะการใช้งาน
+        .equalTo('1')               //ดึงเฉพาะสถานะ =1
+        .on('value', function (snapshot) { // ชุดข้อมูลที่ได้
+            if (snapshot.exists()) {        // กรณีมีข้อมูลในตาราง
+                let i = 0                   //ไว้เก็บ ลำดับ ให้ค่าเริ่มต้น = 0
+                snapshot.forEach(function (childSnapshot) { ///วนลูปเพื่อดึงข้อมูลมาใส่แต่ละบรรทัด
+                    const data = childSnapshot.val()       // ดึงเฉพาะค่ามาใช่
+                  // เริ่มวนบรรทัด  
+                     html += `<tr>                           
+                    <th scope="row">${i + 1}</th> 
+                    <td>${data.ANM_Name}</td>  
+                    <td>${data.ANM_Code}</td>
+                    <td>
+                    ${data.ANM_Active == '1'
+                    ? `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: greenyellow;"></iconify-icon>
+                    ปกติ`
+                    : `<iconify-icon icon="ic:baseline-fiber-manual-record" style="color: red;"></iconify-icon>
+                    ไม่ใช้งาน`
+                    }</td>
+                    <td> <button class="w-auto btn btn-danger btn-sm p-1 delanimal"
+                    type="button" value="${childSnapshot.key
+                    }"><iconify-icon icon="mdi:trash-can-outline"></iconify-icon> ไม่ใช้งาน
+
+                    </button>
+                    <button class="w-auto btn btn-warning btn-sm p-1 updateanimal"
+                    type="button" value="${childSnapshot.key
+                    }"><iconify-icon icon="mdi:edit-outline"></iconify-icon> แก้ไข
+
+                    </button></td> 
+
+                    </tr>`
                     i++
                 })
-                document.getElementById('table-animaltype').style.display =
-                    'table-row-group'
-
-                document.getElementById('table-animaltype').innerHTML = html
-                delanimal()
-                editanimal()
-            } else {
+                document.getElementById('table-animaltype').style.display ='table-row-group'
+                document.getElementById('table-animaltype').innerHTML = html //นำบรรทัดที่ได้ทั้งหมด มาใส่ในตาราง
+                delanimal() //สำหรับ สร้างเหตุการณ์ หากมีการกดปุ่ม ไม้ใช้งาน
+                editanimal()//สำหรับ สร้างเหตุการณ์ หากมีการกดปุ่ม แก้ไข
+            } else {// กรณีไม่มีข้อมูลในตาราง
                 document.getElementById(
                     'table-animaltype'
-                ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white"> ไม่พบข้อมูล
-  </td></tr>`
+                ).innerHTML = `<tr class="bg-light"><td colspan="5" class="text-center bg-white"> ไม่พบข้อมูล </td></tr>`
             }
         })
 }
+
+//////// สำหรับ การคลิกปุ่ม บันทึกประเภทสัตว์ ////////////////
 document
     .getElementById('saveanimal')
     .addEventListener('click', function (event) {
-        const animaltype = document.getElementById('animaltype').value
+        const animaltype = document.getElementById('animaltype').value //เอาค่าที่กรอกมา
 
-        if (animaltype == '') {
-            alert('กรุณาระบุประเภทสัตว์')
+        if (animaltype == '') {   // เช็คว่าหากไม่ได้กรอกข้อมูล
+            alert('กรุณาระบุประเภทสัตว์') //เตือน
             return false
-        } else {
-            let coll = 0
-            var postListRef = firebase.database().ref('animal_type')
-            postListRef.on('value', function (snapshot) {
-                document.getElementById('tb-animal').style.display = 'none'
-                if (snapshot.numChildren() != undefined) {
-                    coll = snapshot.numChildren()
+        } else {                /// กรอกข้อมูลแล้ว
+            let coll = 0        //สำหรับเก็บค่าตัวเลข เบื้องต้นให้ = 0
+            var postListRef = firebase.database().ref('animal_type')   //เชื่อมตาราง 
+            postListRef.on('value', function (snapshot) {              //เอาค่าในตารางมาวนลูป 
+                document.getElementById('tb-animal').style.display = 'none' // ซ่อนบรรทัดในตารางไว้ก่อนเพื่อให้ตอนกดบันทึกข้อมูลจะมีบรรทัดใหม่ขึ้นมา
+                if (snapshot.numChildren() != undefined) {    // เช็คว่าข้อมูลมีค่ามั้ย
+                    coll = snapshot.numChildren()               //หากมีให้ coll นับข้อมูลแต่ละบรรทัด +1 เพื่อนับข้อมูลในตารางทั้งหมดว่ามีกี่บรรทัด
                 }
             })
-            var newPostRef = postListRef.push()
-            newPostRef.set(
+
+            var newPostRef = postListRef.push()  // คำสีั่งสำหรับ เอาข้อมูลใส่ใน ตาราง animal type
+            newPostRef.set(                      // คำสั่งสำหรับ set ว่าจะบันทึกข้อมูลอะไรบ้าง
                 {
-                    ANM_ID: coll == 0 ? 1 : coll + 1,
-                    ANM_Name: animaltype,
-                    ANM_Code: 'ANM0' + (coll == 0 ? 1 : coll + 1),
-                    ANM_Active: '1'
+                    ANM_ID: coll == 0 ? 1 : coll + 1,  // หาก ตัวแปร coll=0 แสดงว่าไม่เคยมีข้อมูลในตาราง animal type เลย ให้ใส่ข้อมูล id ที่กำลังจะบันทึกเป็นบรรทัดที่ 1  แต่ถ้าcollไม่เท่ากับ0 ให้เอาจำนวนข้อมูลที่นับมาตั้งแต่ตอนแรก มาบวกเพิ่ม 1
+                    ANM_Name: animaltype,  //ข้อมูลประเภทสัตว์ ที่เรากรอกไป
+                    ANM_Code: 'ANM0' + (coll == 0 ? 1 : coll + 1),  //เซ้ตข้อมูล Animal Code จากข้อมูลจำนวนบรรทัดที่มีในตาราง +เพิ่ม 1
+                    ANM_Active: '1'  // เซ็ตสถานะ ให้ใช้งาน
                 },
-                error => {
-                    if (error) {
-                        alert('เพิ่มข้อมูลไม่สำเร็จ')
-                        document.getElementById('v-pills-pets-tab').click()
+                error => {// สำหรับเช็คว่า บันทึกได้หรือไม่ได้
+                    if (error) {   //กรณีบันทึกไม่ได้
+                        alert('เพิ่มข้อมูลไม่สำเร็จ') //เตือน
+                        document.getElementById('v-pills-pets-tab').click() //ให้คลิกปุ่มเมนู ประเภทสัตว์ เพื่อ refresh ตาราง
                         return false
                         // The write failed...
-                    } else {
+                    } else {//กรณีบันทึกได้
                         alert('เพิ่มข้อมูลสำเร็จ')
 
-                        document.getElementById('v-pills-pets-tab').click()
+                        document.getElementById('v-pills-pets-tab').click()//ให้คลิกปุ่มเมนู ประเภทสัตว์ เพื่อ refresh ตาราง
                         // Data saved successfully!
                         return false
                     }
@@ -121,96 +133,94 @@ document
             )
         }
     })
+//////// สำหรับ การคลิกปุ่ม ไม่ใช้งานประเภทสัตว์ ////////////////
 
 function delanimal() {
-    document.querySelectorAll('.delanimal').forEach(item => {
-        item.addEventListener('click', function (event) {
-            document.getElementById('tb-animal').style.display = 'none'
-            firebase
-                .database()
-                .ref('animal_type')
-                .child(event.target.value)
-                .update({
-                    ANM_Active: '0'
+    document.querySelectorAll('.delanimal').forEach(item => { /// วนลูปปุ่มลบทั้งหมดในตารางทุกบันทัด
+        item.addEventListener('click', function (event) {       //สร้างเหตุการณ์ หากมีการกดปุ่ม
+            document.getElementById('tb-animal').style.display = 'none' // ซ่อนตารางไว้ก่อน
+            firebase.database().ref('animal_type')// เชื่อมต่อตาราง
+                .child(event.target.value)        //ดึงเฉพาะ คีย์ที่มีค่าตรงกับปุ่มที่คลิก ปุ่มแต่ละปุ่มจะเก็บค่าคีย์ไว้ใน value ของปุ่ม
+                .update({                           //คำสั่งสำหรับอัพเดท
+                    ANM_Active: '0'                 //ให้สถานะการใช้งาน = 0
                 })
-                .then(() => {
-                    alert('อัพเดทสถานะสำเร็จ')
-                    document.getElementById('v-pills-pets-tab').click()
+                .then(() => {                   //กรณี อัพเดทข้อมูลได้
+                    alert('อัพเดทสถานะสำเร็จ')         //เตือน
+                    document.getElementById('v-pills-pets-tab').click() // สั่งให้กดปุ่ม ประเภทสัตว์
                 })
-                .catch(error => {
-                    alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
-                    document.getElementById('v-pills-pets-tab').click()
+                .catch(error => { //กรณี อัพเดทข้อมูลไม่ได้
+                    alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่') //เตือน
+                    document.getElementById('v-pills-pets-tab').click()// สั่งให้กดปุ่ม ประเภทสัตว์
                 })
         })
     })
 }
+//////// สำหรับ การคลิกปุ่ม แก้ไขประเภทสัตว์ ////////////////
 
 function editanimal() {
-    document.querySelectorAll('.updateanimal').forEach(item => {
-        item.addEventListener('click', function (event) {
-            document.getElementById('updateanimal').style.display = 'inline-block'
-            document.getElementById('saveanimal').style.display = 'none'
-            document.getElementById('animalkey').value = event.target.value
-            firebase
-                .database()
-                .ref('animal_type')
-                .child(event.target.value)
-                .on('child_added', snapshot => {
-                    const newPost = snapshot.val()
-                    if (snapshot.key == 'ANM_Name') {
-                        document.getElementById('animaltype').value = newPost
-                    } else if (snapshot.key == 'ANM_ID') {
-                        document.getElementById('animalid').value = newPost
+    document.querySelectorAll('.updateanimal').forEach(item => {/// วนลูปปุ่มลบทั้งหมดในตารางทุกบันทัด
+        item.addEventListener('click', function (event) { //สร้างเหตุการณ์ หากมีการกดปุ่ม
+            document.getElementById('updateanimal').style.display = 'inline-block'//โชว์ปุ่มอัพเดทข้อมูล
+            document.getElementById('saveanimal').style.display = 'none'//ซ่อนปุ่มอัพเดทข้อมูล
+            document.getElementById('animalkey').value = event.target.value // เก็บค่าคีย์จากปุ่มที่คลิกไว้ในช่องเก็บข้อมูล animal key
+            firebase.database().ref('animal_type')// เชื่อมต่อตาราง
+                .child(event.target.value)    //ดึงเฉพาะ คีย์ที่มีค่าตรงกับปุ่มที่คลิก ปุ่มแต่ละปุ่มจะเก็บค่าคีย์ไว้ใน value ของปุ่ม
+                .on('child_added', snapshot => { //ดึงเฉพาะชุดข้อมูลที่มีคีย์=ปุ่มที่กด
+                    const newPost = snapshot.val() // ค่าของชุดข้อมูลนั้น
+                    if (snapshot.key == 'ANM_Name') { //เช็คว่าข้อมูลที่ดึงได้ ใช้คอลัมน์ ANM_Name มั้ย
+                        document.getElementById('animaltype').value = newPost  //ดึงค่าของ ANM_Name มาเก็บไว้ในช่องเก็บข้อมูลanimaltype
+                    } else if (snapshot.key == 'ANM_ID') {//เช็คว่าข้อมูลที่ดึงได้ ใช้คอลัมน์ ANM_ID มั้ย
+                        document.getElementById('animalid').value = newPost//ดึงค่าของ ANM_ID มาเก็บไว้ในช่องเก็บข้อมูลanimalid
                     } else if (snapshot.key == 'ANM_Code') {
                         document.getElementById('animalcode').value = newPost
                     } else if (snapshot.key == 'ANM_Active') {
                         document.getElementById('animalactive').value = newPost
                     }
                 })
+            /// สร้างเหตุการณ์หากมีการคลิก ปุ่ม อัพเดทข้อมูล
             document
                 .getElementById('updateanimal')
                 .addEventListener('click', function (event) {
-                    document.getElementById('tb-animal').style.display = 'none'
-                    updateanimal()
+                    document.getElementById('tb-animal').style.display = 'none' // ซ่อนตารางไว้ก่อน
+                    updateanimal()  //เรียกใช้ฟังก์ชัน อัพเดทข้อมูล
                 })
         })
     })
 }
 
 function updateanimal() {
-    const animaltype = document.getElementById('animaltype').value
-    const animalid = document.getElementById('animalid').value
-    const animalactive = document.getElementById('animalactive').value
-    const animalcode = document.getElementById('animalcode').value
-    const animalkey = document.getElementById('animalkey').value
-    if (animaltype == '') {
-        document.getElementById('tb-animal').style.display = 'inline-table'
+    const animaltype = document.getElementById('animaltype').value //ดึงค่าที่เก็บในช่อง animaltype
+    const animalid = document.getElementById('animalid').value//ดึงค่าที่เก็บในช่อง animalid
+    const animalactive = document.getElementById('animalactive').value//ดึงค่าที่เก็บในช่อง animalactive
+    const animalcode = document.getElementById('animalcode').value//ดึงค่าที่เก็บในช่อง animalcode
+    const animalkey = document.getElementById('animalkey').value//ดึงค่าที่เก็บในช่อง animalkey
+    if (animaltype == '') {  //ถ้าไม่ได้กรอกข้อมูลประเภทสัตว์
+        document.getElementById('tb-animal').style.display = 'inline-table' // โชว์ตารางไว้เพราะยังไม่ได้อัพเดทข้อมลใหม่
 
-        alert('กรุณาระบุประเภทสัตว์')
+        alert('กรุณาระบุประเภทสัตว์') //เตือน
         return false
     } else {
-        document.getElementById('tb-animal').style.display = 'none'
-        firebase
-            .database()
-            .ref('animal_type')
-            .child(animalkey)
-            .update({
-                ANM_ID: animalid,
-                ANM_Name: animaltype,
-                ANM_Code: animalcode,
-                ANM_Active: animalactive
+        document.getElementById('tb-animal').style.display = 'none'// ซ่อนตารางไว้ สำหรับไว้รอหากมีการอัพเดทข้อมูลไว้เข้าไป
+        firebase.database().ref('animal_type')// เชื่อมต่อตาราง
+            .child(animalkey)//ดึงเฉพาะ คีย์ที่มีค่าตรงกับปุ่มที่คลิก ปุ่มแต่ละปุ่มจะเก็บค่าคีย์ไว้ใน value ของปุ่ม
+            .update({ //คำสั่งสำหรับ update ข้อมูล
+                ANM_ID: animalid, // ค่า animalid ที่เก็บไว้ตอนคลิกปุ่ม
+                ANM_Name: animaltype,// ค่า animaltype ที่กรอกใหม
+                ANM_Code: animalcode,// ค่า animalcode ที่เก็บไว้ตอนคลิกปุ่ม
+                ANM_Active: animalactive// ค่า animalactive ที่เก็บไว้ตอนคลิกปุ่ม
             })
-            .then(() => {
-                alert('อัพเดทข้อมูลสำเร็จ')
+            .then(() => { //กรณีอัพเดทข้อมูลสำเร็จ
+                alert('อัพเดทข้อมูลสำเร็จ') //เตือน
 
-                document.getElementById('v-pills-pets-tab').click()
+                document.getElementById('v-pills-pets-tab').click() //คลิกปุ่ม ประเภทสัตว์ เพื่อดึงข้อมูลในตารางใหม่
             })
-            .catch(error => {
+            .catch(error => { //กรณีอัพเดทข้อมูลไม่สำเร็จ
                 alert('เกิดข้อผิดพลาด กรุณาติดต่อเจ้าหน้าที่')
-                document.getElementById('v-pills-pets-tab').click()
+                document.getElementById('v-pills-pets-tab').click() //คลิกปุ่ม ประเภทสัตว์ เพื่อดึงข้อมูลในตารางใหม่
             })
     }
 }
+
 // ========= End Animal Type ==============================
 
 // ========= Service Type ==============================
@@ -427,7 +437,7 @@ function updateservice() {
             })
     }
 }
-// ========= And Service Type ==============================
+// ========= End Service Type ==============================
 
 // ========= FUR Type ==============================
 document
@@ -635,7 +645,7 @@ function updatefur() {
             })
     }
 }
-// ========= And fur Type ==============================
+// ========= End fur Type ==============================
 
 // ========= Pets Size  ==============================
 document
@@ -859,7 +869,7 @@ function updatesize() {
             })
     }
 }
-// ========= And Size animal ==============================
+// ========= End Size animal ==============================
 
 // ========= Price Service ==============================
 document
@@ -1120,15 +1130,13 @@ function delprice() {
         })
     })
 }
+// ========= End Price Service ==============================
 
 // ========= Booking  ==============================
 document
     .getElementById('v-pills-booking-tab')
     .addEventListener('click', function (event) {
         selectOption('service', '_booking')
-        // selectOption('animal','_booking')
-        // selectOption('fur','_booking')
-        // selectOption('size','_booking')
         document.getElementById('tb-booking').style.display = 'inline-table'
         selectBooking()
         const e = new Event('change')
@@ -1964,6 +1972,10 @@ function cancelbooking() {
     })
 }
 
+// ========= End Booking ==============================
+
+// ========= Select Data and Set To Option ==============================
+
 function selectOption(type, id) {
     if (type == 'service') {
         var postListRef = firebase.database().ref('service_type')
@@ -2039,10 +2051,12 @@ function selectOption(type, id) {
         })
     }
 }
+// ========= Get Text In Option ==============================
 
 function getTextInOption(id, value) {
     return document.querySelector(`#${id} option[value=${value}]`).innerText
 }
+// ========= Set Comma To Number ==============================
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
